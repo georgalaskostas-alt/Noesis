@@ -1,0 +1,10 @@
+{
+  "seeds": 100,
+  "train_tasks": 200,
+  "validation_tasks": 40,
+  "test_tasks_per_condition": 20,
+  "mixtures": [0.1, 0.5, 1.0],
+  "conditions": ["matched", "shifted", "neutral"],
+  "bootstrap_repeats": 10000,
+  "depth": 2
+}

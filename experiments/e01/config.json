@@ -1,0 +1,7 @@
+{
+  "seeds": 100,
+  "tasks_per_seed": 20,
+  "depth": 2,
+  "budget": 16,
+  "bootstrap_repeats": 10000
+}

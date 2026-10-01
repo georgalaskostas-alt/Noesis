@@ -1,0 +1,33 @@
+{
+  "started_utc": "2026-09-30T20:14:03.070207+00:00",
+  "config": {
+    "seeds": 100,
+    "train_tasks": 200,
+    "validation_tasks": 40,
+    "test_tasks_per_condition": 20,
+    "mixtures": [
+      0.1,
+      0.5,
+      1.0
+    ],
+    "conditions": [
+      "matched",
+      "shifted",
+      "neutral"
+    ],
+    "bootstrap_repeats": 10000,
+    "depth": 2
+  },
+  "python": "3.14.7",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "grammar_size": 429,
+  "grammar_sha256": "06f1a25997bb002dec6490d3f86e2f5efcb836f8a6d9dbf35ea6e4f049246d2a",
+  "source_sha256": {
+    "noesis/__init__.py": "fde4ad2db4d69c9012ac8fd93e94e5150234957111594dd2b0343fd6f00f8bba",
+    "noesis/__main__.py": "36494f46ba63f38c2dd31b76e3b128d2b1fb8152856398fa638fcb676df59b97",
+    "noesis/core.py": "ee32adabc3c7396caf6e8b435f824c94a67fbc2e14078f356518db65e27d7d9c",
+    "noesis/experiment.py": "efaed5d6f095296fb8938b89f118ebbfa1d5bf95bd43fdb1ed41869201022788",
+    "noesis/transfer.py": "5bb122679c23c7f68f55fbf612590d9085943a4f851d3965dc765f3b495ebe6b",
+    "tests/test_transfer.py": "379ae46dc85a8e95df30d68cb56b52541cd58b782028db260260800db23012ca"
+  }
+}

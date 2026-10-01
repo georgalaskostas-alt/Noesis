@@ -1,0 +1,22 @@
+{
+  "started_utc": "2026-09-30T16:08:49.535717+00:00",
+  "config": {
+    "seeds": 100,
+    "tasks_per_seed": 20,
+    "depth": 2,
+    "budget": 16,
+    "bootstrap_repeats": 10000
+  },
+  "python": "3.12.14",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "grammar_size": 429,
+  "grammar_sha256": "06f1a25997bb002dec6490d3f86e2f5efcb836f8a6d9dbf35ea6e4f049246d2a",
+  "source_sha256": {
+    "noesis/__init__.py": "02d8c06fddee28ae041811859e6b9b4468a7e3ed6804d2763d5fc0292338e201",
+    "noesis/__main__.py": "36494f46ba63f38c2dd31b76e3b128d2b1fb8152856398fa638fcb676df59b97",
+    "noesis/core.py": "ee32adabc3c7396caf6e8b435f824c94a67fbc2e14078f356518db65e27d7d9c",
+    "noesis/experiment.py": "d389f579c5ff08be29f72eaee613edd473194eed9c267529feaa17e2f91c8212",
+    "tests/test_core.py": "e3faacc8c6006a07ce13764ebf15d4db76cf15cbd7704a99eea8c9d9c527f2c2"
+  },
+  "protocol": "E01 v0.1 depth=AST height; primary discovery cost excludes post-identification checkpoints"
+}

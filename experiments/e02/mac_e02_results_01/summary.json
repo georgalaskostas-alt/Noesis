@@ -1,0 +1,92 @@
+{
+  "matched": {
+    "methods": {
+      "uniform": {
+        "episodes": 2000,
+        "failures": 0,
+        "mean_queries": 8.92,
+        "mean_agent_ms": 1.0458274028424057,
+        "mean_evaluations": 13756.287,
+        "brier_at_4": 0.19483632439343238,
+        "brier_at_8": 0.07227777777777777
+      },
+      "learned": {
+        "episodes": 2000,
+        "failures": 0,
+        "mean_queries": 8.658,
+        "mean_agent_ms": 1.032794397455291,
+        "mean_evaluations": 13553.146,
+        "brier_at_4": 0.18029936737959257,
+        "brier_at_8": 0.06581272474955353
+      }
+    },
+    "mean_query_saving": 0.262,
+    "relative_query_reduction_pct": 2.937219730941709,
+    "seed_bootstrap_95pct": [
+      0.1625,
+      0.36099999999999993
+    ],
+    "seeds_learned_worse": 18,
+    "interpretation": "benefit"
+  },
+  "shifted": {
+    "methods": {
+      "uniform": {
+        "episodes": 2000,
+        "failures": 0,
+        "mean_queries": 9.1315,
+        "mean_agent_ms": 1.0818457324130577,
+        "mean_evaluations": 13740.2515,
+        "brier_at_4": 0.19558145120058534,
+        "brier_at_8": 0.07219654513888889
+      },
+      "learned": {
+        "episodes": 2000,
+        "failures": 0,
+        "mean_queries": 9.751,
+        "mean_agent_ms": 1.140992687716789,
+        "mean_evaluations": 14547.558,
+        "brier_at_4": 0.2379785052085183,
+        "brier_at_8": 0.12786474796054145
+      }
+    },
+    "mean_query_saving": -0.6195,
+    "relative_query_reduction_pct": -6.784208509007272,
+    "seed_bootstrap_95pct": [
+      -0.7264999999999999,
+      -0.5169875
+    ],
+    "seeds_learned_worse": 70,
+    "interpretation": "harm"
+  },
+  "neutral": {
+    "methods": {
+      "uniform": {
+        "episodes": 2000,
+        "failures": 0,
+        "mean_queries": 8.8665,
+        "mean_agent_ms": 1.0663277102576103,
+        "mean_evaluations": 13734.286,
+        "brier_at_4": 0.21981297591524745,
+        "brier_at_8": 0.07586689236111112
+      },
+      "learned": {
+        "episodes": 2000,
+        "failures": 0,
+        "mean_queries": 9.0735,
+        "mean_agent_ms": 1.0875487849771162,
+        "mean_evaluations": 13924.0905,
+        "brier_at_4": 0.24364683299999793,
+        "brier_at_8": 0.10866052909840553
+      }
+    },
+    "mean_query_saving": -0.20699999999999996,
+    "relative_query_reduction_pct": -2.3346303501945442,
+    "seed_bootstrap_95pct": [
+      -0.2725125000000001,
+      -0.14250000000000002
+    ],
+    "seeds_learned_worse": 57,
+    "interpretation": "harm"
+  }
+}

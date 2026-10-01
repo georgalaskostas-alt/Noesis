@@ -1,0 +1,1718 @@
+[
+  {
+    "table": 0,
+    "expression": "(x0 XOR x0)"
+  },
+  {
+    "table": 15,
+    "expression": "NOT((x2 OR x3))"
+  },
+  {
+    "table": 51,
+    "expression": "NOT((x1 OR x3))"
+  },
+  {
+    "table": 60,
+    "expression": "(NOT(x3) AND (x1 XOR x2))"
+  },
+  {
+    "table": 85,
+    "expression": "NOT((x0 OR x3))"
+  },
+  {
+    "table": 90,
+    "expression": "(NOT(x3) AND (x0 XOR x2))"
+  },
+  {
+    "table": 102,
+    "expression": "(NOT(x3) AND (x0 XOR x1))"
+  },
+  {
+    "table": 136,
+    "expression": "(NOT(x3) AND (x0 AND x1))"
+  },
+  {
+    "table": 160,
+    "expression": "(NOT(x3) AND (x0 AND x2))"
+  },
+  {
+    "table": 170,
+    "expression": "(NOT(x3) AND x0)"
+  },
+  {
+    "table": 192,
+    "expression": "(NOT(x3) AND (x1 AND x2))"
+  },
+  {
+    "table": 204,
+    "expression": "(NOT(x3) AND x1)"
+  },
+  {
+    "table": 238,
+    "expression": "(NOT(x3) AND (x0 OR x1))"
+  },
+  {
+    "table": 240,
+    "expression": "(NOT(x3) AND x2)"
+  },
+  {
+    "table": 250,
+    "expression": "(NOT(x3) AND (x0 OR x2))"
+  },
+  {
+    "table": 252,
+    "expression": "(NOT(x3) AND (x1 OR x2))"
+  },
+  {
+    "table": 255,
+    "expression": "NOT(x3)"
+  },
+  {
+    "table": 771,
+    "expression": "NOT((x1 OR x2))"
+  },
+  {
+    "table": 780,
+    "expression": "(NOT(x2) AND (x1 XOR x3))"
+  },
+  {
+    "table": 816,
+    "expression": "((x2 XOR x3) AND NOT(x1))"
+  },
+  {
+    "table": 854,
+    "expression": "((x1 OR x2) XOR (x0 OR x3))"
+  },
+  {
+    "table": 960,
+    "expression": "((x2 XOR x3) AND (x1 XOR x3))"
+  },
+  {
+    "table": 1020,
+    "expression": "((x1 OR x2) XOR x3)"
+  },
+  {
+    "table": 1285,
+    "expression": "NOT((x0 OR x2))"
+  },
+  {
+    "table": 1290,
+    "expression": "(NOT(x2) AND (x0 XOR x3))"
+  },
+  {
+    "table": 1334,
+    "expression": "((x0 OR x2) XOR (x1 OR x3))"
+  },
+  {
+    "table": 1360,
+    "expression": "((x2 XOR x3) AND NOT(x0))"
+  },
+  {
+    "table": 1440,
+    "expression": "((x2 XOR x3) AND (x0 XOR x3))"
+  },
+  {
+    "table": 1530,
+    "expression": "((x0 OR x2) XOR x3)"
+  },
+  {
+    "table": 1542,
+    "expression": "(NOT(x2) AND (x0 XOR x1))"
+  },
+  {
+    "table": 1632,
+    "expression": "((x2 XOR x3) AND (x0 XOR x1))"
+  },
+  {
+    "table": 2056,
+    "expression": "(NOT(x2) AND (x0 AND x1))"
+  },
+  {
+    "table": 2176,
+    "expression": "((x2 XOR x3) AND (x0 AND x1))"
+  },
+  {
+    "table": 2560,
+    "expression": "(NOT(x2) AND (x0 AND x3))"
+  },
+  {
+    "table": 2570,
+    "expression": "(NOT(x2) AND x0)"
+  },
+  {
+    "table": 2640,
+    "expression": "((x2 XOR x3) AND (x0 XOR x2))"
+  },
+  {
+    "table": 2720,
+    "expression": "((x2 XOR x3) AND x0)"
+  },
+  {
+    "table": 2800,
+    "expression": "((x2 XOR x3) AND (x0 OR x2))"
+  },
+  {
+    "table": 2810,
+    "expression": "((x2 AND x3) XOR (x0 OR x2))"
+  },
+  {
+    "table": 3072,
+    "expression": "(NOT(x2) AND (x1 AND x3))"
+  },
+  {
+    "table": 3084,
+    "expression": "(NOT(x2) AND x1)"
+  },
+  {
+    "table": 3120,
+    "expression": "((x2 XOR x3) AND (x1 XOR x2))"
+  },
+  {
+    "table": 3264,
+    "expression": "((x2 XOR x3) AND x1)"
+  },
+  {
+    "table": 3312,
+    "expression": "((x2 XOR x3) AND (x1 OR x2))"
+  },
+  {
+    "table": 3324,
+    "expression": "((x2 AND x3) XOR (x1 OR x2))"
+  },
+  {
+    "table": 3598,
+    "expression": "(NOT(x2) AND (x0 OR x1))"
+  },
+  {
+    "table": 3808,
+    "expression": "((x2 XOR x3) AND (x0 OR x1))"
+  },
+  {
+    "table": 3840,
+    "expression": "(NOT(x2) AND x3)"
+  },
+  {
+    "table": 3850,
+    "expression": "(NOT(x2) AND (x0 OR x3))"
+  },
+  {
+    "table": 3852,
+    "expression": "(NOT(x2) AND (x1 OR x3))"
+  },
+  {
+    "table": 3855,
+    "expression": "NOT(x2)"
+  },
+  {
+    "table": 3900,
+    "expression": "(x2 XOR (x1 OR x3))"
+  },
+  {
+    "table": 3930,
+    "expression": "(x2 XOR (x0 OR x3))"
+  },
+  {
+    "table": 4000,
+    "expression": "((x2 XOR x3) AND (x0 OR x3))"
+  },
+  {
+    "table": 4010,
+    "expression": "((x2 AND x3) XOR (x0 OR x3))"
+  },
+  {
+    "table": 4032,
+    "expression": "((x2 XOR x3) AND (x1 OR x3))"
+  },
+  {
+    "table": 4044,
+    "expression": "((x2 AND x3) XOR (x1 OR x3))"
+  },
+  {
+    "table": 4080,
+    "expression": "(x2 XOR x3)"
+  },
+  {
+    "table": 4095,
+    "expression": "NOT((x2 AND x3))"
+  },
+  {
+    "table": 4369,
+    "expression": "NOT((x0 OR x1))"
+  },
+  {
+    "table": 4382,
+    "expression": "((x0 OR x1) XOR (x2 OR x3))"
+  },
+  {
+    "table": 4386,
+    "expression": "(NOT(x1) AND (x0 XOR x3))"
+  },
+  {
+    "table": 4420,
+    "expression": "((x1 XOR x3) AND NOT(x0))"
+  },
+  {
+    "table": 4488,
+    "expression": "((x1 XOR x3) AND (x0 XOR x3))"
+  },
+  {
+    "table": 4590,
+    "expression": "((x0 OR x1) XOR x3)"
+  },
+  {
+    "table": 4626,
+    "expression": "(NOT(x1) AND (x0 XOR x2))"
+  },
+  {
+    "table": 4680,
+    "expression": "((x1 XOR x3) AND (x0 XOR x2))"
+  },
+  {
+    "table": 5140,
+    "expression": "((x1 XOR x2) AND NOT(x0))"
+  },
+  {
+    "table": 5160,
+    "expression": "((x1 XOR x2) AND (x0 XOR x3))"
+  },
+  {
+    "table": 6168,
+    "expression": "((x1 XOR x2) AND (x0 XOR x2))"
+  },
+  {
+    "table": 7710,
+    "expression": "((x0 OR x1) XOR x2)"
+  },
+  {
+    "table": 7918,
+    "expression": "((x0 OR x1) XOR (x2 AND x3))"
+  },
+  {
+    "table": 8224,
+    "expression": "(NOT(x1) AND (x0 AND x2))"
+  },
+  {
+    "table": 8320,
+    "expression": "((x1 XOR x3) AND (x0 AND x2))"
+  },
+  {
+    "table": 8704,
+    "expression": "(NOT(x1) AND (x0 AND x3))"
+  },
+  {
+    "table": 8738,
+    "expression": "(NOT(x1) AND x0)"
+  },
+  {
+    "table": 8772,
+    "expression": "((x1 XOR x3) AND (x0 XOR x1))"
+  },
+  {
+    "table": 8840,
+    "expression": "((x1 XOR x3) AND x0)"
+  },
+  {
+    "table": 8908,
+    "expression": "((x1 XOR x3) AND (x0 OR x1))"
+  },
+  {
+    "table": 8942,
+    "expression": "((x1 AND x3) XOR (x0 OR x1))"
+  },
+  {
+    "table": 9252,
+    "expression": "((x1 XOR x2) AND (x0 XOR x1))"
+  },
+  {
+    "table": 10240,
+    "expression": "((x1 XOR x2) AND (x0 AND x3))"
+  },
+  {
+    "table": 10280,
+    "expression": "((x1 XOR x2) AND x0)"
+  },
+  {
+    "table": 11308,
+    "expression": "((x1 XOR x2) AND (x0 OR x1))"
+  },
+  {
+    "table": 11822,
+    "expression": "((x1 AND x2) XOR (x0 OR x1))"
+  },
+  {
+    "table": 12288,
+    "expression": "(NOT(x1) AND (x2 AND x3))"
+  },
+  {
+    "table": 12300,
+    "expression": "((x1 XOR x3) AND (x1 XOR x2))"
+  },
+  {
+    "table": 12336,
+    "expression": "(NOT(x1) AND x2)"
+  },
+  {
+    "table": 12480,
+    "expression": "((x1 XOR x3) AND x2)"
+  },
+  {
+    "table": 12492,
+    "expression": "((x1 XOR x3) AND (x1 OR x2))"
+  },
+  {
+    "table": 12540,
+    "expression": "((x1 AND x3) XOR (x1 OR x2))"
+  },
+  {
+    "table": 12850,
+    "expression": "(NOT(x1) AND (x0 OR x2))"
+  },
+  {
+    "table": 13000,
+    "expression": "((x1 XOR x3) AND (x0 OR x2))"
+  },
+  {
+    "table": 13056,
+    "expression": "(NOT(x1) AND x3)"
+  },
+  {
+    "table": 13090,
+    "expression": "(NOT(x1) AND (x0 OR x3))"
+  },
+  {
+    "table": 13104,
+    "expression": "(NOT(x1) AND (x2 OR x3))"
+  },
+  {
+    "table": 13107,
+    "expression": "NOT(x1)"
+  },
+  {
+    "table": 13116,
+    "expression": "(x1 XOR (x2 OR x3))"
+  },
+  {
+    "table": 13158,
+    "expression": "(x1 XOR (x0 OR x3))"
+  },
+  {
+    "table": 13192,
+    "expression": "((x1 XOR x3) AND (x0 OR x3))"
+  },
+  {
+    "table": 13226,
+    "expression": "((x1 AND x3) XOR (x0 OR x3))"
+  },
+  {
+    "table": 13248,
+    "expression": "((x1 XOR x3) AND (x2 OR x3))"
+  },
+  {
+    "table": 13260,
+    "expression": "(x1 XOR x3)"
+  },
+  {
+    "table": 13296,
+    "expression": "((x1 AND x3) XOR (x2 OR x3))"
+  },
+  {
+    "table": 13311,
+    "expression": "NOT((x1 AND x3))"
+  },
+  {
+    "table": 13878,
+    "expression": "(x1 XOR (x0 OR x2))"
+  },
+  {
+    "table": 14074,
+    "expression": "((x1 AND x3) XOR (x0 OR x2))"
+  },
+  {
+    "table": 14392,
+    "expression": "((x1 XOR x2) AND (x0 OR x2))"
+  },
+  {
+    "table": 14906,
+    "expression": "((x1 AND x2) XOR (x0 OR x2))"
+  },
+  {
+    "table": 15360,
+    "expression": "((x1 XOR x2) AND x3)"
+  },
+  {
+    "table": 15372,
+    "expression": "((x1 XOR x2) AND (x1 OR x3))"
+  },
+  {
+    "table": 15400,
+    "expression": "((x1 XOR x2) AND (x0 OR x3))"
+  },
+  {
+    "table": 15408,
+    "expression": "((x1 XOR x2) AND (x2 OR x3))"
+  },
+  {
+    "table": 15420,
+    "expression": "(x1 XOR x2)"
+  },
+  {
+    "table": 15555,
+    "expression": "((x2 XOR x3) XOR NOT(x1))"
+  },
+  {
+    "table": 15564,
+    "expression": "(x1 XOR (x2 AND x3))"
+  },
+  {
+    "table": 15600,
+    "expression": "((x1 AND x3) XOR x2)"
+  },
+  {
+    "table": 15615,
+    "expression": "(NOT(x3) OR (x1 XOR x2))"
+  },
+  {
+    "table": 16140,
+    "expression": "((x1 AND x2) XOR (x1 OR x3))"
+  },
+  {
+    "table": 16176,
+    "expression": "((x1 AND x2) XOR (x2 OR x3))"
+  },
+  {
+    "table": 16191,
+    "expression": "NOT((x1 AND x2))"
+  },
+  {
+    "table": 16234,
+    "expression": "((x1 AND x2) XOR (x0 OR x3))"
+  },
+  {
+    "table": 16320,
+    "expression": "((x1 AND x2) XOR x3)"
+  },
+  {
+    "table": 16335,
+    "expression": "(NOT(x2) OR (x1 XOR x3))"
+  },
+  {
+    "table": 16371,
+    "expression": "((x2 XOR x3) OR NOT(x1))"
+  },
+  {
+    "table": 16380,
+    "expression": "((x1 XOR x3) OR (x1 XOR x2))"
+  },
+  {
+    "table": 16448,
+    "expression": "(NOT(x0) AND (x1 AND x2))"
+  },
+  {
+    "table": 16512,
+    "expression": "((x0 XOR x3) AND (x1 AND x2))"
+  },
+  {
+    "table": 16962,
+    "expression": "((x0 XOR x2) AND (x0 XOR x1))"
+  },
+  {
+    "table": 17408,
+    "expression": "(NOT(x0) AND (x1 AND x3))"
+  },
+  {
+    "table": 17442,
+    "expression": "((x0 XOR x3) AND (x0 XOR x1))"
+  },
+  {
+    "table": 17476,
+    "expression": "(NOT(x0) AND x1)"
+  },
+  {
+    "table": 17544,
+    "expression": "((x0 XOR x3) AND x1)"
+  },
+  {
+    "table": 17578,
+    "expression": "((x0 XOR x3) AND (x0 OR x1))"
+  },
+  {
+    "table": 17646,
+    "expression": "((x0 AND x3) XOR (x0 OR x1))"
+  },
+  {
+    "table": 18432,
+    "expression": "((x0 XOR x2) AND (x1 AND x3))"
+  },
+  {
+    "table": 18504,
+    "expression": "((x0 XOR x2) AND x1)"
+  },
+  {
+    "table": 19018,
+    "expression": "((x0 XOR x2) AND (x0 OR x1))"
+  },
+  {
+    "table": 20046,
+    "expression": "((x0 AND x2) XOR (x0 OR x1))"
+  },
+  {
+    "table": 20480,
+    "expression": "(NOT(x0) AND (x2 AND x3))"
+  },
+  {
+    "table": 20490,
+    "expression": "((x0 XOR x3) AND (x0 XOR x2))"
+  },
+  {
+    "table": 20560,
+    "expression": "(NOT(x0) AND x2)"
+  },
+  {
+    "table": 20640,
+    "expression": "((x0 XOR x3) AND x2)"
+  },
+  {
+    "table": 20650,
+    "expression": "((x0 XOR x3) AND (x0 OR x2))"
+  },
+  {
+    "table": 20730,
+    "expression": "((x0 AND x3) XOR (x0 OR x2))"
+  },
+  {
+    "table": 21588,
+    "expression": "(NOT(x0) AND (x1 OR x2))"
+  },
+  {
+    "table": 21672,
+    "expression": "((x0 XOR x3) AND (x1 OR x2))"
+  },
+  {
+    "table": 21760,
+    "expression": "(NOT(x0) AND x3)"
+  },
+  {
+    "table": 21828,
+    "expression": "(NOT(x0) AND (x1 OR x3))"
+  },
+  {
+    "table": 21840,
+    "expression": "(NOT(x0) AND (x2 OR x3))"
+  },
+  {
+    "table": 21845,
+    "expression": "NOT(x0)"
+  },
+  {
+    "table": 21850,
+    "expression": "(x0 XOR (x2 OR x3))"
+  },
+  {
+    "table": 21862,
+    "expression": "(x0 XOR (x1 OR x3))"
+  },
+  {
+    "table": 21896,
+    "expression": "((x0 XOR x3) AND (x1 OR x3))"
+  },
+  {
+    "table": 21920,
+    "expression": "((x0 XOR x3) AND (x2 OR x3))"
+  },
+  {
+    "table": 21930,
+    "expression": "(x0 XOR x3)"
+  },
+  {
+    "table": 21964,
+    "expression": "((x0 AND x3) XOR (x1 OR x3))"
+  },
+  {
+    "table": 22000,
+    "expression": "((x0 AND x3) XOR (x2 OR x3))"
+  },
+  {
+    "table": 22015,
+    "expression": "NOT((x0 AND x3))"
+  },
+  {
+    "table": 22102,
+    "expression": "(x0 XOR (x1 OR x2))"
+  },
+  {
+    "table": 22268,
+    "expression": "((x0 AND x3) XOR (x1 OR x2))"
+  },
+  {
+    "table": 22616,
+    "expression": "((x0 XOR x2) AND (x1 OR x2))"
+  },
+  {
+    "table": 23040,
+    "expression": "((x0 XOR x2) AND x3)"
+  },
+  {
+    "table": 23050,
+    "expression": "((x0 XOR x2) AND (x0 OR x3))"
+  },
+  {
+    "table": 23112,
+    "expression": "((x0 XOR x2) AND (x1 OR x3))"
+  },
+  {
+    "table": 23120,
+    "expression": "((x0 XOR x2) AND (x2 OR x3))"
+  },
+  {
+    "table": 23130,
+    "expression": "(x0 XOR x2)"
+  },
+  {
+    "table": 23205,
+    "expression": "((x2 XOR x3) XOR NOT(x0))"
+  },
+  {
+    "table": 23210,
+    "expression": "(x0 XOR (x2 AND x3))"
+  },
+  {
+    "table": 23280,
+    "expression": "((x0 AND x3) XOR x2)"
+  },
+  {
+    "table": 23295,
+    "expression": "(NOT(x3) OR (x0 XOR x2))"
+  },
+  {
+    "table": 23644,
+    "expression": "((x0 AND x2) XOR (x1 OR x2))"
+  },
+  {
+    "table": 24330,
+    "expression": "((x0 AND x2) XOR (x0 OR x3))"
+  },
+  {
+    "table": 24400,
+    "expression": "((x0 AND x2) XOR (x2 OR x3))"
+  },
+  {
+    "table": 24415,
+    "expression": "NOT((x0 AND x2))"
+  },
+  {
+    "table": 24428,
+    "expression": "((x0 AND x2) XOR (x1 OR x3))"
+  },
+  {
+    "table": 24480,
+    "expression": "((x0 AND x2) XOR x3)"
+  },
+  {
+    "table": 24495,
+    "expression": "(NOT(x2) OR (x0 XOR x3))"
+  },
+  {
+    "table": 24565,
+    "expression": "((x2 XOR x3) OR NOT(x0))"
+  },
+  {
+    "table": 24570,
+    "expression": "((x0 XOR x3) OR (x0 XOR x2))"
+  },
+  {
+    "table": 24576,
+    "expression": "((x0 XOR x1) AND (x2 AND x3))"
+  },
+  {
+    "table": 24672,
+    "expression": "((x0 XOR x1) AND x2)"
+  },
+  {
+    "table": 25186,
+    "expression": "((x0 XOR x1) AND (x0 OR x2))"
+  },
+  {
+    "table": 25700,
+    "expression": "((x0 XOR x1) AND (x1 OR x2))"
+  },
+  {
+    "table": 26112,
+    "expression": "((x0 XOR x1) AND x3)"
+  },
+  {
+    "table": 26146,
+    "expression": "((x0 XOR x1) AND (x0 OR x3))"
+  },
+  {
+    "table": 26180,
+    "expression": "((x0 XOR x1) AND (x1 OR x3))"
+  },
+  {
+    "table": 26208,
+    "expression": "((x0 XOR x1) AND (x2 OR x3))"
+  },
+  {
+    "table": 26214,
+    "expression": "(x0 XOR x1)"
+  },
+  {
+    "table": 26265,
+    "expression": "((x1 XOR x3) XOR NOT(x0))"
+  },
+  {
+    "table": 26282,
+    "expression": "(x0 XOR (x1 AND x3))"
+  },
+  {
+    "table": 26316,
+    "expression": "((x0 AND x3) XOR x1)"
+  },
+  {
+    "table": 26367,
+    "expression": "(NOT(x3) OR (x0 XOR x1))"
+  },
+  {
+    "table": 26985,
+    "expression": "((x1 XOR x2) XOR NOT(x0))"
+  },
+  {
+    "table": 27030,
+    "expression": "((x1 XOR x2) XOR (x0 XOR x3))"
+  },
+  {
+    "table": 27242,
+    "expression": "(x0 XOR (x1 AND x2))"
+  },
+  {
+    "table": 27328,
+    "expression": "((x0 AND x3) XOR (x1 AND x2))"
+  },
+  {
+    "table": 27756,
+    "expression": "((x0 AND x2) XOR x1)"
+  },
+  {
+    "table": 27808,
+    "expression": "((x0 AND x2) XOR (x1 AND x3))"
+  },
+  {
+    "table": 28527,
+    "expression": "(NOT(x2) OR (x0 XOR x1))"
+  },
+  {
+    "table": 28662,
+    "expression": "((x2 XOR x3) OR (x0 XOR x1))"
+  },
+  {
+    "table": 29298,
+    "expression": "((x0 AND x1) XOR (x0 OR x2))"
+  },
+  {
+    "table": 29812,
+    "expression": "((x0 AND x1) XOR (x1 OR x2))"
+  },
+  {
+    "table": 30498,
+    "expression": "((x0 AND x1) XOR (x0 OR x3))"
+  },
+  {
+    "table": 30532,
+    "expression": "((x0 AND x1) XOR (x1 OR x3))"
+  },
+  {
+    "table": 30583,
+    "expression": "NOT((x0 AND x1))"
+  },
+  {
+    "table": 30584,
+    "expression": "((x0 AND x1) XOR (x2 OR x3))"
+  },
+  {
+    "table": 30600,
+    "expression": "((x0 AND x1) XOR x3)"
+  },
+  {
+    "table": 30651,
+    "expression": "(NOT(x1) OR (x0 XOR x3))"
+  },
+  {
+    "table": 30685,
+    "expression": "((x1 XOR x3) OR NOT(x0))"
+  },
+  {
+    "table": 30702,
+    "expression": "((x0 XOR x3) OR (x0 XOR x1))"
+  },
+  {
+    "table": 30840,
+    "expression": "((x0 AND x1) XOR x2)"
+  },
+  {
+    "table": 30856,
+    "expression": "((x0 AND x1) XOR (x2 AND x3))"
+  },
+  {
+    "table": 31611,
+    "expression": "(NOT(x1) OR (x0 XOR x2))"
+  },
+  {
+    "table": 31710,
+    "expression": "((x1 XOR x3) OR (x0 XOR x2))"
+  },
+  {
+    "table": 32125,
+    "expression": "((x1 XOR x2) OR NOT(x0))"
+  },
+  {
+    "table": 32190,
+    "expression": "((x1 XOR x2) OR (x0 XOR x3))"
+  },
+  {
+    "table": 32382,
+    "expression": "((x0 XOR x2) OR (x0 XOR x1))"
+  },
+  {
+    "table": 32768,
+    "expression": "((x0 AND x1) AND (x2 AND x3))"
+  },
+  {
+    "table": 32896,
+    "expression": "((x0 AND x1) AND x2)"
+  },
+  {
+    "table": 34680,
+    "expression": "((x2 XOR x3) XOR (x0 AND x1))"
+  },
+  {
+    "table": 34695,
+    "expression": "(NOT(x2) XOR (x0 AND x1))"
+  },
+  {
+    "table": 34816,
+    "expression": "((x0 AND x1) AND x3)"
+  },
+  {
+    "table": 34935,
+    "expression": "(NOT(x3) XOR (x0 AND x1))"
+  },
+  {
+    "table": 34944,
+    "expression": "((x0 AND x1) AND (x2 OR x3))"
+  },
+  {
+    "table": 34952,
+    "expression": "(x0 AND x1)"
+  },
+  {
+    "table": 35071,
+    "expression": "(NOT(x3) OR (x0 AND x1))"
+  },
+  {
+    "table": 36751,
+    "expression": "(NOT(x2) OR (x0 AND x1))"
+  },
+  {
+    "table": 36856,
+    "expression": "((x2 XOR x3) OR (x0 AND x1))"
+  },
+  {
+    "table": 37740,
+    "expression": "((x1 XOR x3) XOR (x0 AND x2))"
+  },
+  {
+    "table": 37779,
+    "expression": "(NOT(x1) XOR (x0 AND x2))"
+  },
+  {
+    "table": 38250,
+    "expression": "((x0 XOR x3) XOR (x1 AND x2))"
+  },
+  {
+    "table": 38293,
+    "expression": "(NOT(x0) XOR (x1 AND x2))"
+  },
+  {
+    "table": 38460,
+    "expression": "((x1 XOR x2) XOR (x0 AND x3))"
+  },
+  {
+    "table": 38490,
+    "expression": "((x0 XOR x2) XOR (x1 AND x3))"
+  },
+  {
+    "table": 38502,
+    "expression": "((x0 XOR x1) XOR (x2 AND x3))"
+  },
+  {
+    "table": 38550,
+    "expression": "((x0 XOR x1) XOR x2)"
+  },
+  {
+    "table": 39219,
+    "expression": "(NOT(x1) XOR (x0 AND x3))"
+  },
+  {
+    "table": 39253,
+    "expression": "(NOT(x0) XOR (x1 AND x3))"
+  },
+  {
+    "table": 39270,
+    "expression": "((x0 XOR x1) XOR x3)"
+  },
+  {
+    "table": 39318,
+    "expression": "((x0 XOR x1) XOR (x2 OR x3))"
+  },
+  {
+    "table": 39321,
+    "expression": "(NOT(x0) XOR x1)"
+  },
+  {
+    "table": 39338,
+    "expression": "((x0 XOR x1) XOR (x1 OR x3))"
+  },
+  {
+    "table": 39372,
+    "expression": "((x0 XOR x1) XOR (x0 OR x3))"
+  },
+  {
+    "table": 39578,
+    "expression": "((x0 XOR x1) XOR (x1 OR x2))"
+  },
+  {
+    "table": 40092,
+    "expression": "((x0 XOR x1) XOR (x0 OR x2))"
+  },
+  {
+    "table": 40960,
+    "expression": "((x0 AND x2) AND x3)"
+  },
+  {
+    "table": 41055,
+    "expression": "(NOT(x3) XOR (x0 AND x2))"
+  },
+  {
+    "table": 41088,
+    "expression": "((x0 AND x2) AND (x1 OR x3))"
+  },
+  {
+    "table": 41120,
+    "expression": "(x0 AND x2)"
+  },
+  {
+    "table": 41215,
+    "expression": "(NOT(x3) OR (x0 AND x2))"
+  },
+  {
+    "table": 42255,
+    "expression": "(NOT(x2) XOR (x0 AND x3))"
+  },
+  {
+    "table": 42325,
+    "expression": "(NOT(x0) XOR (x2 AND x3))"
+  },
+  {
+    "table": 42330,
+    "expression": "((x0 XOR x2) XOR x3)"
+  },
+  {
+    "table": 42390,
+    "expression": "((x0 XOR x2) XOR (x1 OR x3))"
+  },
+  {
+    "table": 42405,
+    "expression": "(NOT(x0) XOR x2)"
+  },
+  {
+    "table": 42410,
+    "expression": "((x0 XOR x2) XOR (x2 OR x3))"
+  },
+  {
+    "table": 42480,
+    "expression": "((x0 XOR x2) XOR (x0 OR x3))"
+  },
+  {
+    "table": 42662,
+    "expression": "((x0 XOR x2) XOR (x1 OR x2))"
+  },
+  {
+    "table": 43008,
+    "expression": "((x0 AND x3) AND (x1 OR x2))"
+  },
+  {
+    "table": 43176,
+    "expression": "(x0 AND (x1 OR x2))"
+  },
+  {
+    "table": 43350,
+    "expression": "((x0 XOR x3) XOR (x1 OR x2))"
+  },
+  {
+    "table": 43433,
+    "expression": "(NOT(x0) XOR (x1 OR x2))"
+  },
+  {
+    "table": 43520,
+    "expression": "(x0 AND x3)"
+  },
+  {
+    "table": 43605,
+    "expression": "(NOT(x0) XOR x3)"
+  },
+  {
+    "table": 43610,
+    "expression": "((x0 XOR x3) XOR (x2 OR x3))"
+  },
+  {
+    "table": 43622,
+    "expression": "((x0 XOR x3) XOR (x1 OR x3))"
+  },
+  {
+    "table": 43656,
+    "expression": "(x0 AND (x1 OR x3))"
+  },
+  {
+    "table": 43673,
+    "expression": "(NOT(x0) XOR (x1 OR x3))"
+  },
+  {
+    "table": 43680,
+    "expression": "(x0 AND (x2 OR x3))"
+  },
+  {
+    "table": 43685,
+    "expression": "(NOT(x0) XOR (x2 OR x3))"
+  },
+  {
+    "table": 43690,
+    "expression": "x0"
+  },
+  {
+    "table": 43775,
+    "expression": "(NOT(x3) OR x0)"
+  },
+  {
+    "table": 44815,
+    "expression": "(NOT(x2) OR (x0 AND x3))"
+  },
+  {
+    "table": 44880,
+    "expression": "((x0 XOR x3) XOR (x0 OR x2))"
+  },
+  {
+    "table": 44975,
+    "expression": "(NOT(x2) OR x0)"
+  },
+  {
+    "table": 45040,
+    "expression": "((x2 XOR x3) OR (x0 AND x2))"
+  },
+  {
+    "table": 45050,
+    "expression": "((x2 XOR x3) OR x0)"
+  },
+  {
+    "table": 46003,
+    "expression": "(NOT(x1) OR (x0 AND x2))"
+  },
+  {
+    "table": 46060,
+    "expression": "((x1 XOR x3) OR (x0 AND x2))"
+  },
+  {
+    "table": 46260,
+    "expression": "((x0 XOR x2) XOR (x0 OR x1))"
+  },
+  {
+    "table": 47923,
+    "expression": "(NOT(x1) OR (x0 AND x3))"
+  },
+  {
+    "table": 47940,
+    "expression": "((x0 XOR x3) XOR (x0 OR x1))"
+  },
+  {
+    "table": 48059,
+    "expression": "(NOT(x1) OR x0)"
+  },
+  {
+    "table": 48076,
+    "expression": "((x1 XOR x3) OR (x0 AND x1))"
+  },
+  {
+    "table": 48110,
+    "expression": "((x1 XOR x3) OR x0)"
+  },
+  {
+    "table": 48316,
+    "expression": "((x1 XOR x2) OR (x0 AND x1))"
+  },
+  {
+    "table": 48700,
+    "expression": "((x1 XOR x2) OR (x0 AND x3))"
+  },
+  {
+    "table": 48830,
+    "expression": "((x1 XOR x2) OR x0)"
+  },
+  {
+    "table": 49152,
+    "expression": "((x1 AND x2) AND x3)"
+  },
+  {
+    "table": 49215,
+    "expression": "(NOT(x3) XOR (x1 AND x2))"
+  },
+  {
+    "table": 49280,
+    "expression": "((x1 AND x2) AND (x0 OR x3))"
+  },
+  {
+    "table": 49344,
+    "expression": "(x1 AND x2)"
+  },
+  {
+    "table": 49407,
+    "expression": "(NOT(x3) OR (x1 AND x2))"
+  },
+  {
+    "table": 49935,
+    "expression": "(NOT(x2) XOR (x1 AND x3))"
+  },
+  {
+    "table": 49971,
+    "expression": "(NOT(x1) XOR (x2 AND x3))"
+  },
+  {
+    "table": 49980,
+    "expression": "((x1 XOR x2) XOR x3)"
+  },
+  {
+    "table": 50070,
+    "expression": "((x1 XOR x2) XOR (x0 OR x3))"
+  },
+  {
+    "table": 50115,
+    "expression": "(NOT(x1) XOR x2)"
+  },
+  {
+    "table": 50124,
+    "expression": "((x1 XOR x2) XOR (x2 OR x3))"
+  },
+  {
+    "table": 50160,
+    "expression": "((x1 XOR x2) XOR (x1 OR x3))"
+  },
+  {
+    "table": 50886,
+    "expression": "((x1 XOR x2) XOR (x0 OR x2))"
+  },
+  {
+    "table": 51200,
+    "expression": "((x1 AND x3) AND (x0 OR x2))"
+  },
+  {
+    "table": 51400,
+    "expression": "(x1 AND (x0 OR x2))"
+  },
+  {
+    "table": 51510,
+    "expression": "((x1 XOR x3) XOR (x0 OR x2))"
+  },
+  {
+    "table": 51657,
+    "expression": "(NOT(x1) XOR (x0 OR x2))"
+  },
+  {
+    "table": 52224,
+    "expression": "(x1 AND x3)"
+  },
+  {
+    "table": 52275,
+    "expression": "(NOT(x1) XOR x3)"
+  },
+  {
+    "table": 52284,
+    "expression": "((x1 XOR x3) XOR (x2 OR x3))"
+  },
+  {
+    "table": 52326,
+    "expression": "((x1 XOR x3) XOR (x0 OR x3))"
+  },
+  {
+    "table": 52360,
+    "expression": "(x1 AND (x0 OR x3))"
+  },
+  {
+    "table": 52377,
+    "expression": "(NOT(x1) XOR (x0 OR x3))"
+  },
+  {
+    "table": 52416,
+    "expression": "(x1 AND (x2 OR x3))"
+  },
+  {
+    "table": 52419,
+    "expression": "(NOT(x1) XOR (x2 OR x3))"
+  },
+  {
+    "table": 52428,
+    "expression": "x1"
+  },
+  {
+    "table": 52479,
+    "expression": "(NOT(x3) OR x1)"
+  },
+  {
+    "table": 53007,
+    "expression": "(NOT(x2) OR (x1 AND x3))"
+  },
+  {
+    "table": 53040,
+    "expression": "((x1 XOR x3) XOR (x1 OR x2))"
+  },
+  {
+    "table": 53199,
+    "expression": "(NOT(x2) OR x1)"
+  },
+  {
+    "table": 53232,
+    "expression": "((x2 XOR x3) OR (x1 AND x2))"
+  },
+  {
+    "table": 53244,
+    "expression": "((x2 XOR x3) OR x1)"
+  },
+  {
+    "table": 53970,
+    "expression": "((x1 XOR x2) XOR (x0 OR x1))"
+  },
+  {
+    "table": 54741,
+    "expression": "(NOT(x0) OR (x1 AND x2))"
+  },
+  {
+    "table": 54762,
+    "expression": "((x0 XOR x3) OR (x1 AND x2))"
+  },
+  {
+    "table": 56026,
+    "expression": "((x0 XOR x2) OR (x0 AND x1))"
+  },
+  {
+    "table": 56610,
+    "expression": "((x1 XOR x3) XOR (x0 OR x1))"
+  },
+  {
+    "table": 56661,
+    "expression": "(NOT(x0) OR (x1 AND x3))"
+  },
+  {
+    "table": 56746,
+    "expression": "((x0 XOR x3) OR (x0 AND x1))"
+  },
+  {
+    "table": 56797,
+    "expression": "(NOT(x0) OR x1)"
+  },
+  {
+    "table": 56814,
+    "expression": "((x0 XOR x3) OR x1)"
+  },
+  {
+    "table": 56922,
+    "expression": "((x0 XOR x2) OR (x1 AND x3))"
+  },
+  {
+    "table": 57054,
+    "expression": "((x0 XOR x2) OR x1)"
+  },
+  {
+    "table": 57344,
+    "expression": "((x0 OR x1) AND (x2 AND x3))"
+  },
+  {
+    "table": 57568,
+    "expression": "((x0 OR x1) AND x2)"
+  },
+  {
+    "table": 57630,
+    "expression": "((x2 XOR x3) XOR (x0 OR x1))"
+  },
+  {
+    "table": 57825,
+    "expression": "(NOT(x2) XOR (x0 OR x1))"
+  },
+  {
+    "table": 59110,
+    "expression": "((x0 XOR x1) OR (x0 AND x2))"
+  },
+  {
+    "table": 60096,
+    "expression": "((x0 AND x3) OR (x1 AND x2))"
+  },
+  {
+    "table": 60138,
+    "expression": "(x0 OR (x1 AND x2))"
+  },
+  {
+    "table": 60576,
+    "expression": "((x0 AND x2) OR (x1 AND x3))"
+  },
+  {
+    "table": 60652,
+    "expression": "((x0 AND x2) OR x1)"
+  },
+  {
+    "table": 60928,
+    "expression": "((x0 OR x1) AND x3)"
+  },
+  {
+    "table": 60945,
+    "expression": "(NOT(x3) XOR (x0 OR x1))"
+  },
+  {
+    "table": 61030,
+    "expression": "((x0 XOR x1) OR (x0 AND x3))"
+  },
+  {
+    "table": 61098,
+    "expression": "(x0 OR (x1 AND x3))"
+  },
+  {
+    "table": 61132,
+    "expression": "((x0 AND x3) OR x1)"
+  },
+  {
+    "table": 61152,
+    "expression": "((x0 OR x1) AND (x2 OR x3))"
+  },
+  {
+    "table": 61166,
+    "expression": "(x0 OR x1)"
+  },
+  {
+    "table": 61183,
+    "expression": "(NOT(x3) OR (x0 OR x1))"
+  },
+  {
+    "table": 61423,
+    "expression": "(NOT(x2) OR (x0 OR x1))"
+  },
+  {
+    "table": 61438,
+    "expression": "((x2 XOR x3) OR (x0 OR x1))"
+  },
+  {
+    "table": 61440,
+    "expression": "(x2 AND x3)"
+  },
+  {
+    "table": 61455,
+    "expression": "(NOT(x2) XOR x3)"
+  },
+  {
+    "table": 61500,
+    "expression": "((x2 XOR x3) XOR (x1 OR x3))"
+  },
+  {
+    "table": 61530,
+    "expression": "((x2 XOR x3) XOR (x0 OR x3))"
+  },
+  {
+    "table": 61600,
+    "expression": "(x2 AND (x0 OR x3))"
+  },
+  {
+    "table": 61605,
+    "expression": "(NOT(x2) XOR (x0 OR x3))"
+  },
+  {
+    "table": 61632,
+    "expression": "(x2 AND (x1 OR x3))"
+  },
+  {
+    "table": 61635,
+    "expression": "(NOT(x2) XOR (x1 OR x3))"
+  },
+  {
+    "table": 61680,
+    "expression": "x2"
+  },
+  {
+    "table": 61695,
+    "expression": "(NOT(x3) OR x2)"
+  },
+  {
+    "table": 62220,
+    "expression": "((x2 XOR x3) XOR (x1 OR x2))"
+  },
+  {
+    "table": 62259,
+    "expression": "(NOT(x1) OR (x2 AND x3))"
+  },
+  {
+    "table": 62412,
+    "expression": "((x1 XOR x3) OR (x1 AND x2))"
+  },
+  {
+    "table": 62451,
+    "expression": "(NOT(x1) OR x2)"
+  },
+  {
+    "table": 62460,
+    "expression": "((x1 XOR x3) OR x2)"
+  },
+  {
+    "table": 62730,
+    "expression": "((x2 XOR x3) XOR (x0 OR x2))"
+  },
+  {
+    "table": 62805,
+    "expression": "(NOT(x0) OR (x2 AND x3))"
+  },
+  {
+    "table": 62890,
+    "expression": "((x0 XOR x3) OR (x0 AND x2))"
+  },
+  {
+    "table": 62965,
+    "expression": "(NOT(x0) OR x2)"
+  },
+  {
+    "table": 62970,
+    "expression": "((x0 XOR x3) OR x2)"
+  },
+  {
+    "table": 63078,
+    "expression": "((x0 XOR x1) OR (x2 AND x3))"
+  },
+  {
+    "table": 63222,
+    "expression": "((x0 XOR x1) OR x2)"
+  },
+  {
+    "table": 63624,
+    "expression": "((x0 AND x1) OR (x2 AND x3))"
+  },
+  {
+    "table": 63736,
+    "expression": "((x0 AND x1) OR x2)"
+  },
+  {
+    "table": 64000,
+    "expression": "((x0 OR x2) AND x3)"
+  },
+  {
+    "table": 64005,
+    "expression": "(NOT(x3) XOR (x0 OR x2))"
+  },
+  {
+    "table": 64090,
+    "expression": "((x0 XOR x2) OR (x0 AND x3))"
+  },
+  {
+    "table": 64170,
+    "expression": "(x0 OR (x2 AND x3))"
+  },
+  {
+    "table": 64200,
+    "expression": "((x0 OR x2) AND (x1 OR x3))"
+  },
+  {
+    "table": 64240,
+    "expression": "((x0 AND x3) OR x2)"
+  },
+  {
+    "table": 64250,
+    "expression": "(x0 OR x2)"
+  },
+  {
+    "table": 64255,
+    "expression": "(NOT(x3) OR (x0 OR x2))"
+  },
+  {
+    "table": 64507,
+    "expression": "(NOT(x1) OR (x0 OR x2))"
+  },
+  {
+    "table": 64510,
+    "expression": "((x1 XOR x3) OR (x0 OR x2))"
+  },
+  {
+    "table": 64512,
+    "expression": "((x1 OR x2) AND x3)"
+  },
+  {
+    "table": 64515,
+    "expression": "(NOT(x3) XOR (x1 OR x2))"
+  },
+  {
+    "table": 64572,
+    "expression": "((x1 XOR x2) OR (x1 AND x3))"
+  },
+  {
+    "table": 64680,
+    "expression": "((x1 OR x2) AND (x0 OR x3))"
+  },
+  {
+    "table": 64716,
+    "expression": "(x1 OR (x2 AND x3))"
+  },
+  {
+    "table": 64752,
+    "expression": "((x1 AND x3) OR x2)"
+  },
+  {
+    "table": 64764,
+    "expression": "(x1 OR x2)"
+  },
+  {
+    "table": 64767,
+    "expression": "(NOT(x3) OR (x1 OR x2))"
+  },
+  {
+    "table": 65021,
+    "expression": "(NOT(x0) OR (x1 OR x2))"
+  },
+  {
+    "table": 65022,
+    "expression": "((x0 XOR x3) OR (x1 OR x2))"
+  },
+  {
+    "table": 65262,
+    "expression": "((x0 OR x1) OR (x2 AND x3))"
+  },
+  {
+    "table": 65274,
+    "expression": "((x1 AND x3) OR (x0 OR x2))"
+  },
+  {
+    "table": 65276,
+    "expression": "((x0 AND x3) OR (x1 OR x2))"
+  },
+  {
+    "table": 65278,
+    "expression": "((x0 OR x1) OR x2)"
+  },
+  {
+    "table": 65280,
+    "expression": "x3"
+  },
+  {
+    "table": 65295,
+    "expression": "(NOT(x2) OR x3)"
+  },
+  {
+    "table": 65331,
+    "expression": "(NOT(x1) OR x3)"
+  },
+  {
+    "table": 65340,
+    "expression": "((x1 XOR x2) OR x3)"
+  },
+  {
+    "table": 65365,
+    "expression": "(NOT(x0) OR x3)"
+  },
+  {
+    "table": 65370,
+    "expression": "((x0 XOR x2) OR x3)"
+  },
+  {
+    "table": 65382,
+    "expression": "((x0 XOR x1) OR x3)"
+  },
+  {
+    "table": 65416,
+    "expression": "((x0 AND x1) OR x3)"
+  },
+  {
+    "table": 65440,
+    "expression": "((x0 AND x2) OR x3)"
+  },
+  {
+    "table": 65450,
+    "expression": "(x0 OR x3)"
+  },
+  {
+    "table": 65455,
+    "expression": "(NOT(x2) OR (x0 OR x3))"
+  },
+  {
+    "table": 65467,
+    "expression": "(NOT(x1) OR (x0 OR x3))"
+  },
+  {
+    "table": 65470,
+    "expression": "((x1 XOR x2) OR (x0 OR x3))"
+  },
+  {
+    "table": 65472,
+    "expression": "((x1 AND x2) OR x3)"
+  },
+  {
+    "table": 65484,
+    "expression": "(x1 OR x3)"
+  },
+  {
+    "table": 65487,
+    "expression": "(NOT(x2) OR (x1 OR x3))"
+  },
+  {
+    "table": 65501,
+    "expression": "(NOT(x0) OR (x1 OR x3))"
+  },
+  {
+    "table": 65502,
+    "expression": "((x0 XOR x2) OR (x1 OR x3))"
+  },
+  {
+    "table": 65514,
+    "expression": "((x1 AND x2) OR (x0 OR x3))"
+  },
+  {
+    "table": 65516,
+    "expression": "((x0 AND x2) OR (x1 OR x3))"
+  },
+  {
+    "table": 65518,
+    "expression": "((x0 OR x1) OR x3)"
+  },
+  {
+    "table": 65520,
+    "expression": "(x2 OR x3)"
+  },
+  {
+    "table": 65523,
+    "expression": "(NOT(x1) OR (x2 OR x3))"
+  },
+  {
+    "table": 65525,
+    "expression": "(NOT(x0) OR (x2 OR x3))"
+  },
+  {
+    "table": 65526,
+    "expression": "((x0 XOR x1) OR (x2 OR x3))"
+  },
+  {
+    "table": 65528,
+    "expression": "((x0 AND x1) OR (x2 OR x3))"
+  },
+  {
+    "table": 65530,
+    "expression": "((x0 OR x2) OR x3)"
+  },
+  {
+    "table": 65532,
+    "expression": "((x1 OR x2) OR x3)"
+  },
+  {
+    "table": 65534,
+    "expression": "((x0 OR x1) OR (x2 OR x3))"
+  },
+  {
+    "table": 65535,
+    "expression": "(NOT(x0) OR x0)"
+  }
+]

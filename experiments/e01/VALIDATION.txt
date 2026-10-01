@@ -1,0 +1,6 @@
+2026-09-30
+13 unittest tests passed.
+Independent replay audit: 4000 trajectories, 2000 paired problems, source hashes and primary means verified.
+CLI demo completed successfully.
+Grammar: 429 unique functions; 428 distinct targets sampled.
+No physical Mac/Windows test performed.

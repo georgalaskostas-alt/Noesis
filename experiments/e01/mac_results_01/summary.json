@@ -1,0 +1,86 @@
+{
+  "methods": {
+    "random": {
+      "episodes": 2000,
+      "failures": 0,
+      "mean_queries_successes": 10.887,
+      "median_queries_successes": 11.0,
+      "mean_selection_evaluations_successes": 0,
+      "mean_update_evaluations_successes": 902.566,
+      "mean_agent_ms_successes": 0.0797387804632308,
+      "checkpoints": {
+        "1": {
+          "accuracy": 0.5734,
+          "brier": 0.23982588941610627
+        },
+        "2": {
+          "accuracy": 0.5922678571428571,
+          "brier": 0.23515159148543907
+        },
+        "4": {
+          "accuracy": 0.6401041666666667,
+          "brier": 0.22010024533446268
+        },
+        "8": {
+          "accuracy": 0.79021875,
+          "brier": 0.12733296190981172
+        }
+      }
+    },
+    "information": {
+      "episodes": 2000,
+      "failures": 0,
+      "mean_queries_successes": 8.8715,
+      "median_queries_successes": 9.0,
+      "mean_selection_evaluations_successes": 12877.703,
+      "mean_update_evaluations_successes": 857.9535,
+      "mean_agent_ms_successes": 0.8995169877016451,
+      "checkpoints": {
+        "1": {
+          "accuracy": 0.5764333333333334,
+          "brier": 0.23789769734173916
+        },
+        "2": {
+          "accuracy": 0.5992142857142857,
+          "brier": 0.23288547765135187
+        },
+        "4": {
+          "accuracy": 0.6445625,
+          "brier": 0.2161162425185821
+        },
+        "8": {
+          "accuracy": 0.8590625,
+          "brier": 0.07352239583333334
+        }
+      }
+    }
+  },
+  "unique_target_functions": 428,
+  "mean_paired_difference_queries": 2.0155000000000003,
+  "paired_difference_95pct_seed_bootstrap": [
+    1.909,
+    2.1215
+  ],
+  "relative_query_reduction_pct": 18.512905299898975,
+  "engineering_gate_passed": true,
+  "memorizer_checkpoints": {
+    "1": {
+      "accuracy": 0.5,
+      "brier": 0.25
+    },
+    "2": {
+      "accuracy": 0.5,
+      "brier": 0.25
+    },
+    "4": {
+      "accuracy": 0.5,
+      "brier": 0.25
+    },
+    "8": {
+      "accuracy": 0.5,
+      "brier": 0.25
+    }
+  },
+  "inference_scope": "This finite grammar and sampling procedure only; seeds are bootstrap units; repeated functions are not independent new tasks.",
+  "elapsed_seconds_including_evaluation_and_bootstrap": 4.662279833006323
+}

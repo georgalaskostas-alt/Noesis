@@ -1,0 +1,4 @@
+15 tests passed before the frozen experiment.
+Independent audit passed: 100 models, 12000 traces, splits, priors, validation choices, paired targets, source hashes and primary means.
+Default saved-model CLI demo completed: tie 8/8, as validation chose uniform for seed 0.
+No post-result changes to experimental source/config.
