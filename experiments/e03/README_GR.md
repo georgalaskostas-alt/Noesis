@@ -24,3 +24,23 @@ Stress tests: shifted και neutral.
 ## Scientific scope
 
 Το experiment παραμένει στην πεπερασμένη synthetic grammar του E01/E02. Δεν αποτελεί απόδειξη γενικής νοημοσύνης ή ανθρώπινης γνωστικής λειτουργίας.
+
+
+## Smoke run 02 diagnostic
+
+Small preflight run: 5 seeds × 10 test tasks/condition.
+
+Observed mean queries:
+
+| Condition | uniform | fixed | adaptive | discounting |
+|---|---:|---:|---:|---:|
+| matched | 8.92 | 8.60 | 8.64 | 8.64 |
+| shifted | 8.98 | 9.82 | 9.40 | 9.48 |
+| neutral | 8.84 | 9.22 | 9.34 | 9.26 |
+
+Adaptive trust trajectories:
+- matched: 0.908, 0.910, 0.909, 0.891 at steps 1/2/4/8
+- shifted: 0.884, 0.863, 0.828, 0.797
+- neutral: 0.892, 0.881, 0.865, 0.834
+
+Interpretation: evidence-weighted trust detects shift directionally and mitigates part of the fixed-prior harm, but the response is too conservative to recover the uniform baseline under shifted conditions. This smoke run is diagnostic only and is not a confirmatory result.
