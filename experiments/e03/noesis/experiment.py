@@ -64,12 +64,23 @@ def summarize(rows,cfg):
         for method in cfg["methods"]:
             rs=[r for r in rows if r["condition"]==condition and r["method"]==method]
             failures=sum(r["failed"] for r in rs)
-            methods[method]={
+            method_summary={
                 "episodes":len(rs),"failures":failures,
                 "mean_queries":st.mean((r["identified_at"] or 16) for r in rs),
                 "mean_final_trust":(st.mean(r["trace"][-1]["trust_after"] for r in rs)
                                     if method in ("adaptive","discounting") else None),
             }
+            if method in ("adaptive","discounting"):
+                method_summary["mean_trust_by_step"]={
+                    str(step): st.mean(
+                        next((t["trust_after"] for t in row["trace"] if t["step"]==step),
+                             row["trace"][-1]["trust_after"])
+                        for row in rs)
+                    for step in (1,2,4,8)
+                }
+                method_summary["fraction_final_trust_below_0_5"]=st.mean(
+                    float(row["trace"][-1]["trust_after"] < .5) for row in rs)
+            methods[method]=method_summary
         comparisons={}
         for challenger in ("adaptive","discounting"):
             seed_deltas=[]
