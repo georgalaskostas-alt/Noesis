@@ -62,14 +62,19 @@ class MixtureLearner(WeightedLearner):
     def observe(self, x, y):
         learned_p = self._predictive_y(x, y, self.learned_prior)
         uniform_p = self._predictive_y(x, y, self.uniform_prior)
+        trust_before = self.trust
+        predictive_before = trust_before*learned_p + (1-trust_before)*uniform_p
         eps = 1e-15
         self.log_bayes_factor += math.log(max(learned_p,eps)) - math.log(max(uniform_p,eps))
         # Stable logistic conversion of cumulative evidence.
         z = max(-60.0, min(60.0, self.log_bayes_factor))
         self.trust = 1.0 / (1.0 + math.exp(-z))
         self.last_predictive = {
-            "learned": learned_p, "uniform": uniform_p,
-            "observed_probability": self.trust*learned_p + (1-self.trust)*uniform_p,
+            "learned": learned_p,
+            "uniform": uniform_p,
+            "mixture_before_update": predictive_before,
+            "trust_before_update": trust_before,
+            "trust_after_update": self.trust,
         }
         super().observe(x,y)
 
