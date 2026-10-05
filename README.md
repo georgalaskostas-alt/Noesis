@@ -58,3 +58,9 @@ Corrected double-conditioning in adaptive trust and added a static-mixture contr
 The full diagnostic rerun passes 7 tests and a 30,000-trajectory audit.
 Adaptive and static-mixture actions are identical; no extra adaptive capability is demonstrated.
 See [corrected results](experiments/e03/results_corrected_20261005/REPORT.md).
+
+## E04 — Persistent stream memory
+
+[Experiment and commands](experiments/e04/README_GR.md) · [Results](experiments/e04/results_01/REPORT_GR.md)
+
+50 new seeds; 8,000 paired stream tasks; 32,000 agent episodes; 10 tests and independent artifact audit. Fixed recency weighting improves over cumulative memory in the changing stream, but cumulative memory wins in the stable stream. This is a synthetic forgetting-rule experiment, not a learned change detector.

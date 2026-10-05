@@ -1,0 +1,42 @@
+{
+  "config": {
+    "seed_start": 2000,
+    "seeds": 50,
+    "train_tasks": 100,
+    "phase_length": 20,
+    "streams": {
+      "stable": [
+        "matched",
+        "matched",
+        "matched",
+        "matched"
+      ],
+      "switching": [
+        "matched",
+        "shifted",
+        "neutral",
+        "matched"
+      ]
+    },
+    "methods": [
+      "uniform",
+      "frozen",
+      "cumulative",
+      "recency"
+    ],
+    "uniform_mixture": 0.1,
+    "recency_decay": 0.9,
+    "bootstrap_repeats": 10000
+  },
+  "python": "3.12.14",
+  "source_sha256": {
+    "noesis/__init__.py": "cab8a48344fd1314b43fdb8cddaa74b9724f465c1fa12bfd713ab0054b92688a",
+    "noesis/__main__.py": "f91c4ca53a88e177f0e28034eb6c73d1dfb73729b3605f9883b193e223e3732d",
+    "noesis/core.py": "ee32adabc3c7396caf6e8b435f824c94a67fbc2e14078f356518db65e27d7d9c",
+    "noesis/experiment.py": "b68858fb70f5809fde918226a030146234f56717b71f13e47dc976a2ebd2aaad",
+    "noesis/memory.py": "c1f3534b24a5e3b99f09819c88d6a0ff4297833c391cc0e37bbb4f4cbc31419b",
+    "noesis/transfer.py": "5bb122679c23c7f68f55fbf612590d9085943a4f851d3965dc765f3b495ebe6b",
+    "tests/test_memory.py": "8a5f39bd85ca5a0ff0e83afff9d3f422b52694e7b875eea54d4ea97e8ad8fc8e",
+    "PROTOCOL.md": "eaeac035859097f7bd14e83555fb0bca9bea6e9d26fe0278e1881bb35eb324d3"
+  }
+}
