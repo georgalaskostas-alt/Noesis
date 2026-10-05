@@ -26,7 +26,9 @@ Stress tests: shifted και neutral.
 Το experiment παραμένει στην πεπερασμένη synthetic grammar του E01/E02. Δεν αποτελεί απόδειξη γενικής νοημοσύνης ή ανθρώπινης γνωστικής λειτουργίας.
 
 
-## Smoke run 02 diagnostic
+## Historical smoke run 02 — superseded implementation
+
+These numbers describe the old double-conditioning implementation, not the corrected Bayesian mixture. They must not be used as evidence for the corrected model.
 
 Small preflight run: 5 seeds × 10 test tasks/condition.
 
@@ -44,3 +46,41 @@ Adaptive trust trajectories:
 - neutral: 0.892, 0.881, 0.865, 0.834
 
 Interpretation: evidence-weighted trust detects shift directionally and mitigates part of the fixed-prior harm, but the response is too conservative to recover the uniform baseline under shifted conditions. This smoke run is diagnostic only and is not a confirmatory result.
+
+
+## Correction 2026-10-05
+
+The old implementation updated the model trust from conditional predictive evidence,
+then mixed the original priors and conditioned that mixture again. This counted the
+surviving-set evidence twice. `effective_prior()` now mixes the separately normalized
+posteriors over surviving hypotheses using the updated model trust.
+
+For deterministic observations and full-support priors this Bayesian model average
+is exactly equivalent to a single initial prior `0.9 * learned + 0.1 * uniform`,
+subsequently conditioned on observations. The new `static_mix` arm and regression
+test check that equivalence. This is not evidence of an additional metacognitive
+capability. The `discounting` control mixes conditional posteriors using a decaying
+weight; its observation probability is now logged before the weight changes.
+Repeated observations do not decay trust again; invalid or contradictory input is
+rejected before changing the learner state.
+
+`adaptive_initial_trust` is the operative model weight. The legacy
+`adaptive_uniform_model_prior` argument remains accepted for compatibility but is
+unused; the uniform model weight is `1 - adaptive_initial_trust`.
+`log_bayes_factor` is a legacy field name storing log posterior model odds,
+including the initial odds. It is not a pure log Bayes factor.
+
+Run from `experiments/e03`:
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 -m noesis --config config.json --out my_corrected_run
+python3 verify_corrected.py my_corrected_run
+```
+
+The runner saves configuration, Python version, source hashes, fitted models,
+splits, reconstructed training/validation tables, trajectories and summary.
+Training and validation use 16 observations per task; their cost is separate
+from reported test query counts. The 100-seed rerun reuses previously examined
+seeds and is diagnostic, not a fresh confirmatory evaluation. Bootstrap intervals
+use seeds as units; repeated functions are not independent new tasks.

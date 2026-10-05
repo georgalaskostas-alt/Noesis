@@ -1,4 +1,6 @@
 import argparse
+import hashlib
+import platform
 import json
 import math
 import random
@@ -18,6 +20,10 @@ def make_agent(method,rules,learned,seed,cfg):
         return WeightedLearner(rules,uniform_prior(rules),seed)
     if method=="fixed":
         return WeightedLearner(rules,learned,seed)
+    if method=="static_mix":
+        a=cfg["adaptive_initial_trust"]
+        prior={t:a*p+(1-a)/len(learned) for t,p in learned.items()}
+        return WeightedLearner(rules,prior,seed)
     if method=="adaptive":
         return MixtureLearner(rules,learned,seed,cfg["adaptive_initial_trust"],
                               cfg["adaptive_uniform_model_prior"])
@@ -104,6 +110,12 @@ def run(cfg,out_path):
     if out.exists():
         raise FileExistsError(f"{out} already exists; use a new output directory")
     out.mkdir(parents=True)
+    sources={str(p):hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in sorted(Path("noesis").glob("*.py"))}
+    (out/"manifest.json").write_text(json.dumps({"config":cfg,"source_sha256":sources,
+        "python":platform.python_version(),"bootstrap_unit":"seed",
+        "scope":"Finite grammar only; previously examined seeds, diagnostic rerun."},indent=2))
+    (out/"models").mkdir()
     rules=grammar(cfg["depth"])
     rows=[]
     with (out/"episodes.jsonl").open("w") as log:
@@ -113,7 +125,11 @@ def run(cfg,out_path):
             valid_targets=sample_tasks(parts["validation"],cfg["validation_tasks"],random.Random(200000+seed),"matched")
             training,_=collect_experience(train_targets)
             validation,_=collect_experience(valid_targets)
-            _,learned,_=select_mixture(rules,training,validation,tuple(cfg["mixtures"]))
+            mixture,learned,scores=select_mixture(rules,training,validation,tuple(cfg["mixtures"]))
+            (out/"models"/f"seed_{seed:03d}.json").write_text(json.dumps({
+                "mixture":mixture,"prior":learned,"validation_scores":scores,
+                "splits":{k:[r.table for r in v] for k,v in parts.items()},
+                "training":training,"validation":validation},sort_keys=True))
             for ci,condition in enumerate(cfg["conditions"]):
                 targets=sample_tasks(parts["test"],cfg["test_tasks_per_condition"],
                                      random.Random(300000+seed*10+ci),condition)

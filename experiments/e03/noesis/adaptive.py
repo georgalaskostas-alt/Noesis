@@ -1,6 +1,6 @@
 """Online prior-trust policies for NOESIS E03."""
 import math
-from .core import INPUTS, ModelMismatch, binary_entropy, output
+from .core import INPUTS, ModelMismatch, binary_entropy, output, check_input
 from .transfer import WeightedLearner
 
 
@@ -34,8 +34,17 @@ class MixtureLearner(WeightedLearner):
 
     def effective_prior(self):
         a = self.trust
-        return _normalize({t: a*self.learned_prior[t] + (1-a)*self.uniform_prior[t]
-                           for t in self.learned_prior})
+        learned = _normalize({t: self.learned_prior[t] for t in self.candidates})
+        uniform = _normalize({t: self.uniform_prior[t] for t in self.candidates})
+        return {t: a*learned[t] + (1-a)*uniform[t] for t in self.candidates}
+
+    def _new_observation(self, x, y):
+        check_input(x)
+        if type(y) is not int or y not in (0, 1):
+            raise ValueError("Output must be integer 0 or 1")
+        if not any(output(t, x) == y for t in self.candidates):
+            raise ModelMismatch("Observation contradicts candidate model")
+        return x not in self.observed
 
     def _predictive_y(self, x, y, prior):
         mass = sum(prior[t] for t in self.candidates)
@@ -60,6 +69,8 @@ class MixtureLearner(WeightedLearner):
             self.prior = old
 
     def observe(self, x, y):
+        if not self._new_observation(x, y):
+            return
         learned_p = self._predictive_y(x, y, self.learned_prior)
         uniform_p = self._predictive_y(x, y, self.uniform_prior)
         trust_before = self.trust
@@ -88,12 +99,15 @@ class DiscountingLearner(MixtureLearner):
         self.discount_rate = discount_rate
 
     def observe(self, x, y):
+        if not self._new_observation(x, y):
+            return
         learned_p = self._predictive_y(x, y, self.learned_prior)
         uniform_p = self._predictive_y(x, y, self.uniform_prior)
+        trust_before = self.trust
         self.trust *= self.discount_rate
         self.last_predictive = {
             "learned": learned_p, "uniform": uniform_p,
-            "observed_probability": self.trust*learned_p + (1-self.trust)*uniform_p,
+            "observed_probability": trust_before*learned_p + (1-trust_before)*uniform_p,
         }
         # Bypass evidence update in MixtureLearner.
         WeightedLearner.observe(self,x,y)

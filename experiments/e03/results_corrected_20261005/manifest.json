@@ -1,0 +1,41 @@
+{
+  "config": {
+    "seeds": 100,
+    "train_tasks": 200,
+    "validation_tasks": 40,
+    "test_tasks_per_condition": 20,
+    "mixtures": [
+      0.1,
+      0.5,
+      1.0
+    ],
+    "conditions": [
+      "matched",
+      "shifted",
+      "neutral"
+    ],
+    "methods": [
+      "uniform",
+      "fixed",
+      "static_mix",
+      "adaptive",
+      "discounting"
+    ],
+    "adaptive_initial_trust": 0.9,
+    "adaptive_uniform_model_prior": 0.1,
+    "discount_rate": 0.85,
+    "bootstrap_repeats": 10000,
+    "depth": 2
+  },
+  "source_sha256": {
+    "noesis/__init__.py": "8c5c912fbeadb2e47185032e0336ad188355e9e94d45190cf867a49884351d95",
+    "noesis/__main__.py": "f91c4ca53a88e177f0e28034eb6c73d1dfb73729b3605f9883b193e223e3732d",
+    "noesis/adaptive.py": "d152f58aaad258be4166cfdc4647fdd55d0bf2b465fe6d81608941359fdae854",
+    "noesis/core.py": "ee32adabc3c7396caf6e8b435f824c94a67fbc2e14078f356518db65e27d7d9c",
+    "noesis/experiment.py": "ff40e65a3ca69f6336c5de8a8e844758571128235f649ab919619ade8fcc35ec",
+    "noesis/transfer.py": "5bb122679c23c7f68f55fbf612590d9085943a4f851d3965dc765f3b495ebe6b"
+  },
+  "python": "3.12.14",
+  "bootstrap_unit": "seed",
+  "scope": "Finite grammar only; previously examined seeds, diagnostic rerun."
+}

@@ -51,3 +51,10 @@ Research claims must be backed by reproducible runs, saved metrics, and explicit
 ## Status
 
 E01 and E02 were previously validated locally. Detailed E03 trajectory logs were not yet finalized; the next step is to reconstruct and package E03 as a reproducible experiment.
+
+## E03 correction, 2026-10-05
+
+Corrected double-conditioning in adaptive trust and added a static-mixture control.
+The full diagnostic rerun passes 7 tests and a 30,000-trajectory audit.
+Adaptive and static-mixture actions are identical; no extra adaptive capability is demonstrated.
+See [corrected results](experiments/e03/results_corrected_20261005/REPORT.md).
