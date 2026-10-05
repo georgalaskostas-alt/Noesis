@@ -1,0 +1,14 @@
+{
+  "seed_start": 2000,
+  "seeds": 50,
+  "train_tasks": 100,
+  "phase_length": 20,
+  "streams": {
+    "stable": ["matched", "matched", "matched", "matched"],
+    "switching": ["matched", "shifted", "neutral", "matched"]
+  },
+  "methods": ["uniform", "frozen", "cumulative", "recency"],
+  "uniform_mixture": 0.1,
+  "recency_decay": 0.9,
+  "bootstrap_repeats": 10000
+}
