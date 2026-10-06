@@ -40,6 +40,30 @@ class AdaptiveTrustTests(unittest.TestCase):
             a.observe(x,output(target,x))
             self.assertIn(target,a.candidates)
 
+    def test_temperature_amplifies_same_evidence_direction(self):
+        p=fit_prior(self.rules,[0]*200,.1)
+        slow=MixtureLearner(self.rules,p,1,.9,.1,.5,0)
+        fast=MixtureLearner(self.rules,p,1,.9,.1,4.0,0)
+        choices=[]
+        for x in range(16):
+            for y in (0,1):
+                lp=slow._predictive_y(x,y,slow.learned_prior)
+                up=slow._predictive_y(x,y,slow.uniform_prior)
+                if lp < up:
+                    choices.append((lp/up,x,y))
+        _,x,y=min(choices)
+        slow.observe(x,y); fast.observe(x,y)
+        self.assertLess(fast.trust,slow.trust)
+
+    def test_trust_floor_is_respected(self):
+        p=fit_prior(self.rules,[0]*200,.1)
+        a=MixtureLearner(self.rules,p,1,.9,.1,4.0,.25)
+        target=self.rules[-1].table
+        for x in range(16):
+            if len(a.candidates)==1: break
+            a.observe(x,output(target,x))
+            self.assertGreaterEqual(a.trust,.25)
+
     def test_discounting_is_monotone(self):
         p=fit_prior(self.rules,[0]*10,.1)
         a=DiscountingLearner(self.rules,p,1,.8,.5)
