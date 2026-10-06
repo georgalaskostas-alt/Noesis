@@ -26,7 +26,9 @@ def make_agent(method,rules,learned,seed,cfg):
         return WeightedLearner(rules,prior,seed)
     if method=="adaptive":
         return MixtureLearner(rules,learned,seed,cfg["adaptive_initial_trust"],
-                              cfg["adaptive_uniform_model_prior"])
+                              cfg["adaptive_uniform_model_prior"],
+                              cfg.get("adaptive_evidence_temperature",1.0),
+                              cfg.get("adaptive_trust_floor",0.0))
     if method=="discounting":
         return DiscountingLearner(rules,learned,seed,cfg["adaptive_initial_trust"],
                                   cfg["discount_rate"])
