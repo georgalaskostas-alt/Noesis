@@ -6,7 +6,7 @@
   "mixtures": [
     0.1,
     0.5,
-    1.0
+    1
   ],
   "conditions": [
     "matched",
@@ -24,5 +24,32 @@
   "adaptive_uniform_model_prior": 0.1,
   "discount_rate": 0.85,
   "bootstrap_repeats": 10000,
-  "depth": 2
+  "depth": 2,
+  "adaptive_evidence_temperature": 1,
+  "adaptive_trust_floor": 0,
+  "calibration": {
+    "seeds": 40,
+    "tasks_per_condition": 20,
+    "conditions": [
+      "matched",
+      "shifted",
+      "neutral"
+    ],
+    "initial_trust_grid": [
+      0.6,
+      0.75,
+      0.9
+    ],
+    "evidence_temperature_grid": [
+      0.5,
+      1,
+      2,
+      4
+    ],
+    "trust_floor_grid": [
+      0,
+      0.1,
+      0.25
+    ]
+  }
 }
