@@ -19,16 +19,22 @@ class MixtureLearner(WeightedLearner):
     elimination remains purely evidence based, as in E02.
     """
     def __init__(self, rules, learned_prior, seed, initial_trust=.9,
-                 uniform_model_prior=.1):
+                 uniform_model_prior=.1, evidence_temperature=1.0, trust_floor=0.0):
         if not 0 < initial_trust < 1:
             raise ValueError("initial_trust must be in (0,1)")
         if not 0 < uniform_model_prior < 1:
             raise ValueError("uniform_model_prior must be in (0,1)")
+        if not evidence_temperature > 0:
+            raise ValueError("evidence_temperature must be positive")
+        if not 0 <= trust_floor < 1:
+            raise ValueError("trust_floor must be in [0,1)")
         super().__init__(rules, learned_prior, seed)
         self.learned_prior = dict(self.prior)
         self.uniform_prior = {t: 1 / len(self.candidates) for t in self.candidates}
         self.trust = initial_trust
         self.uniform_model_prior = uniform_model_prior
+        self.evidence_temperature = evidence_temperature
+        self.trust_floor = trust_floor
         self.log_bayes_factor = math.log(initial_trust / (1-initial_trust))
         self.last_predictive = None
 
@@ -76,10 +82,12 @@ class MixtureLearner(WeightedLearner):
         trust_before = self.trust
         predictive_before = trust_before*learned_p + (1-trust_before)*uniform_p
         eps = 1e-15
-        self.log_bayes_factor += math.log(max(learned_p,eps)) - math.log(max(uniform_p,eps))
+        self.log_bayes_factor += self.evidence_temperature * (
+            math.log(max(learned_p,eps)) - math.log(max(uniform_p,eps)))
         # Stable logistic conversion of cumulative evidence.
         z = max(-60.0, min(60.0, self.log_bayes_factor))
-        self.trust = 1.0 / (1.0 + math.exp(-z))
+        raw_trust = 1.0 / (1.0 + math.exp(-z))
+        self.trust = max(self.trust_floor, raw_trust)
         self.last_predictive = {
             "learned": learned_p,
             "uniform": uniform_p,
