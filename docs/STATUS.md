@@ -3,7 +3,7 @@
 Updated: 2026-10-07
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — second leakage audit failed; stricter motif-root holdout patched
+State: ACTIVE — first leakage-free E06.2 pilot obtained; benchmark redesign required
 
 ## What has been completed
 
@@ -35,38 +35,32 @@ State: ACTIVE — second leakage audit failed; stricter motif-root holdout patch
 
 ## Current next action
 
-Run the patched leakage-controlled E06.2 pilot:
+Redesign E06.2 into a purpose-built compositional benchmark:
+1. construct reusable parameterized motifs;
+2. generate training programs containing those motifs as proper subprograms;
+3. generate test programs with novel complete roots/compositions by construction;
+4. guarantee exact semantic and root-structural holdout;
+5. target at least 200 clean test programs per seed;
+6. compare learned library vs no-library, shuffled-library and random-library controls;
+7. only after the benchmark is frozen run >=50 seeds and paired bootstrap CI.
 
-    cd ~/Projects/Noesis/experiments/e06
-    git pull origin research/e06-program-synthesis
-    python3 run_abstraction_experiment.py
+Do not weaken the leakage rule to increase sample size.
 
-Required immediate checks:
-- root_leakage must equal 0;
-- enough held-out test programs must remain to make the protocol useful.
-If the clean pool collapses, redesign the task split/generator instead of weakening
-the leakage rule.
-
-## If the patched pilot is positive
+## If the redesigned pilot is positive
 
 Do NOT declare success. Next:
-1. add shuffled-library and random-library controls;
-2. add explicit semantic + structural leakage assertions/tests;
+1. freeze generator/configuration;
+2. run no-library, shuffled-library and random-library controls;
 3. run >=50 independent seeds;
 4. compute paired bootstrap 95% CI;
 5. inspect distribution and worst-case harm;
-6. freeze protocol and document gate;
-7. only then move to E07 abstraction-guided active reasoning.
+6. document gate decision;
+7. move to E07 only if the effect survives controls.
 
-## If the patched pilot is zero/negative
+## If the redesigned pilot is zero/negative
 
-Keep the result. Diagnose whether:
-- motifs are too generic;
-- variable-renaming invariance destroys useful binding information;
-- description_cost reward is poorly calibrated;
-- the task generator lacks compositional structure;
-- motifs need parameterized arguments/macros rather than tree-shape counts.
-Revise the hypothesis, not the success criterion.
+Keep the result and diagnose motif parameterization, task depth, binding and
+description-cost assumptions. Revise the mechanism, not the success criterion.
 
 ## Current scientific claims allowed
 
@@ -74,13 +68,15 @@ Allowed:
 - the synthesis engine functions on its controlled Boolean grammar;
 - whole-program frequency reuse failed its pilot;
 - structural motifs can be extracted mechanically;
-- the first abstraction pilot was confounded by structural root overlap.
+- the first two abstraction pilots were invalid due to structural overlap;
+- one leakage-free pilot showed positive description-length compression on 32
+  held-out programs, but the benchmark is too small/selective for a success claim.
 
 Not allowed:
-- E06 improves reasoning efficiency;
-- Noesis has demonstrated human-like abstraction;
-- Noesis is AGI or evidence of consciousness;
-- the invalid 2.0768 description saving is a valid positive result.
+- E06 has passed its scientific gate;
+- Noesis has demonstrated general abstraction or human-like reasoning;
+- the 1.9497 saving is confirmed or generalizable;
+- Noesis is AGI or evidence of consciousness.
 
 ## Navigation rule
 
