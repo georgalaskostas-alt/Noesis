@@ -26,13 +26,18 @@ def run(seed=6200,train=160,test=200,max_cost=7):
     for p in learned:
         lib.observe(p)
     train_tables={p.table for p in learned}
+    train_root_keys={structural_key(p) for p in learned}
 
     rows=[]
+    excluded_root_matches=0
     for p in test_pool:
         if len(rows)>=test:
             break
         if p.table in train_tables:
             raise RuntimeError("semantic leakage")
+        if structural_key(p) in train_root_keys:
+            excluded_root_matches+=1
+            continue
         base=description_cost(p)
         reuse=description_cost(p,lib)
         rows.append({
@@ -54,6 +59,7 @@ def run(seed=6200,train=160,test=200,max_cost=7):
         "compressed":sum(x>0 for x in savings),
         "unchanged":sum(x==0 for x in savings),
         "root_leakage":sum(r["root_seen"] for r in rows),
+        "excluded_root_matches":excluded_root_matches,
         "top_motif_counts":[count for _,count in lib.motifs()[:10]],
         "rows":rows,
     }
