@@ -35,7 +35,7 @@ def run(seed=6200,train=160,test=200,max_cost=7):
             break
         if p.table in train_tables:
             raise RuntimeError("semantic leakage")
-        if structural_key(p) in train_root_keys:
+        if structural_key(p) in train_root_keys or structural_key(p) in lib.counts:
             excluded_root_matches+=1
             continue
         base=description_cost(p)
