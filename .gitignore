@@ -1,2 +1,6 @@
 __pycache__/
 *.py[cod]
+experiments/e05/my_memory.json
+experiments/e05/mac_e05_results_*/
+
+experiments/e05/results_01/episodes.jsonl.gz

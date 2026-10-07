@@ -1,66 +1,31 @@
 # NOESIS
 
-Experimental research codebase for adaptive reasoning, query efficiency, memory, and transfer learning.
+Experimental code for active queries, transfer, persistent memory and adaptive
+reasoning. Python standard library. These are finite synthetic experiments, not
+a general AI or a validated model of the human brain.
 
-## Current research lineage
+| Experiment | Question | Finding / status |
+|---|---|---|
+| E01 | Choose informative queries? | 18.51% fewer queries than random on the declared benchmark; higher internal compute. |
+| E02 | Transfer a learned prior? | Benefit on matched tasks; harm on shifted and neutral tasks. |
+| E03 | Adapt trust within a task? | Corrected Bayesian implementation equals a static initial mixture; no extra capability demonstrated. |
+| E04 | Retain and discount experience across tasks? | Recency beats accumulation on changing streams; accumulation wins on stable streams. |
+| E05 | Learn weights across memory timescales and persist the engine? | 16 tests; 96,000 episodes. Beats static mixing, but not clearly recency; overall research gate failed. |
 
-### E01 — Query Efficiency
-- 13 tests
-- 2,000 paired tasks
-- Information-gain policy: 8.8715 average queries
-- Random policy: 10.887 average queries
-- Query reduction: 18.51%
-- Approx. 11.3× more internal processing
-- Result: improved query efficiency, but no evidence of learned reusable concepts.
+## Current milestone
 
-### E02 — Learned Prior / Transfer
-- 15 tests
-- 6,000 tasks
-- Matched-distribution transfer: +2.94%
-- Shifted-distribution transfer: -6.78%
-- Neutral setting: -2.33%
-- Main finding: learned priors can help under matching conditions but can cause negative transfer under distribution shift.
+[E05 instructions, API and demo](experiments/e05/README_GR.md) ·
+[Protocol](experiments/e05/PROTOCOL.md) ·
+[Results](experiments/e05/results_01/REPORT_GR.md) ·
+[Research roadmap in Greek](docs/ROADMAP_GR.md)
 
-## Current research target
-
-The next experiment focuses on **adaptive trust in learned priors** and **negative-transfer mitigation**.
-
-The system should learn when prior knowledge is useful, detect distribution mismatch, reduce or disable harmful priors, and compare adaptive trust against:
-- no prior,
-- fixed prior,
-- oracle/best-case reference where appropriate.
-
-## Repository strategy
-
-Each experiment should be reproducible and isolated:
-
-```
-noesis/
-  core/
-  experiments/
-    e01_query_efficiency/
-    e02_transfer/
-    e03_adaptive_trust/
-  tests/
-  docs/
-  results/
+```bash
+cd experiments/e05
+python3 -m unittest discover -s tests -v
+python3 -m noesis --demo --tasks 20 --state-out my_memory.json
+python3 -m noesis --demo --tasks 20 --state-in my_memory.json --state-out my_memory.json
 ```
 
-Research claims must be backed by reproducible runs, saved metrics, and explicit evaluation scope.
-
-## Status
-
-E01 and E02 were previously validated locally. Detailed E03 trajectory logs were not yet finalized; the next step is to reconstruct and package E03 as a reproducible experiment.
-
-## E03 correction, 2026-10-05
-
-Corrected double-conditioning in adaptive trust and added a static-mixture control.
-The full diagnostic rerun passes 7 tests and a 30,000-trajectory audit.
-Adaptive and static-mixture actions are identical; no extra adaptive capability is demonstrated.
-See [corrected results](experiments/e03/results_corrected_20261005/REPORT.md).
-
-## E04 — Persistent stream memory
-
-[Experiment and commands](experiments/e04/README_GR.md) · [Results](experiments/e04/results_01/REPORT_GR.md)
-
-50 new seeds; 8,000 paired stream tasks; 32,000 agent episodes; 10 tests and independent artifact audit. Fixed recency weighting improves over cumulative memory in the changing stream, but cumulative memory wins in the stable stream. This is a synthetic forgetting-rule experiment, not a learned change detector.
+Each experiment is isolated and keeps its own code, protocol and results.
+Run commands from its directory. No API keys, pip dependencies or GPU required.
+All research claims are limited to the tested grammar and sampling procedure.

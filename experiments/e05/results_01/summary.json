@@ -1,0 +1,1368 @@
+{
+  "streams": {
+    "stable": {
+      "methods": {
+        "uniform": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.90325,
+          "mean_pre_task_nll": 6.061456918928017,
+          "mean_selection_evaluations": 12891.72,
+          "mean_update_evaluations": 858.89425,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.885,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.924,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.916,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.888,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "frozen": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.6725,
+          "mean_pre_task_nll": 5.94274306814405,
+          "mean_selection_evaluations": 12712.4595,
+          "mean_update_evaluations": 846.354,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.689,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.667,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.713,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.621,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "cumulative": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.453,
+          "mean_pre_task_nll": 5.387586295236597,
+          "mean_selection_evaluations": 12649.70075,
+          "mean_update_evaluations": 840.99025,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.57,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.488,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.414,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.34,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "recency": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.47475,
+          "mean_pre_task_nll": 5.406607120881436,
+          "mean_selection_evaluations": 12723.0575,
+          "mean_update_evaluations": 846.3455,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.557,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.499,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.431,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.412,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "static_mix": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.56375,
+          "mean_pre_task_nll": 5.530382116645666,
+          "mean_selection_evaluations": 12697.89175,
+          "mean_update_evaluations": 844.9465,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.59,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.585,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.564,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.516,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "adaptive": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.4545,
+          "mean_pre_task_nll": 5.35002124781796,
+          "mean_selection_evaluations": 12667.159,
+          "mean_update_evaluations": 842.236,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.565,
+              "mean_weights_before": {
+                "archive": 0.16535587487219622,
+                "long": 0.26855946348103266,
+                "recent": 0.29336940384505605,
+                "fast": 0.27271525780171507
+              }
+            },
+            "1": {
+              "mean_queries": 8.475,
+              "mean_weights_before": {
+                "archive": 0.05348033316481294,
+                "long": 0.3622596686752534,
+                "recent": 0.5024979359970754,
+                "fast": 0.08176206216285832
+              }
+            },
+            "2": {
+              "mean_queries": 8.433,
+              "mean_weights_before": {
+                "archive": 0.02991629032685424,
+                "long": 0.4859903366257994,
+                "recent": 0.4648139668053344,
+                "fast": 0.019279406242011958
+              }
+            },
+            "3": {
+              "mean_queries": 8.345,
+              "mean_weights_before": {
+                "archive": 0.021718484148381505,
+                "long": 0.5927681899921328,
+                "recent": 0.36953124359513323,
+                "fast": 0.015982082264352434
+              }
+            }
+          }
+        }
+      }
+    },
+    "slow": {
+      "methods": {
+        "uniform": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 9.044,
+          "mean_pre_task_nll": 6.061456918928017,
+          "mean_selection_evaluations": 12886.88475,
+          "mean_update_evaluations": 859.1985,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.924,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.928,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 9.136,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 9.188,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "frozen": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 9.2915,
+          "mean_pre_task_nll": 6.56821301159342,
+          "mean_selection_evaluations": 13285.39725,
+          "mean_update_evaluations": 891.2815,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.661,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.66,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 9.928,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 9.917,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "cumulative": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.92425,
+          "mean_pre_task_nll": 5.879860516712366,
+          "mean_selection_evaluations": 13133.4865,
+          "mean_update_evaluations": 878.29725,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.538,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.442,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 9.565,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 9.152,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "recency": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.53975,
+          "mean_pre_task_nll": 5.400077798657828,
+          "mean_selection_evaluations": 12700.6815,
+          "mean_update_evaluations": 844.99025,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.554,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.438,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.709,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.458,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "static_mix": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.7125,
+          "mean_pre_task_nll": 5.709975521413377,
+          "mean_selection_evaluations": 12897.81975,
+          "mean_update_evaluations": 859.96675,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.577,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.473,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 9.019,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.781,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "adaptive": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.5595,
+          "mean_pre_task_nll": 5.420048193104517,
+          "mean_selection_evaluations": 12714.749,
+          "mean_update_evaluations": 846.088,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.563,
+              "mean_weights_before": {
+                "archive": 0.1604302930426611,
+                "long": 0.2605318667477159,
+                "recent": 0.2841455339724424,
+                "fast": 0.29489230623718066
+              }
+            },
+            "1": {
+              "mean_queries": 8.453,
+              "mean_weights_before": {
+                "archive": 0.051353920291963846,
+                "long": 0.3511466456905246,
+                "recent": 0.5116649264014509,
+                "fast": 0.08583450761606067
+              }
+            },
+            "2": {
+              "mean_queries": 8.744,
+              "mean_weights_before": {
+                "archive": 0.013922141741740572,
+                "long": 0.06971135812834398,
+                "recent": 0.8059092770085966,
+                "fast": 0.11045722312131878
+              }
+            },
+            "3": {
+              "mean_queries": 8.478,
+              "mean_weights_before": {
+                "archive": 0.00911905958282614,
+                "long": 0.0147908936896081,
+                "recent": 0.9550347135135486,
+                "fast": 0.021055333214017098
+              }
+            }
+          }
+        }
+      }
+    },
+    "fast": {
+      "methods": {
+        "uniform": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 9.0295,
+          "mean_pre_task_nll": 6.061456918928017,
+          "mean_selection_evaluations": 12889.76,
+          "mean_update_evaluations": 859.4025,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 9.062,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 9.034,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 9.007,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 9.015,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "frozen": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 9.296,
+          "mean_pre_task_nll": 6.572451733803381,
+          "mean_selection_evaluations": 13267.76125,
+          "mean_update_evaluations": 890.0415,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 9.297,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 9.307,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 9.26,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 9.32,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "cumulative": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.92975,
+          "mean_pre_task_nll": 5.90645213466942,
+          "mean_selection_evaluations": 13119.032,
+          "mean_update_evaluations": 877.21975,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 9.16,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.969,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.842,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.748,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "recency": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.77575,
+          "mean_pre_task_nll": 5.743766042546287,
+          "mean_selection_evaluations": 12977.48475,
+          "mean_update_evaluations": 865.86025,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 9.001,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.715,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.699,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.688,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "static_mix": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.86325,
+          "mean_pre_task_nll": 5.881655149093402,
+          "mean_selection_evaluations": 13022.497,
+          "mean_update_evaluations": 869.71375,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.993,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.854,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.831,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.775,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "adaptive": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.74375,
+          "mean_pre_task_nll": 5.740428644398277,
+          "mean_selection_evaluations": 12947.83775,
+          "mean_update_evaluations": 863.58225,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.816,
+              "mean_weights_before": {
+                "archive": 0.10558747849214131,
+                "long": 0.13085789519949362,
+                "recent": 0.17466990297964183,
+                "fast": 0.5888847233287232
+              }
+            },
+            "1": {
+              "mean_queries": 8.766,
+              "mean_weights_before": {
+                "archive": 0.030005351056778783,
+                "long": 0.08792378094485445,
+                "recent": 0.46328045514301675,
+                "fast": 0.41879041285534996
+              }
+            },
+            "2": {
+              "mean_queries": 8.703,
+              "mean_weights_before": {
+                "archive": 0.02575483177916678,
+                "long": 0.11597091072093885,
+                "recent": 0.788333077588689,
+                "fast": 0.06994117991120534
+              }
+            },
+            "3": {
+              "mean_queries": 8.69,
+              "mean_weights_before": {
+                "archive": 0.02814737770961689,
+                "long": 0.24116685517705092,
+                "recent": 0.6978390626379604,
+                "fast": 0.03284670447537185
+              }
+            }
+          }
+        }
+      }
+    },
+    "returning": {
+      "methods": {
+        "uniform": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.946,
+          "mean_pre_task_nll": 6.061456918928017,
+          "mean_selection_evaluations": 12890.35125,
+          "mean_update_evaluations": 859.14025,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.909,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 9.15,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.863,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.862,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "frozen": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 9.1155,
+          "mean_pre_task_nll": 6.483775207354792,
+          "mean_selection_evaluations": 13105.367,
+          "mean_update_evaluations": 877.249,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.688,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 9.919,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 9.198,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.657,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "cumulative": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.86125,
+          "mean_pre_task_nll": 5.9828624026219375,
+          "mean_selection_evaluations": 13014.3605,
+          "mean_update_evaluations": 869.30725,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.571,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 9.513,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.882,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.479,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "recency": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.67375,
+          "mean_pre_task_nll": 5.738016837970215,
+          "mean_selection_evaluations": 12859.70975,
+          "mean_update_evaluations": 856.98575,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.581,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.774,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.791,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.549,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "static_mix": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.76075,
+          "mean_pre_task_nll": 5.901365763470466,
+          "mean_selection_evaluations": 12900.86,
+          "mean_update_evaluations": 860.42075,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.62,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "1": {
+              "mean_queries": 8.994,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "2": {
+              "mean_queries": 8.891,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            },
+            "3": {
+              "mean_queries": 8.538,
+              "mean_weights_before": {
+                "archive": 0.25,
+                "long": 0.25,
+                "recent": 0.25,
+                "fast": 0.25
+              }
+            }
+          }
+        },
+        "adaptive": {
+          "episodes": 4000,
+          "failures": 0,
+          "mean_queries": 8.66225,
+          "mean_pre_task_nll": 5.733362973292707,
+          "mean_selection_evaluations": 12849.74275,
+          "mean_update_evaluations": 856.116,
+          "expert_prior_entries_per_task": 1716,
+          "blocks": {
+            "0": {
+              "mean_queries": 8.572,
+              "mean_weights_before": {
+                "archive": 0.1665273944749147,
+                "long": 0.2612191331273816,
+                "recent": 0.29777389993767384,
+                "fast": 0.27447957246002985
+              }
+            },
+            "1": {
+              "mean_queries": 8.765,
+              "mean_weights_before": {
+                "archive": 0.019273998211752227,
+                "long": 0.04990485753312272,
+                "recent": 0.5778847580053309,
+                "fast": 0.3529363862497941
+              }
+            },
+            "2": {
+              "mean_queries": 8.825,
+              "mean_weights_before": {
+                "archive": 0.037355001244323074,
+                "long": 0.10241112542983907,
+                "recent": 0.7921468401211241,
+                "fast": 0.06808703320471372
+              }
+            },
+            "3": {
+              "mean_queries": 8.487,
+              "mean_weights_before": {
+                "archive": 0.09194404453650018,
+                "long": 0.36482068998124434,
+                "recent": 0.5161928358899428,
+                "fast": 0.027042429592312706
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "adaptive_comparisons": {
+    "stable": {
+      "uniform": {
+        "mean_query_saving": 0.44875000000000004,
+        "seed_bootstrap_95pct": [
+          0.34225000000000017,
+          0.5565000000000001
+        ],
+        "seeds_adaptive_worse": 9
+      },
+      "frozen": {
+        "mean_query_saving": 0.21800000000000005,
+        "seed_bootstrap_95pct": [
+          0.14924999999999994,
+          0.2897562500000001
+        ],
+        "seeds_adaptive_worse": 6
+      },
+      "cumulative": {
+        "mean_query_saving": -0.0014999999999998793,
+        "seed_bootstrap_95pct": [
+          -0.030756249999999947,
+          0.029750000000000013
+        ],
+        "seeds_adaptive_worse": 28
+      },
+      "recency": {
+        "mean_query_saving": 0.02024999999999993,
+        "seed_bootstrap_95pct": [
+          -0.019999999999999896,
+          0.05999999999999995
+        ],
+        "seeds_adaptive_worse": 21
+      },
+      "static_mix": {
+        "mean_query_saving": 0.10925000000000003,
+        "seed_bootstrap_95pct": [
+          0.07400000000000004,
+          0.14549999999999993
+        ],
+        "seeds_adaptive_worse": 9
+      }
+    },
+    "slow": {
+      "uniform": {
+        "mean_query_saving": 0.48450000000000004,
+        "seed_bootstrap_95pct": [
+          0.41524999999999995,
+          0.553
+        ],
+        "seeds_adaptive_worse": 1
+      },
+      "frozen": {
+        "mean_query_saving": 0.7319999999999999,
+        "seed_bootstrap_95pct": [
+          0.6702499999999999,
+          0.7937499999999997
+        ],
+        "seeds_adaptive_worse": 0
+      },
+      "cumulative": {
+        "mean_query_saving": 0.36474999999999996,
+        "seed_bootstrap_95pct": [
+          0.31849999999999995,
+          0.41075625
+        ],
+        "seeds_adaptive_worse": 1
+      },
+      "recency": {
+        "mean_query_saving": -0.019750000000000087,
+        "seed_bootstrap_95pct": [
+          -0.03625000000000003,
+          -0.0037500000000000354
+        ],
+        "seeds_adaptive_worse": 31
+      },
+      "static_mix": {
+        "mean_query_saving": 0.15299999999999997,
+        "seed_bootstrap_95pct": [
+          0.12474999999999997,
+          0.18124999999999988
+        ],
+        "seeds_adaptive_worse": 4
+      }
+    },
+    "fast": {
+      "uniform": {
+        "mean_query_saving": 0.2857500000000001,
+        "seed_bootstrap_95pct": [
+          0.21650000000000016,
+          0.3577500000000001
+        ],
+        "seeds_adaptive_worse": 6
+      },
+      "frozen": {
+        "mean_query_saving": 0.5522500000000001,
+        "seed_bootstrap_95pct": [
+          0.48700000000000004,
+          0.6170000000000002
+        ],
+        "seeds_adaptive_worse": 0
+      },
+      "cumulative": {
+        "mean_query_saving": 0.18599999999999992,
+        "seed_bootstrap_95pct": [
+          0.1395000000000001,
+          0.23450000000000004
+        ],
+        "seeds_adaptive_worse": 7
+      },
+      "recency": {
+        "mean_query_saving": 0.03199999999999985,
+        "seed_bootstrap_95pct": [
+          0.008743749999999589,
+          0.05549999999999969
+        ],
+        "seeds_adaptive_worse": 14
+      },
+      "static_mix": {
+        "mean_query_saving": 0.11949999999999995,
+        "seed_bootstrap_95pct": [
+          0.0855,
+          0.15649999999999983
+        ],
+        "seeds_adaptive_worse": 8
+      }
+    },
+    "returning": {
+      "uniform": {
+        "mean_query_saving": 0.28375,
+        "seed_bootstrap_95pct": [
+          0.22099999999999984,
+          0.34900000000000014
+        ],
+        "seeds_adaptive_worse": 5
+      },
+      "frozen": {
+        "mean_query_saving": 0.45325000000000004,
+        "seed_bootstrap_95pct": [
+          0.3952500000000002,
+          0.5120000000000001
+        ],
+        "seeds_adaptive_worse": 0
+      },
+      "cumulative": {
+        "mean_query_saving": 0.199,
+        "seed_bootstrap_95pct": [
+          0.16424999999999992,
+          0.23500625000000006
+        ],
+        "seeds_adaptive_worse": 3
+      },
+      "recency": {
+        "mean_query_saving": 0.01150000000000002,
+        "seed_bootstrap_95pct": [
+          -0.012006250000000085,
+          0.03625000000000014
+        ],
+        "seeds_adaptive_worse": 20
+      },
+      "static_mix": {
+        "mean_query_saving": 0.09849999999999995,
+        "seed_bootstrap_95pct": [
+          0.06550000000000007,
+          0.1322499999999999
+        ],
+        "seeds_adaptive_worse": 11
+      }
+    },
+    "changing": {
+      "uniform": {
+        "mean_query_saving": 0.3513333333333334,
+        "seed_bootstrap_95pct": [
+          0.29058125000000007,
+          0.4130833333333334
+        ],
+        "seeds_adaptive_worse": 2
+      },
+      "frozen": {
+        "mean_query_saving": 0.5791666666666667,
+        "seed_bootstrap_95pct": [
+          0.5235812500000001,
+          0.6349166666666667
+        ],
+        "seeds_adaptive_worse": 0
+      },
+      "cumulative": {
+        "mean_query_saving": 0.24991666666666662,
+        "seed_bootstrap_95pct": [
+          0.21683125,
+          0.2835
+        ],
+        "seeds_adaptive_worse": 0
+      },
+      "recency": {
+        "mean_query_saving": 0.007916666666666596,
+        "seed_bootstrap_95pct": [
+          -0.004918750000000143,
+          0.020666666666666583
+        ],
+        "seeds_adaptive_worse": 21
+      },
+      "static_mix": {
+        "mean_query_saving": 0.12366666666666662,
+        "seed_bootstrap_95pct": [
+          0.10024999999999999,
+          0.14716666666666653
+        ],
+        "seeds_adaptive_worse": 4
+      }
+    }
+  },
+  "gate": {
+    "changing_beats_static_mix": true,
+    "changing_beats_recency": false,
+    "stable_harm_vs_cumulative_upper_at_most_0_10": true,
+    "zero_failures": true
+  },
+  "engineering_gate_passed": false,
+  "scope": "Finite Boolean grammar; fixed-share controller; seed bootstrap; exploratory unadjusted intervals."
+}
