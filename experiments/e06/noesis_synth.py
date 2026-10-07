@@ -74,7 +74,11 @@ class Synthesizer:
         return sorted(hits,key=lambda p:(-(self.library.get(p.table,0) if reuse else 0),p.cost,p.key()))
 
 def identify_queries(synth,target,seed,reuse=True):
-    """Active identification; target is used only by the evaluator to answer selected queries."""
+    """Active Bayesian identification over semantic hypotheses.
+
+    Reuse contributes a prior only; observations always enforce semantic
+    consistency. The evaluator target is used solely to answer selected queries.
+    """
     rng=Random(seed);obs=[];remaining=set(range(16))
     while True:
         ranked=synth.rank(obs,reuse)
@@ -82,13 +86,23 @@ def identify_queries(synth,target,seed,reuse=True):
         if len(tables)<=1:
             p=synth.synthesize(obs)
             return len(obs),p,tuple(obs)
-        # information-gain split over currently consistent semantic hypotheses
-        best=[];score=-1
+        # Reuse is a soft prior, never a filter. Laplace mass keeps unseen
+        # hypotheses alive and avoids turning memory into an oracle.
+        weights={}
+        for p in ranked:
+            bonus=synth.library.get(p.table,0) if reuse else 0
+            weights[p.table]=1.0+float(bonus)
+        total=sum(weights.values())
+        best=[];best_score=None
         for x in remaining:
-            ones=sum((t>>x)&1 for t in tables);zeros=len(tables)-ones
-            s=min(ones,zeros)
-            if s>score:score=s;best=[x]
-            elif s==score:best.append(x)
+            one=sum(w for t,w in weights.items() if (t>>x)&1)
+            zero=total-one
+            # Expected remaining posterior mass after the answer. Lower is better.
+            score=(one*one+zero*zero)/total
+            if best_score is None or score<best_score-1e-12:
+                best_score=score;best=[x]
+            elif abs(score-best_score)<=1e-12:
+                best.append(x)
         x=best[rng.randrange(len(best))]
         obs.append((x,(target>>x)&1));remaining.remove(x)
         if not remaining:
