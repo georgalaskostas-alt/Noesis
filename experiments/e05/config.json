@@ -1,0 +1,12 @@
+{
+  "seed_start": 3000,
+  "seeds": 50,
+  "train_tasks": 100,
+  "tasks_per_stream": 80,
+  "streams": ["stable", "slow", "fast", "returning"],
+  "methods": ["uniform", "frozen", "cumulative", "recency", "static_mix", "adaptive"],
+  "uniform_mixture": 0.1,
+  "expert_decays": {"archive": null, "long": 1.0, "recent": 0.9, "fast": 0.5},
+  "share": 0.02,
+  "bootstrap_repeats": 10000
+}
