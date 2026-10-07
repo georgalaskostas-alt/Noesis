@@ -3,7 +3,7 @@
 Updated: 2026-10-07
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — first leakage-free E06.2 pilot obtained; benchmark redesign required
+State: ACTIVE — first benchmark redesign exhausted; deeper compositional generator patched
 
 ## What has been completed
 
@@ -33,9 +33,13 @@ State: ACTIVE — first leakage-free E06.2 pilot obtained; benchmark redesign re
 - Protocol patched again to exclude any test root present anywhere in the learned
   motif library.
 
+## Latest benchmark-design result
+
+The first purpose-built generator failed before evaluation: with the original shallow grammar it exhausted at 36 unique training roots and 0 test roots for a requested 40/40 split. This is a generator-capacity failure, not a synthesis result. The generator has now been redesigned with deeper, disjoint train/test composition templates and the test suite now requires successful deterministic 300/300 generation.
+
 ## Current next action
 
-Redesign E06.2 into a purpose-built compositional benchmark:
+Validate the redesigned purpose-built compositional benchmark:
 1. construct reusable parameterized motifs;
 2. generate training programs containing those motifs as proper subprograms;
 3. generate test programs with novel complete roots/compositions by construction;
