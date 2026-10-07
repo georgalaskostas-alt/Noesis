@@ -39,3 +39,27 @@ cat results.json
 
 Το τρέχον commit είναι **implementation/protocol**, όχι θετικό αποτέλεσμα.
 Δεν ισχυριζόμαστε ανθρώπινη νόηση, AGI ή breakthrough πριν υπάρξουν δεδομένα.
+
+
+## Pilot result — seed 6000
+
+Μετά τη διόρθωση ώστε το reuse prior να επηρεάζει πράγματι την active query
+selection, το pilot έδωσε:
+
+- semantic programs: 893
+- train tasks: 80
+- held-out test tasks: 120
+- mean query saving: -0.1583333333
+- reuse better: 18
+- reuse worse: 31
+- equal: 71
+
+Αυτό είναι αρνητικό αποτέλεσμα. Το frequency prior πάνω σε ολόκληρα programs
+δεν βελτίωσε την αποδοτικότητα και κατά μέσο όρο την επιδείνωσε. Δεν
+προχωράμε σε claim επιτυχίας ούτε σε multi-seed confirmation αυτού του
+μηχανισμού ως έχει.
+
+Η επόμενη υπόθεση του E06 είναι αυστηρότερη: **structural abstraction reuse**.
+Αντί να θυμόμαστε μόνο ολόκληρες truth tables, θα εξάγουμε επαναλαμβανόμενα
+subprograms/motifs και θα μετρήσουμε αν αυτά μειώνουν description length ή/και
+queries σε held-out compositional tasks.
