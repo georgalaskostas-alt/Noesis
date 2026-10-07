@@ -3,7 +3,7 @@
 Updated: 2026-10-07
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — awaiting rerun after structural-root holdout fix
+State: ACTIVE — second leakage audit failed; stricter motif-root holdout patched
 
 ## What has been completed
 
@@ -22,8 +22,16 @@ State: ACTIVE — awaiting rerun after structural-root holdout fix
   apparent mean description saving=2.07676503336,
   compressed=200/200, BUT root_leakage=127.
   Decision: INVALID RESULT; no positive claim.
-- Protocol patched to exclude test programs whose full structural root appeared
-  in training. Commit: 8084dd565ccea35baca89d5a4317399eb589b37d.
+- First holdout patch excluded roots matching training roots.
+- Second pilot after that patch:
+  train=160, test=42, motifs=15,
+  apparent mean description saving=1.84263345122,
+  compressed=42/42, root_leakage=10, excluded_root_matches=370.
+  Decision: INVALID RESULT; still no positive claim.
+- Diagnosis: a test root can match an internal structural motif learned from a
+  training program even when it does not match a training root.
+- Protocol patched again to exclude any test root present anywhere in the learned
+  motif library.
 
 ## Current next action
 
@@ -33,7 +41,11 @@ Run the patched leakage-controlled E06.2 pilot:
     git pull origin research/e06-program-synthesis
     python3 run_abstraction_experiment.py
 
-Required immediate check: root_leakage must equal 0.
+Required immediate checks:
+- root_leakage must equal 0;
+- enough held-out test programs must remain to make the protocol useful.
+If the clean pool collapses, redesign the task split/generator instead of weakening
+the leakage rule.
 
 ## If the patched pilot is positive
 
