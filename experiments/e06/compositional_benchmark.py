@@ -1,86 +1,72 @@
-"""Purpose-built E06.2 compositional benchmark.
+"""E06.2 benchmark with sampled variable bindings and structural transfer.
 
-Train/test share parameterized proper motifs but use disjoint complete composition
-families. The generator is deterministic and enforces semantic and structural-root
-holdout by construction.
+Unlike prior XOR-root test families, both partitions span all top-level operators
+and are divided by deterministic disjoint semantic/root keys, not by a fixed root
+operator. Shared proper motifs are retained. Results are not a causal efficacy
+claim until controls and held-out validation are completed.
 """
 from random import Random
 from noesis_synth import var,unary,binary
-from abstractions import structural_key
+from abstractions import structural_key,AbstractionLibrary,walk
 
 MOTIFS=("xor","and_not","or_not","xor_not")
 
 def motif(kind,a,b):
-    if kind=="xor": return binary("xor",a,b)
-    if kind=="and_not": return binary("and",a,unary("not",b))
-    if kind=="or_not": return binary("or",a,unary("not",b))
-    if kind=="xor_not": return binary("xor",a,unary("not",b))
+    if kind=="xor":return binary("xor",a,b)
+    if kind=="and_not":return binary("and",a,unary("not",b))
+    if kind=="or_not":return binary("or",a,unary("not",b))
+    if kind=="xor_not":return binary("xor",a,unary("not",b))
     raise ValueError(kind)
 
-def _vars(rng):
-    ids=list(range(4));rng.shuffle(ids)
-    return [var(i) for i in ids]
-
-def build_candidate(rng,split):
-    a,b,c,d=_vars(rng)
-    m1=motif(rng.choice(MOTIFS),a,b)
-    m2=motif(rng.choice(MOTIFS),c,d)
-    m3=motif(rng.choice(MOTIFS),a,c)
-
-    # Disjoint top-level template families. Shared motifs only occur below root.
-    if split=="train":
-        template=rng.randrange(4)
-        if template==0:
-            p=binary("and",m1,binary("or",m2,m3))
-        elif template==1:
-            p=binary("or",m1,binary("and",m2,m3))
-        elif template==2:
-            p=binary("and",unary("not",m1),binary("or",m2,m3))
-        else:
-            p=binary("or",unary("not",m1),binary("and",m2,m3))
-    elif split=="test":
-        template=rng.randrange(4)
-        if template==0:
-            p=binary("xor",m1,binary("and",m2,m3))
-        elif template==1:
-            p=binary("xor",m1,binary("or",m2,m3))
-        elif template==2:
-            p=unary("not",binary("xor",m1,binary("and",m2,m3)))
-        else:
-            p=unary("not",binary("xor",m1,binary("or",m2,m3)))
-    else:
-        raise ValueError(split)
-
-    # Binding/order variation below the root increases semantic diversity without
-    # changing the split-specific complete template family.
-    if rng.random()<.5:
-        extra=motif(rng.choice(MOTIFS),b,d)
-        if split=="train":
-            p=binary("and",p,extra) if rng.random()<.5 else binary("or",p,extra)
-        else:
-            p=binary("xor",p,extra)
+def build_candidate(rng,split=None):
+    variables=[var(rng.randrange(4)) for _ in range(10)]
+    atoms=[]
+    for i in range(0,10,2):
+        atoms.append(motif(rng.choice(MOTIFS),variables[i],variables[i+1]))
+    # Build a variable-depth Boolean composition. Some branches can repeat
+    # variables; the distinct semantic holdout is checked in generate().
+    p=atoms[0]
+    for m in atoms[1:]:
+        op=rng.choice(("and","or","xor"))
+        p=binary(op,p,m) if rng.randrange(2) else binary(op,m,p)
+        if rng.randrange(5)==0:p=unary("not",p)
     return p
 
-def generate(seed=6600,n_train=300,n_test=300,max_attempts=500000):
+def generate(seed=6600,n_train=300,n_test=300,max_attempts=300000):
     rng=Random(seed)
     train=[];test=[]
-    train_tables=set();train_roots=set()
+    tables=set();roots=set()
     attempts=0
-
-    while len(train)<n_train and attempts<max_attempts:
-        attempts+=1;p=build_candidate(rng,"train");k=structural_key(p)
-        if p.table in train_tables or k in train_roots:continue
-        train.append(p);train_tables.add(p.table);train_roots.add(k)
-
-    test_tables=set();test_roots=set()
-    while len(test)<n_test and attempts<max_attempts:
-        attempts+=1;p=build_candidate(rng,"test");k=structural_key(p)
-        if p.table in train_tables or p.table in test_tables:continue
-        if k in train_roots or k in test_roots:continue
-        test.append(p);test_tables.add(p.table);test_roots.add(k)
-
+    # Collect a common pool, then split by unique semantics and unique
+    # renaming-invariant roots. This avoids train-family dominance exhausting
+    # all test semantics before the test set is constructed.
+    while len(train)+len(test)<n_train+n_test and attempts<max_attempts:
+        attempts+=1
+        p=build_candidate(rng)
+        k=structural_key(p)
+        if p.table in tables or k in roots:continue
+        tables.add(p.table);roots.add(k)
+        if len(train)<n_train:train.append(p)
+        else:test.append(p)
     if len(train)<n_train or len(test)<n_test:
-        raise RuntimeError(
-            f"benchmark exhausted: train={len(train)} test={len(test)} attempts={attempts}"
-        )
+        raise RuntimeError(f"benchmark exhausted: train={len(train)} test={len(test)} attempts={attempts}")
+
+    lib=AbstractionLibrary(3)
+    for p in train:lib.observe(p)
+    # Disallow complete test structure matching a learned proper subtree.
+    # Replacements are sampled from the same distribution, not an easier split.
+    test_roots={structural_key(p) for p in test}
+    for i,p in enumerate(test):
+        if structural_key(p) not in lib.counts:continue
+        test_roots.remove(structural_key(p))
+        while attempts<max_attempts:
+            attempts+=1
+            candidate=build_candidate(rng)
+            k=structural_key(candidate)
+            if candidate.table in tables or k in roots or k in lib.counts:continue
+            tables.add(candidate.table);roots.add(k);test_roots.add(k)
+            test[i]=candidate
+            break
+        else:
+            raise RuntimeError("benchmark exhausted during motif-root cleanup")
     return train,test
