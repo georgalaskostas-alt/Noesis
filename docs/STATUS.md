@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — second benchmark design failed (300 train / 2 test); shared-distribution generator implemented, validation pending
+State: ACTIVE — shared-distribution generator passed all 16 tests; paired control runner added, validation pending
 
 ## What has been completed
 
@@ -41,11 +41,13 @@ The first purpose-built generator failed before evaluation: with the original sh
 
 The deeper split-by-root-family generator FAILED 4/16 tests: 300 training programs could be generated, but only 2 semantically held-out test programs after 500000 attempts (also 200/2 in smaller runs). The original 12 synthesis/abstraction tests still passed. Different Boolean compositions can collapse to identical truth tables, so syntactic novelty does not imply semantic novelty. The 300/300 benchmark has **NOT** passed validation.
 
-Latest patch replaces disjoint root-operator families with a shared-distribution candidate generator, preserving exact semantic and structural-root exclusions, including learned subtree roots. This patch is untested locally; next step is rerunning the full 16-test suite. If 300/300 still exhausts, characterize distinct semantic capacity before modifying the benchmark further. No positive E06.2 scientific claim is allowed.
+Latest patch replaces disjoint root-operator families with a shared-distribution candidate generator, preserving exact semantic and structural-root exclusions, including learned subtree roots. User ran the complete 16-test suite on 2026-10-09: all 16 tests PASS in 0.633s, including deterministic 300/300 generation and holdout invariants. This validates generator functionality, not a learning advantage. No positive E06.2 scientific claim is allowed.
 
 ## Current next action
 
-Validate the redesigned purpose-built compositional benchmark:
+Run and assess the newly added paired-control pilot `python3 run_compositional_controls.py`. This runner reports a heuristic description-cost proxy, not actual query efficiency or guaranteed coding compression. Its controls are baseline/no-library, learned motif counts, shuffled motif frequencies, and random motifs; interpret random and shuffled comparisons cautiously. Validate all controls and test for trivial proxy advantages before any 50-seed confirmation.
+
+Completed benchmark design tasks:
 1. construct reusable parameterized motifs;
 2. generate training programs containing those motifs as proper subprograms;
 3. generate test programs with novel complete roots/compositions by construction;
