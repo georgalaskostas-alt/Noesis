@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — 300/300 paired-controls pilot positive on heuristic proxy; metric audit pending
+State: ACTIVE — positive heuristic pilot; non-overlapping encoding audit implemented, awaiting local verification
 
 ## What has been completed
 
@@ -71,6 +71,16 @@ Next: audit the proxy and matched controls; add per-case paired comparisons,
 actual executable encoding/description lengths with library overhead,
 held-out task accuracy and query/search efficiency. Freeze metrics before
 multi-seed confirmation. Retain negative and invalid prior pilots.
+
+## Metric audit implementation — 2026-10-09
+
+Added `run_encoding_audit.py`: non-overlapping subtree replacement (1 token per
+motif reference), structural-key dictionary storage overhead, paired wins/ties/
+losses, gross and net savings against baseline, shuffled and randomized
+controls. Added 4 tests for accounting invariants. These files are not yet
+locally executed. This is a token proxy, not real compressed bits; the
+randomized-control candidate universe includes held-out test structures and
+is therefore diagnostic only, not a clean independent control.
 
 ## Current next action
 
