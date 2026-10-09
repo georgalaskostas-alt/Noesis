@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — benchmark passed 16 tests; randomized-control construction patched after pilot exception, verification pending
+State: ACTIVE — 300/300 paired-controls pilot positive on heuristic proxy; metric audit pending
 
 ## What has been completed
 
@@ -48,6 +48,29 @@ Latest patch replaces disjoint root-operator families with a shared-distribution
 After the 16/16 benchmark unit tests passed, the first controls run failed before producing metrics: `RuntimeError: insufficient disjoint random motif controls`. The initial random control demanded as many entirely new motifs as in the learned library, but the available candidate motif space could not supply them. This was a control-design failure, not a negative learning result.
 
 Fix committed: random-key assignment now samples a size- and frequency-matched subset of the observed motif universe, rather than requiring disjoint keys. This is explicitly a *permuted-key negative control*, not an independently trained random library. Added 4 targeted tests checking size/frequency preservation, determinism, shuffled frequencies, and a 30/30 pilot. These new tests have not yet been run by the user. The original 16 benchmark tests were previously observed passing.
+
+## Latest E06.2 paired-controls pilot — seed 6600
+
+User-executed result (2026-10-09):
+- 20/20 unit tests passed.
+- train_programs=300, test_programs=300, motifs_discovered=414.
+- root_leakage=0 (as reported by the runner).
+- metric=heuristic_description_cost_proxy.
+- learned_saving=14.299731673651003.
+- increment_vs_shuffled=6.739177256470121.
+- increment_vs_random=6.794016316144864.
+- positive_learned_cases=300/300 against no-library baseline.
+
+Decision: PROMISING PILOT, SCIENTIFIC GATE OPEN. The discount-based cost
+formula can mechanically favor motifs seen in training; these numbers do not
+establish actual compression, query savings, or general reasoning ability.
+The random control is a motif-key permutation, not an independent random
+training process.
+
+Next: audit the proxy and matched controls; add per-case paired comparisons,
+actual executable encoding/description lengths with library overhead,
+held-out task accuracy and query/search efficiency. Freeze metrics before
+multi-seed confirmation. Retain negative and invalid prior pilots.
 
 ## Current next action
 
