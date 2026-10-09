@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — positive heuristic pilot; non-overlapping encoding audit implemented, awaiting local verification
+State: ACTIVE — E06.2 encoding audit completed; scientific gate NOT PASSED; control redesign required
 
 ## What has been completed
 
@@ -81,6 +81,31 @@ controls. Added 4 tests for accounting invariants. These files are not yet
 locally executed. This is a token proxy, not real compressed bits; the
 randomized-control candidate universe includes held-out test structures and
 is therefore diagnostic only, not a clean independent control.
+
+## Encoding audit result — 2026-10-09 (user executed)
+
+All 24 tests passed (0.795s). 300 train / 300 test, seed 6600.
+The non-overlapping token-proxy audit reports baseline=7145 tokens.
+- Learned: 300/300 gross wins vs baseline; gross mean=18.3233333;
+  library overhead=4779; net total saving=718.
+- Shuffled frequency library: *exactly equal* to learned;
+  0 wins / 300 ties / 0 losses in direct comparison; net saving=718.
+- Randomized keys: gross mean=19.35; overhead=5099; net saving=706;
+  direct learned vs randomized 79 wins, 72 ties, 149 losses;
+  learned mean token advantage=-1.0266667.
+- Randomized key candidate pool included held-out test structures:
+  its comparison is contaminated and cannot support an independent
+  generalization claim.
+- Learned and shuffled have identical motifs and the encoding-token
+  model ignores motif frequencies. The former +6.739 heuristic advantage
+  vs shuffled is therefore metric-dependent, not replicated here.
+
+Decision: NOT PASSED. This is toy-token compression with overhead and
+not actual byte/bit encoding, query saving or improved reasoning.
+Next: build leakage-free independent control libraries *only from
+training data*, then freeze an explicitly decodable code-cost model
+and test real synthesis/query efficiency. Do not declare E06.2 success
+or run confirmatory 50 seeds on the existing contaminated random control.
 
 ## Current next action
 
