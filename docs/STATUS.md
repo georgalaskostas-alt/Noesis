@@ -117,6 +117,22 @@ or run confirmatory 50 seeds on the existing contaminated random control.
 - Scientific gate remains NOT PASSED. The training-only patch removes test leakage from this audit but does not supply independent control keys.
 - Next: freeze a training-only independent control with a different motif-selection policy (e.g. matched-size random subset versus count-ranked subset, with fixed dictionary budget); evaluate on held-out data. Then evaluate downstream synthesis search/query operations and actual bit encoding if appropriate.
 
+## Train-only motif-selection pilot implementation — 2026-10-09
+
+Added `run_motif_selection.py` comparing top-frequency motif selection
+against 20 independently seeded random subsets of the **same training-only
+motif universe**, each with 40 entries (or fewer if unavailable).
+Reports gross and net token-proxy savings including dictionary overhead,
+random-control range, and per-program wins/ties/losses.
+Added four tests. Code is committed but NOT yet locally executed.
+This is a distinct-key selection comparison; the controls have matched
+entry count, not matched serialized dictionary size. A result must not
+be called a clean budget-matched compression experiment or real coding
+efficiency until overhead and decodability are properly controlled.
+
+Next local run: 28 unit tests expected, then
+`python3 run_motif_selection.py`. Scientific gate remains NOT PASSED.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
