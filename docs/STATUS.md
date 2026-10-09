@@ -107,6 +107,16 @@ training data*, then freeze an explicitly decodable code-cost model
 and test real synthesis/query efficiency. Do not declare E06.2 success
 or run confirmatory 50 seeds on the existing contaminated random control.
 
+## Clean train-only encoding audit — 2026-10-09 (user executed)
+
+- 24/24 tests passed in 0.661s.
+- seed 6600, training 300, held-out tests 300, baseline 7145 proxy tokens.
+- Learned, shuffled and frequency-randomized libraries each yield gross mean saving 18.3233333 tokens per program, library overhead 4779, and net total saving +718 proxy tokens.
+- Direct comparisons: learned versus shuffled 0/300 wins, 300/300 ties; learned versus randomized frequencies 0/300 wins, 300/300 ties.
+- These are the *same motif key set* with frequencies rearranged; encoder is frequency-insensitive, so ties are an expected control-design property, not a validation of learned advantage.
+- Scientific gate remains NOT PASSED. The training-only patch removes test leakage from this audit but does not supply independent control keys.
+- Next: freeze a training-only independent control with a different motif-selection policy (e.g. matched-size random subset versus count-ranked subset, with fixed dictionary budget); evaluate on held-out data. Then evaluate downstream synthesis search/query operations and actual bit encoding if appropriate.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
