@@ -10,7 +10,10 @@ import statistics
 from pathlib import Path
 from abstractions import structural_key
 from compositional_benchmark import generate
-from run_compositional_controls import library_from,permuted_library,random_library
+from run_compositional_controls import library_from,permuted_library
+from random import Random
+from collections import Counter
+from abstractions import AbstractionLibrary,walk
 
 def key_size(key):
     if isinstance(key,str):
@@ -29,11 +32,26 @@ def encoded_tokens(p,library):
 def library_tokens(library):
     return sum(key_size(k)+1 for k in library.counts)
 
+def train_only_random_library(source,seed,train):
+    """Frequency-matched control with keys sampled exclusively from training.
+
+    Sampling the training-key universe cannot create new structural keys when
+    source already contains all eligible train subtrees. Therefore this is
+    explicitly a frequency permutation, not an independent random baseline.
+    """
+    rng=Random(seed)
+    keys=sorted(source.counts,key=repr)
+    frequencies=list(source.counts.values())
+    rng.shuffle(frequencies)
+    result=AbstractionLibrary(source.min_cost)
+    result.counts=Counter(dict(zip(keys,frequencies)))
+    return result
+
 def run(seed=6600,n_train=300,n_test=300):
     train,test=generate(seed,n_train,n_test)
     learned=library_from(train)
     shuffled=permuted_library(learned,seed+11)
-    randomized=random_library(learned,seed+23,train+test)
+    randomized=train_only_random_library(learned,seed+23,train)
     libs={"learned":learned,"shuffled":shuffled,"randomized":randomized}
     # Test data is used for evaluation only, except the existing randomized
     # control's candidate-key universe, which is explicitly flagged below.
@@ -68,7 +86,7 @@ def run(seed=6600,n_train=300,n_test=300):
         "seed":seed,"train_programs":len(train),"test_programs":len(test),
         "model":"nonoverlapping_tree_token_proxy_with_dictionary_overhead",
         "baseline_total_tokens":baseline_total,
-        "controls_warning":"randomized key universe includes test structures; diagnostic only, not a clean independent control",
+        "controls_warning":"train-only randomization of frequencies preserves motif keys; it is NOT an independent random-key control",
         "results":per_case,
     }
 
