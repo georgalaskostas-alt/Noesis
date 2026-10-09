@@ -28,19 +28,23 @@ def permuted_library(source,seed):
     return result
 
 def random_library(source,seed,programs):
-    """Sample random proper motifs from a separate, seeded program pool."""
-    random=Random(seed)
-    candidates={
+    """Shuffle learned motif keys across the available program motif universe.
+
+    This is a size- and frequency-matched random-key assignment control, not an
+    independent library trained on unseen examples. It does not require new,
+    disjoint motifs; that constraint made the original control impossible.
+    """
+    rng=Random(seed)
+    candidates=sorted({
         structural_key(n) for p in programs for n in list(walk(p))[1:]
         if n.cost>=source.min_cost
-    }
-    candidates=list(candidates-set(source.counts))
-    random.shuffle(candidates)
-    result=AbstractionLibrary(source.min_cost)
+    } | set(source.counts),key=repr)
     if len(candidates)<len(source.counts):
-        raise RuntimeError("insufficient disjoint random motif controls")
+        raise RuntimeError("motif universe too small for matched random control")
+    rng.shuffle(candidates)
     frequencies=list(source.counts.values())
-    random.shuffle(frequencies)
+    rng.shuffle(frequencies)
+    result=AbstractionLibrary(source.min_cost)
     result.counts=Counter(dict(zip(candidates[:len(frequencies)],frequencies)))
     return result
 
@@ -48,9 +52,9 @@ def run(seed=6600,n_train=300,n_test=300):
     train,test=generate(seed,n_train,n_test)
     learned=library_from(train)
     shuffled=permuted_library(learned,seed+11)
-    # Random motifs drawn from the held-out test pool are a negative-control
-    # construction only. They carry no target labels or frequency information.
-    random= random_library(learned,seed+23,test)
+    # Use the available motif universe for a size/frequency-matched random-key
+    # control. Test labels are never used to estimate motif frequencies.
+    random=random_library(learned,seed+23,train+test)
     train_tables={p.table for p in train}
     train_roots={structural_key(p) for p in train}
     if any(p.table in train_tables or structural_key(p) in train_roots
@@ -82,6 +86,7 @@ def run(seed=6600,n_train=300,n_test=300):
         "motifs_discovered":len(learned.counts),
         "root_leakage":0,
         "metrics_kind":"heuristic_description_cost_proxy",
+        "random_control_kind":"motif_key_permutation_not_disjoint_library",
         "mean":means,
         "positive_learned_cases":sum(r["learned_saving"]>0 for r in rows),
         "rows":rows,
