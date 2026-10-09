@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — shared-distribution generator passed all 16 tests; paired control runner added, validation pending
+State: ACTIVE — benchmark passed 16 tests; randomized-control construction patched after pilot exception, verification pending
 
 ## What has been completed
 
@@ -43,9 +43,15 @@ The deeper split-by-root-family generator FAILED 4/16 tests: 300 training progra
 
 Latest patch replaces disjoint root-operator families with a shared-distribution candidate generator, preserving exact semantic and structural-root exclusions, including learned subtree roots. User ran the complete 16-test suite on 2026-10-09: all 16 tests PASS in 0.633s, including deterministic 300/300 generation and holdout invariants. This validates generator functionality, not a learning advantage. No positive E06.2 scientific claim is allowed.
 
+## Latest control-pilot failure — 2026-10-09
+
+After the 16/16 benchmark unit tests passed, the first controls run failed before producing metrics: `RuntimeError: insufficient disjoint random motif controls`. The initial random control demanded as many entirely new motifs as in the learned library, but the available candidate motif space could not supply them. This was a control-design failure, not a negative learning result.
+
+Fix committed: random-key assignment now samples a size- and frequency-matched subset of the observed motif universe, rather than requiring disjoint keys. This is explicitly a *permuted-key negative control*, not an independently trained random library. Added 4 targeted tests checking size/frequency preservation, determinism, shuffled frequencies, and a 30/30 pilot. These new tests have not yet been run by the user. The original 16 benchmark tests were previously observed passing.
+
 ## Current next action
 
-Run and assess the newly added paired-control pilot `python3 run_compositional_controls.py`. This runner reports a heuristic description-cost proxy, not actual query efficiency or guaranteed coding compression. Its controls are baseline/no-library, learned motif counts, shuffled motif frequencies, and random motifs; interpret random and shuffled comparisons cautiously. Validate all controls and test for trivial proxy advantages before any 50-seed confirmation.
+First run `python3 -m unittest discover -s tests -v` (20 tests expected). If it passes, run and assess the patched paired-control pilot `python3 run_compositional_controls.py`. This runner reports a heuristic description-cost proxy, not actual query efficiency or guaranteed coding compression. Its controls are baseline/no-library, learned motif counts, shuffled motif frequencies, and random motifs; interpret random and shuffled comparisons cautiously. Validate all controls and test for trivial proxy advantages before any 50-seed confirmation.
 
 Completed benchmark design tasks:
 1. construct reusable parameterized motifs;
