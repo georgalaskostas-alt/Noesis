@@ -1,9 +1,9 @@
 # NOESIS — LIVE STATUS
 
-Updated: 2026-10-07
+Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — first benchmark redesign exhausted; deeper compositional generator patched
+State: ACTIVE — second benchmark design failed (300 train / 2 test); shared-distribution generator implemented, validation pending
 
 ## What has been completed
 
@@ -36,6 +36,12 @@ State: ACTIVE — first benchmark redesign exhausted; deeper compositional gener
 ## Latest benchmark-design result
 
 The first purpose-built generator failed before evaluation: with the original shallow grammar it exhausted at 36 unique training roots and 0 test roots for a requested 40/40 split. This is a generator-capacity failure, not a synthesis result. The generator has now been redesigned with deeper, disjoint train/test composition templates and the test suite now requires successful deterministic 300/300 generation.
+
+## New failure and redesign — 2026-10-09
+
+The deeper split-by-root-family generator FAILED 4/16 tests: 300 training programs could be generated, but only 2 semantically held-out test programs after 500000 attempts (also 200/2 in smaller runs). The original 12 synthesis/abstraction tests still passed. Different Boolean compositions can collapse to identical truth tables, so syntactic novelty does not imply semantic novelty. The 300/300 benchmark has **NOT** passed validation.
+
+Latest patch replaces disjoint root-operator families with a shared-distribution candidate generator, preserving exact semantic and structural-root exclusions, including learned subtree roots. This patch is untested locally; next step is rerunning the full 16-test suite. If 300/300 still exhausts, characterize distinct semantic capacity before modifying the benchmark further. No positive E06.2 scientific claim is allowed.
 
 ## Current next action
 
