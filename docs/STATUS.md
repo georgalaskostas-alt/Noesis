@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — E06.2 encoding audit completed; scientific gate NOT PASSED; control redesign required
+State: ACTIVE — E06.2 gate NOT PASSED; contaminated control removed; independent train-only comparator still needed
 
 ## What has been completed
 
@@ -109,7 +109,15 @@ or run confirmatory 50 seeds on the existing contaminated random control.
 
 ## Current next action
 
-First run `python3 -m unittest discover -s tests -v` (20 tests expected). If it passes, run and assess the patched paired-control pilot `python3 run_compositional_controls.py`. This runner reports a heuristic description-cost proxy, not actual query efficiency or guaranteed coding compression. Its controls are baseline/no-library, learned motif counts, shuffled motif frequencies, and random motifs; interpret random and shuffled comparisons cautiously. Validate all controls and test for trivial proxy advantages before any 50-seed confirmation.
+Run the 24-test suite and `python3 run_encoding_audit.py` after the
+train-only control patch. The prior randomized key baseline used held-out test
+structures and is invalid. The replacement permutes only training-derived
+frequencies, so it is **not an independent random-key control** and is expected
+to tie learned under a frequency-insensitive encoding metric. This deliberately
+removes leakage but does not satisfy the independent-control requirement.
+Next design an independent train-only comparator (e.g., different training
+subsets or randomized training programs), then measure actual reasoning
+efficiency. Do not claim scientific gate passed.
 
 Completed benchmark design tasks:
 1. construct reusable parameterized motifs;
