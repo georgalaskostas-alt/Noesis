@@ -22,7 +22,7 @@ def rank_pool(pool,dictionary=()):
     # Ties resolved with the same immutable, library-independent signature.
     return sorted(pool,key=lambda p:(len(pack_tree(p,dictionary)),repr(signature(p))))
 
-def run(seeds=(6600,6601,6602,6603,6604),n_train=300,n_test=300,entries=40):
+def run(seeds=(6600,6601,6602,6603,6604),n_train=300,n_test=300,entries=40,n_targets=50):
     results=[]
     for seed in seeds:
         train,test=generate(seed,n_train,n_test)
@@ -35,10 +35,10 @@ def run(seeds=(6600,6601,6602,6603,6604),n_train=300,n_test=300,entries=40):
             ordered=rank_pool(test,dictionary)
             positions[label]={signature(p):i+1 for i,p in enumerate(ordered)}
         # Distinct test semantics are enforced by generate().
-        rows={label:[positions[label][signature(p)] for p in test] for label in positions}
+        targets=test[:n_targets]\n        rows={label:[positions[label][signature(p)] for p in targets] for label in positions}
         results.append({
             "seed":seed,"train":len(train),"test":len(test),
-            "candidate_pool_size":len(test),
+            "candidate_pool_size":len(test),"evaluated_targets":len(targets),
             "learned_entries":len(learned),"random_entries":len(random_lib),
             "mean_candidates_examined":{k:statistics.mean(v) for k,v in rows.items()},
             "median_candidates_examined":{k:statistics.median(v) for k,v in rows.items()},
@@ -55,7 +55,7 @@ def run(seeds=(6600,6601,6602,6603,6604),n_train=300,n_test=300,entries=40):
             "Every target is explicitly included in the held-out candidate pool",
             "Each target is identified by full truth-table equality; no interactive queries",
             "Ranking only: no grammar enumeration or synthesis of novel candidates",
-            "Identical fixed candidate pool implies mean rank across ALL targets is invariant",
+            "Targets are the first n_targets of the held-out test pool; selection may induce ordering bias",
             "Random control matches entry count but not serialized dictionary bytes",
             "Five exploratory seeds; no confirmatory inference",
         ],
