@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — motif-selection pilot promising; budget-matched control, decoder and reasoning tests required
+State: ACTIVE — budget-capped train-only selection pilot implemented; verification pending; gate NOT PASSED
 
 ## What has been completed
 
@@ -155,6 +155,19 @@ Next: match dictionary cost, ideally fix a token budget rather than
 number of entries, and compare against alternative train-only selection
 policies. Include an explicit encoder/decoder and real query/search
 efficiency before considering E06 scientific gate. Gate remains NOT PASSED.
+
+## E06.2 budget-capped pilot implementation — 2026-10-10
+
+Added `run_budget_matched.py` and four unit tests. Selects motifs from
+training only with a shared maximum dictionary budget of 300 structural
+proxy tokens. Ranked selector uses training occurrence per dictionary token;
+20 random-order greedy controls obey the same cap. Records actual used
+dictionary tokens, entry counts, gross/net proxy savings, and ranges.
+This is budget-capped rather than exactly equal-used-cost; greedy not optimal;
+still not an actual encoder/decoder or a reasoning-efficiency benchmark.
+No local test or experiment output has been observed yet.
+Next: run 32 unit tests and `python3 run_budget_matched.py`.
+Scientific gate remains NOT PASSED.
 
 ## Current next action
 
