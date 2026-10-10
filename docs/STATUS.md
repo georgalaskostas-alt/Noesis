@@ -268,6 +268,34 @@ run this revision. Expected total test count: 47. This is not evidence of
 reasoning improvements, nor a parameterized macro/entropy codec. Scientific
 gate remains NOT PASSED.
 
+## E06.4 user-run result — 2026-10-10
+
+User pulled commit 930bdac and ran 47/47 tests PASS (0.800s).
+The standalone, independently decodable plain and shared corpus streams
+roundtripped 300 test programs each on five exploratory seeds (3,000 verified
+roundtrips across both formats). Both use matched record framing and include
+their own complete headers; the shared stream serializes its dictionary once.
+
+Seed | Plain bytes | Shared bytes | Saving bytes | Saving %
+--- | ---: | ---: | ---: | ---:
+6600 | 8353 | 6590 | 1763 | 21.106
+6601 | 8366 | 6627 | 1739 | 20.787
+6602 | 8321 | 6622 | 1699 | 20.418
+6603 | 8312 | 6637 | 1675 | 20.152
+6604 | 8333 | 6560 | 1773 | 21.277
+
+All five seeds positive; mean percentage saving=20.748%.
+This supersedes the prior 33.103% *non-equivalent framing comparison*
+as the current fair-byte benchmark. Only exact-syntax motifs, selected
+from train. Five seeds are exploratory rather than confirmatory and there
+is still no observed synthesis/query advantage. E06 scientific gate
+remains NOT PASSED.
+
+Next: pre-register a paired program-synthesis experiment with identical
+candidate order and holdout tasks, comparing search/query effort using
+a train-only learned library against no-library, size-matched random
+motifs, and frequency controls. Preserve negative findings.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
