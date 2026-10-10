@@ -205,6 +205,18 @@ is informative and must be preserved. No tests have yet been run locally.
 Next: 38 tests expected, then `python3 run_real_codec.py`.
 Scientific gate remains NOT PASSED.
 
+## E06.3 decoder bug observed and patched — 2026-10-10
+
+User executed the 38-test suite: 35 passed, 3 ERROR
+(`test_no_variable_binding_conflation`, `test_roundtrip_with_dictionary`,
+`test_roundtrip_without_dictionary`). The benchmark crashed before
+producing any results. Root cause: decoder `op.startswith("x")`
+mistakenly classified `xor` as a variable and attempted `int("or")`.
+Patched both exact variable-dispatch sites to recognize only x0..x3.
+Patch has been committed but not yet locally verified by the user.
+Rerun 38 tests and `python3 run_real_codec.py`; do not claim
+successful roundtrip until observed.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
