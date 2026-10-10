@@ -217,6 +217,23 @@ Patch has been committed but not yet locally verified by the user.
 Rerun 38 tests and `python3 run_real_codec.py`; do not claim
 successful roundtrip until observed.
 
+## E06.3 exact codec user results and shared dictionary pilot — 2026-10-10
+
+User reran after xor decoder bugfix: 38/38 tests PASS (0.741s).
+300/300 held-out AST and truth table roundtrips passed. Literal wire
+format total=9,845 bytes; dictionary embedded per message=79,542 bytes;
+saving=-69,697 bytes (negative; 8.08x encoded size). This is a real,
+negative per-message storage finding, not evidence of compression.
+
+Added `run_shared_codec.py` and two tests. New benchmark serializes the
+same exact-template dictionary once, counts all length-prefixed test
+records, and validates each AST/table roundtrip. NB the benchmark counts
+the shared header and payload separately but does not yet offer a
+standalone stream decoder consuming the combined file. Byte accounting
+is informational, and both formats have different framing overhead;
+interpret results cautiously. User run pending (40 tests expected).
+Scientific gate remains NOT PASSED.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
