@@ -64,7 +64,7 @@ def unpack_tree(data,dictionary=()):
         op=REV[tag]
         if op in ("0","1"):
             return const(int(op))
-        if op.startswith("x"):
+        if op in ("x0","x1","x2","x3"):
             return var(int(op[1:]))
         if op=="not":
             return unary(op,read())
