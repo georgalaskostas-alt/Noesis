@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — budget-capped train-only selection pilot implemented; verification pending; gate NOT PASSED
+State: ACTIVE — E06.3 exact AST lossless codec implemented; local verification pending; gate NOT PASSED
 
 ## What has been completed
 
@@ -188,6 +188,22 @@ Next focus: semantics-preserving, fully decodable representation including
 variable bindings and library overhead, with roundtrip tests; then paired
 held-out program-synthesis search efficiency. Do not run confirmatory
 multi-seed evaluation on the non-decodable proxy.
+
+## E06.3 exact-byte codec implementation — 2026-10-10
+
+Added `real_codec.py`, `run_real_codec.py`, and six codec tests.
+Wire format has magic header, literal serialized exact-AST dictionary
+entries, length-prefixed payload, one-byte operators and references.
+Decoder reconstructs Program nodes and rejects malformed lengths/opcodes.
+Exact signatures prevent conflating alpha-renamed variable bindings;
+parameterized motifs are NOT yet encoded, and this deliberately sacrifices
+the earlier structural-proxy discounts. Held-out benchmark checks each
+program's syntax and truth table after decode and reports actual byte counts.
+Dictionary is stored in EACH encoded message, not amortized across corpus:
+expect this baseline may be worse than no dictionary. A negative result
+is informative and must be preserved. No tests have yet been run locally.
+Next: 38 tests expected, then `python3 run_real_codec.py`.
+Scientific gate remains NOT PASSED.
 
 ## Current next action
 
