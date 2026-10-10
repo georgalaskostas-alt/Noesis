@@ -234,6 +234,26 @@ is informational, and both formats have different framing overhead;
 interpret results cautiously. User run pending (40 tests expected).
 Scientific gate remains NOT PASSED.
 
+## E06.3 shared-dictionary user-run result — 2026-10-10
+
+User ran latest branch and reported 40/40 tests PASS (0.745s).
+Seed=6600; train=300; test=300; exact syntax dictionary=40 motifs.
+Literal standalone wire-format total=9,845 bytes.
+Repeating dictionary per program=79,542 bytes.
+Shared dictionary header=244 bytes; length-framed records=6,342 bytes;
+shared total=6,586 bytes. Observed shared saving=3,259 bytes = 33.103%
+against the currently implemented standalone-message baseline.
+All 300/300 individual records roundtrip with the in-memory dictionary.
+
+Interpretation: *positive empirical byte reduction* for the shared-dictionary
+accounting under one seed, not proof of optimal compression or reasoning.
+The baseline and shared-stream framing differ. The concatenated shared
+stream lacks an independently verified stream decoder; current test checks
+records using a pre-supplied in-memory dictionary. Preserve this caveat.
+Next: implement a standalone shared-stream encoder/decoder with exact
+byte-level framing and fair baseline, corruption tests, and multi-seed
+replication. E06 scientific gate remains NOT PASSED.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
