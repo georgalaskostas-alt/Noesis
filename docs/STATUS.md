@@ -3,7 +3,7 @@
 Updated: 2026-10-09
 Branch: research/e06-program-synthesis
 Active experiment: E06.2 structural abstraction reuse
-State: ACTIVE — E06.2 gate NOT PASSED; contaminated control removed; independent train-only comparator still needed
+State: ACTIVE — motif-selection pilot promising; budget-matched control, decoder and reasoning tests required
 
 ## What has been completed
 
@@ -132,6 +132,29 @@ efficiency until overhead and decodability are properly controlled.
 
 Next local run: 28 unit tests expected, then
 `python3 run_motif_selection.py`. Scientific gate remains NOT PASSED.
+
+## E06.2 motif-selection pilot — user-run result 2026-10-10
+
+User pulled commit 927dc7e and ran 28/28 tests PASS (0.697s).
+Seed 6600: train=300, test=300, available motifs=414, 40 dictionary
+entries, 20 independent random subset replicates (all sampled exclusively
+from the training-derived motif universe), baseline=7145 proxy tokens.
+
+Frequency-ranked selected library: gross saving=5258, dictionary cost=268,
+net saving=4990; mean gross per test=17.5266666667.
+Random subset net saving: mean=844.75, range=[-122,2591].
+Observed ranked-minus-random-mean net saving=4145.25.
+
+Interpretation: large positive exploratory signal for *motif selection
+under the current structural token-cost proxy*, not established compression
+or generalization. Entry counts are matched; dictionary encoding budgets
+are NOT. Only one task seed, with 20 random subsets; no cross-seed CI.
+No actual decodable encoding and no measured synthesis/query benefit.
+
+Next: match dictionary cost, ideally fix a token budget rather than
+number of entries, and compare against alternative train-only selection
+policies. Include an explicit encoder/decoder and real query/search
+efficiency before considering E06 scientific gate. Gate remains NOT PASSED.
 
 ## Current next action
 
