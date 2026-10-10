@@ -254,6 +254,20 @@ Next: implement a standalone shared-stream encoder/decoder with exact
 byte-level framing and fair baseline, corruption tests, and multi-seed
 replication. E06 scientific gate remains NOT PASSED.
 
+## E06.4 standalone corpus codec implementation — 2026-10-10
+
+Implemented `corpus_codec.py`: two independently decodable binary
+corpus formats, with matching magic/header, record count and length-prefixed
+records. Shared mode serializes a literal exact-AST dictionary once;
+plain mode has none. The decoder accepts only the complete bytes stream,
+reconstructs its own dictionary, rejects malformed/trailing data and
+roundtrips syntax and semantics. Added `run_corpus_codec.py` for five
+preselected exploratory seeds (6600..6604), and seven tests including
+truncation, duplicate dictionary, and corruption cases. User has not yet
+run this revision. Expected total test count: 47. This is not evidence of
+reasoning improvements, nor a parameterized macro/entropy codec. Scientific
+gate remains NOT PASSED.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
