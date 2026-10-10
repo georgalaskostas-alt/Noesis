@@ -296,6 +296,22 @@ candidate order and holdout tasks, comparing search/query effort using
 a train-only learned library against no-library, size-matched random
 motifs, and frequency controls. Preserve negative findings.
 
+## E07.1 held-out candidate-order pilot — 2026-10-10
+
+Implemented `run_e07_ranking.py` and four tests. Uses the same
+held-out pool of 300 candidate programs under all policies, evaluates
+a preselected first 50 targets, and counts candidate positions until
+full truth-table equality. Policies: literal AST byte length, train-only
+learned exact motif dictionary, train-only random motif dictionary
+matched by entry count (NOT dictionary byte size). Reports paired
+wins/losses/ties and mean rank on five exploratory seeds. This is a
+controlled *ranking-only* pilot: targets are guaranteed in the candidate
+pool, no new candidates are synthesized, no queries are performed, and
+the first-50 selection may introduce bias. If evaluating all 300 test
+programs as targets, the mean rank would be mathematically identical
+across policies, hence the explicit subset. No empirical results yet.
+Expected 51 tests. E07 reasoning gate remains NOT PASSED.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
