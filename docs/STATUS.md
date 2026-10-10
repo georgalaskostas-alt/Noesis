@@ -169,6 +169,26 @@ No local test or experiment output has been observed yet.
 Next: run 32 unit tests and `python3 run_budget_matched.py`.
 Scientific gate remains NOT PASSED.
 
+## E06.2 budget-capped pilot result — 2026-10-10 (user executed)
+
+32/32 tests passed in 0.756 seconds. Pilot seed=6600; train=300;
+test=300; training-derived motifs=414; dictionary budget=300 proxy tokens.
+Frequency/dictionary-cost ranked: 44 entries, actual dictionary tokens=300,
+gross saving=5268, net saving=4968. Twenty random-order training-only
+controls: dictionary token use 299–300, entries 24–30, mean net saving
+1589.6, range [-27, 3470]. Ranked minus random mean net=3378.4;
+ranked minus best observed random net=1498.
+
+Interpretation: positive exploratory **structural-token-proxy** result under
+near-matched dictionary budgets; selection is a greedy heuristic, with no
+decoder/binary format and no search/query metric. Twenty random orders are
+NOT twenty independent benchmark seeds. Root/semantic holdout does not
+establish independent generalization. Scientific gate remains NOT PASSED.
+Next focus: semantics-preserving, fully decodable representation including
+variable bindings and library overhead, with roundtrip tests; then paired
+held-out program-synthesis search efficiency. Do not run confirmatory
+multi-seed evaluation on the non-decodable proxy.
+
 ## Current next action
 
 Run the 24-test suite and `python3 run_encoding_audit.py` after the
