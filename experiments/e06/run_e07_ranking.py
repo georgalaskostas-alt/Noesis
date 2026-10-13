@@ -35,7 +35,8 @@ def run(seeds=(6600,6601,6602,6603,6604),n_train=300,n_test=300,entries=40,n_tar
             ordered=rank_pool(test,dictionary)
             positions[label]={signature(p):i+1 for i,p in enumerate(ordered)}
         # Distinct test semantics are enforced by generate().
-        targets=test[:n_targets]\n        rows={label:[positions[label][signature(p)] for p in targets] for label in positions}
+        targets=test[:n_targets]
+        rows={label:[positions[label][signature(p)] for p in targets] for label in positions}
         results.append({
             "seed":seed,"train":len(train),"test":len(test),
             "candidate_pool_size":len(test),"evaluated_targets":len(targets),
