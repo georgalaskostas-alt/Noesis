@@ -48,7 +48,7 @@ def run(seeds=tuple(range(10800,10820)),n_train=200,n_validation=100,
         n_target=100,entries=8,pool_size=30,attempt_cap=2000,
         total_work=8000,first_work=4000,max_depth=5,threshold=0.70):
     if (not seeds or len(set(seeds))!=len(seeds) or
-        min(n_train,n_validation,n_target,entries,pool_size,attempt_cap,max_depth)>0 is False
+        min(n_train,n_validation,n_target,entries,pool_size,attempt_cap,max_depth)<=0
         or entries>pool_size or not 0<first_work<total_work or not 0<=threshold<=1):
         raise ValueError("invalid parameters")
     rows=[]
