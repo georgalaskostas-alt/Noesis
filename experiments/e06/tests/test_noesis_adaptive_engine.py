@@ -23,14 +23,17 @@ class AdaptiveEngineTests(unittest.TestCase):
                              "plain_deep" if semantics=="boolean"
                              else "learned_75")
 
-    def test_constructive_fallback_consistent(self):
+    def test_enabled_constructive_consistent(self):
         engine=AdaptiveSearchEngine(config=SearchConfig(enabled=True))
         target=const(0)
         p=engine.synthesize(observations(target.table,range(16)))
         self.assertIsNotNone(p)
         self.assertEqual(p.table,target.table)
         self.assertEqual(engine.last_report["mode"],
-                         "legacy_constructive")
+                         "adaptive_constructive")
+        self.assertEqual(engine.last_report["policy"],"plain_deep")
+        self.assertTrue(engine.last_report["verified"])
+        self.assertLessEqual(engine.last_report["work"],8000)
 
     def test_bad_config(self):
         with self.assertRaises(ValueError):
