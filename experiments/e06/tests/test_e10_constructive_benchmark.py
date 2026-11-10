@@ -1,7 +1,13 @@
 import unittest
 from run_e10_constructive_benchmark import benchmark
+from run_e09_productivity_calibration import make_seed
 
 class E103BenchmarkTests(unittest.TestCase):
+    def test_target_schema_matches_make_seed(self):
+        _,_,_,targets,_=make_seed(14000,30,10,5,3,8,100,4)
+        self.assertEqual(set(targets),{"shifted","bitvector_grammar"})
+        self.assertTrue(all(len(targets[k])==5 for k in targets))
+
     def test_smoke(self):
         r=benchmark(seeds=(14000,14001),n_train=30,
                     n_validation=10,n_target=5,entries=3,pool_size=8,
