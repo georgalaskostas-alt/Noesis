@@ -63,7 +63,7 @@ def benchmark(seeds=tuple(range(14000,14020)),n_train=80,
                 elapsed=perf_counter()-start
                 arms[name]=(programs,telemetry,elapsed)
             for family in ("shifted","bitvector_grammar"):
-                taskset=targets[semantics][family]
+                taskset=targets[family]
                 for target in taskset:
                     if semantics=="boolean":
                         obs=observations(target.table,observed)
