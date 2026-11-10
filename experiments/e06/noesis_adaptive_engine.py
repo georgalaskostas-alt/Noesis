@@ -8,6 +8,7 @@ construct the search frontier.
 from dataclasses import dataclass
 from noesis_synth import Synthesizer
 from run_e09_budget_portfolio import search
+from noesis_constructive_search import synthesize_boolean,synthesize_bitvector
 
 @dataclass(frozen=True)
 class SearchConfig:
@@ -54,13 +55,45 @@ class AdaptiveSearchEngine:
         return signature in self.candidates(examples,semantics)
 
     def synthesize(self,observations):
-        """Preserve E06's constructive, observation-consistent API.
+        """Return an observation-consistent Boolean AST.
 
-        Search signatures alone cannot reconstruct programs. Until a
-        candidate-to-program map is implemented and verified, use the
-        existing constructive synthesizer without claiming adaptive gains.
+        Experimental synthesis is opt-in. If no verified candidate is found,
+        fall back to E06, with explicit provenance in last_report.
         """
+        if not self.config.enabled:
+            p=self.legacy.synthesize(observations)
+            self.last_report={"mode":"legacy_constructive","policy":None,
+                              "work":0,"attempts":0}
+            return p
+        result=synthesize_boolean(
+            observations,self.learned,self.random_macros,
+            self.config.budget,self.config.attempt_cap,
+            self.config.base_depth,self.config.deep_depth)
+        if result.verified:
+            self.last_report={"mode":"adaptive_constructive",
+                              "policy":result.policy,"work":result.work,
+                              "attempts":result.attempts,
+                              "unique_signatures":result.unique_signatures,
+                              "verified":True}
+            return result.program
         p=self.legacy.synthesize(observations)
-        self.last_report={"mode":"legacy_constructive",
-                          "policy":None,"work":0,"attempts":0}
+        self.last_report={"mode":"legacy_fallback","policy":result.policy,
+                          "work":result.work,"attempts":result.attempts,
+                          "unique_signatures":result.unique_signatures,
+                          "verified":p is not None}
         return p
+
+    def synthesize_bitvector(self,examples,outputs):
+        """Opt-in observational 8-bit synthesis, no legacy BV fallback."""
+        if not self.config.enabled:
+            raise RuntimeError("bitvector synthesis requires enabled=True")
+        result=synthesize_bitvector(
+            examples,outputs,self.learned,self.random_macros,
+            self.config.budget,self.config.attempt_cap,
+            self.config.base_depth,self.config.deep_depth)
+        self.last_report={"mode":"adaptive_bitvector",
+                          "policy":result.policy,"work":result.work,
+                          "attempts":result.attempts,
+                          "unique_signatures":result.unique_signatures,
+                          "verified":result.verified}
+        return result.program
