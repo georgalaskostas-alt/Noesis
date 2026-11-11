@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-12  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 1: εκτελέστηκε, βαθμονόμηση υπό αξιολόγηση**)
+**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 2: diagnostics committed, αναμονή εκτέλεσης**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -19,7 +19,7 @@
 | E06–E09 | Program synthesis, abstractions, controls, search, transfer | Υπάρχουν scripts/πειράματα· χρειάζεται συγκεντρωτικό audit ανά claim |
 | E10.5 | Active Boolean query selection σε κοινό frozen frontier | **Εκτελέστηκε**: αναφέρθηκαν 192 tests OK και benchmark αποτελέσματα |
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
-| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 εκτελέστηκε**: 203 tests OK, held-out calibration metrics αναφέρθηκαν· risk-aware stopping εκκρεμεί |
+| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 εκτελέστηκε**: 203 tests OK· **Φάση 2 committed, δεν έχει εκτελεστεί**· risk-aware stopping εκκρεμεί |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -55,7 +55,7 @@
 
 - [x] Αρχικό εμπειρικό confidence score: Laplace-smoothed P(exact | family, strategy, unique) από calibration tasks. Δεν είναι εγγυημένη πιθανότητα επιτυχίας.
 - [ ] Διαχωρισμός calibration / validation / test tasks: **προσωρινά** έχουν υλοποιηθεί disjoint calibration/test seeds· ανεξάρτητο validation split εκκρεμεί.
-- [ ] Brier score και ECE-10 υλοποιήθηκαν στη Φάση 1· calibration curves και risk–coverage curves εκκρεμούν.
+- [x] Brier score, ECE-10, reliability bins και risk–coverage diagnostics υλοποιήθηκαν (Φάση 2 diagnostics **χωρίς ακόμη εκτέλεση**).
 - [ ] Σύγκριση fixed, random, E10 active, E11 unique-stop, E12 risk-aware σε κοινά seeds/tasks/frontier.
 - [ ] Paired uncertainty intervals ανά dataset και αναφορά περιπτώσεων αποτυχίας.
 - [ ] Καταγραφή query count **και** CPU/selection/frontier costs.
@@ -91,6 +91,16 @@
 
 **Ερευνητικό gate:** E12 Phase 1 **PASS (implementation/tests ran)**, **NO-GO για risk-aware deployment** μέχρι να εξεταστούν calibration curves, risk–coverage, proper validation, statistical uncertainty και CPU costs. Το `results_e12_calibration.json` δημιουργήθηκε τοπικά και δεν έχει προστεθεί στο repository.
 
+### E12 — Φάση 2: Calibration diagnostics (2026-11-12)
+
+- **Κώδικας committed, δεν έχει εκτελεστεί ακόμη**: `experiments/e06/run_e12_calibration_diagnostics.py` (commit `3007c18`) και `experiments/e06/tests/test_e12_calibration_diagnostics.py` (commit `0ac56e8`).
+- Χρησιμοποιεί τα ίδια disjoint calibration/test seeds και το ίδιο confidence model της Φάσης 1.
+- Προσθέτει reliability bins (πλήθος/μέσο confidence/accuracy), risk–coverage για **προκαθορισμένα** thresholds και diagnostics ανά stop reason (unique/budget/frontier_empty).
+- **Δεν** βελτιστοποιεί threshold στο test set, δεν κάνει ακόμη αυτόνομη διακοπή και δεν εγγυάται επίπεδο κινδύνου.
+- Εκτέλεση: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e12_calibration_diagnostics.py`.
+- Αναμενόμενο τοπικό output: `results_e12_diagnostics.json` (untracked).
+- Επόμενο: αξιολόγηση καμπυλών και confidence model, ξεχωριστό validation split, paired uncertainty και μέτρηση CPU.
+
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
 Ένα milestone χαρακτηρίζεται **ολοκληρωμένο και επαληθευμένο** μόνο όταν:
@@ -112,6 +122,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-12 | E12 Phase 2: reliability bins, risk–coverage και stop-reason diagnostics προστέθηκαν | Commits 3007c18, 0ac56e8· tests/benchmark εκκρεμούν |
 | 2026-11-12 | E12 Phase 1: 203 tests OK, held-out Brier/ECE/exact/queries καταγράφηκαν· active Brier χειρότερο | Αναφέρθηκε έξοδος Mac, δεν έγινε ανεξάρτητη αναπαραγωγή |
 | 2026-11-12 | E12 Φάση 1: κώδικας calibration και tests στο GitHub· αναμένεται εκτέλεση | Δεν υπάρχουν ακόμη E12 αποτελέσματα |
 | 2026-11-12 | Δημιουργία κεντρικού progress ledger, καταγραφή E10.5/E11 και σχεδίου E12 | Τα 192/198 tests και τα metrics αναφέρθηκαν από τον χρήστη· όχι ανεξάρτητη εκτέλεση |
