@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-12  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 2: 207 tests OK, diagnostics εκτελέστηκαν**)
+**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 3: risk gate committed, εκκρεμεί εκτέλεση**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -19,7 +19,7 @@
 | E06–E09 | Program synthesis, abstractions, controls, search, transfer | Υπάρχουν scripts/πειράματα· χρειάζεται συγκεντρωτικό audit ανά claim |
 | E10.5 | Active Boolean query selection σε κοινό frozen frontier | **Εκτελέστηκε**: αναφέρθηκαν 192 tests OK και benchmark αποτελέσματα |
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
-| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 εκτελέστηκε**: 203 tests OK· **Φάση 2 εκτελέστηκε: 207 tests OK**· risk-aware stopping εκκρεμεί |
+| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 εκτελέστηκε**: 203 tests OK· **Φάση 2 εκτελέστηκε: 207 tests OK**· Φάση 3 accept/abstain gate committed, δεν έχει εκτελεστεί· early stopping εκκρεμεί |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -54,8 +54,8 @@
 **Ερευνητική ερώτηση:** Πότε μπορούμε να σταματήσουμε να ζητάμε παρατηρήσεις με ελεγχόμενο κίνδυνο σφάλματος και μικρότερο συνολικό κόστος;
 
 - [x] Αρχικό εμπειρικό confidence score: Laplace-smoothed P(exact | family, strategy, unique) από calibration tasks. Δεν είναι εγγυημένη πιθανότητα επιτυχίας.
-- [ ] Διαχωρισμός calibration / validation / test tasks: **προσωρινά** έχουν υλοποιηθεί disjoint calibration/test seeds· ανεξάρτητο validation split εκκρεμεί.
-- [x] Brier score, ECE-10, reliability bins και risk–coverage diagnostics υλοποιήθηκαν (Φάση 2 diagnostics **χωρίς ακόμη εκτέλεση**).
+- [x] Φάση 3: τρεις διακριτές ομάδες seeds calibration/validation/test υλοποιήθηκαν· η νέα εκτέλεση εκκρεμεί.
+- [x] Brier score, ECE-10, reliability bins και risk–coverage diagnostics υλοποιήθηκαν (Φάση 2 diagnostics εκτελέστηκαν: 207 tests OK).
 - [ ] Σύγκριση fixed, random, E10 active, E11 unique-stop, E12 risk-aware σε κοινά seeds/tasks/frontier.
 - [ ] Paired uncertainty intervals ανά dataset και αναφορά περιπτώσεων αποτυχίας.
 - [ ] Καταγραφή query count **και** CPU/selection/frontier costs.
@@ -118,6 +118,20 @@
 
 **Εκκρεμότητες:** Δεν έχουμε δει ακόμη τις πραγματικές risk–coverage curves ή τα reliability bins από το JSON· η έξοδος Terminal εμφανίζει μόνο aggregate metrics και stop reasons. Επομένως δεν επιτρέπεται ισχυρισμός για ασφαλές confidence threshold. Επόμενο ερευνητικό βήμα: explicit frontier-miss diagnosis, validation-only threshold selection και paired risk–coverage αξιολόγηση.
 
+### E12 — Φάση 3: Validation-only risk gate (2026-11-12)
+
+- Κώδικας: `experiments/e06/run_e12_risk_gate.py` — commit `a8f270a`.
+- Tests: `experiments/e06/tests/test_e12_risk_gate.py` — commit `5d22f2a`.
+- **Κατάσταση:** committed στο GitHub, **δεν έχει εκτελεστεί ακόμη**.
+- Disjoint seed sets: calibration 16000–16007, validation 16008–16013, test 16014–16019.
+- Laplace confidence model fitted μόνο στο calibration. Validation επιλέγει threshold με approximate Wilson upper bound <= 0.20, τουλάχιστον 20 accepted tasks. Το test **δεν** χρησιμοποιείται για threshold selection.
+- Αν κανένα threshold δεν ικανοποιεί τα κριτήρια, το σύστημα επιλέγει **abstain_all**.
+- Διαγνωστικά: coverage, selective risk, approximate Wilson bound, wrong unique και empty frontier.
+- **Σημαντικό:** Πρόκειται για post-query **accept/abstain** gate, όχι adaptive early stopping. Τα Wilson intervals δεν αποτελούν formal risk guarantee, ειδικά επειδή τα tasks μοιράζονται seeds.
+- Εκτέλεση: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e12_risk_gate.py`.
+- Αναμενόμενο local/untracked JSON: `results_e12_risk_gate.json`.
+- Επόμενα: αξιολόγηση test risk/coverage, paired seed-level uncertainty, frontier membership audit, CPU accounting και μόνο μετά σχεδιασμός online stopping.
+
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
 Ένα milestone χαρακτηρίζεται **ολοκληρωμένο και επαληθευμένο** μόνο όταν:
@@ -139,6 +153,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-12 | E12 Phase 3: disjoint calibration/validation/test και validation-selected accept/abstain gate | Commits a8f270a, 5d22f2a· tests/benchmark εκκρεμούν |
 | 2026-11-12 | E12 Phase 2: 207 tests OK, aggregate diagnostics και stop reasons καταγράφηκαν | Έξοδος Mac· risk–coverage curves στο JSON δεν έχουν ελεγχθεί |
 | 2026-11-12 | E12 Phase 2: reliability bins, risk–coverage και stop-reason diagnostics προστέθηκαν | Commits 3007c18, 0ac56e8· tests/benchmark εκκρεμούν |
 | 2026-11-12 | E12 Phase 1: 203 tests OK, held-out Brier/ECE/exact/queries καταγράφηκαν· active Brier χειρότερο | Αναφέρθηκε έξοδος Mac, δεν έγινε ανεξάρτητη αναπαραγωγή |
