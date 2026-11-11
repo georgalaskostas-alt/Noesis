@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-12  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**σχεδιασμός**, όχι υλοποίηση)
+**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 1: κώδικας στο GitHub, αναμονή εκτέλεσης**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -19,7 +19,7 @@
 | E06–E09 | Program synthesis, abstractions, controls, search, transfer | Υπάρχουν scripts/πειράματα· χρειάζεται συγκεντρωτικό audit ανά claim |
 | E10.5 | Active Boolean query selection σε κοινό frozen frontier | **Εκτελέστηκε**: αναφέρθηκαν 192 tests OK και benchmark αποτελέσματα |
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
-| E12 | Confidence-aware, risk-aware stopping και calibration | **Επόμενο**: δεν έχει ακόμη υλοποιηθεί ή ελεγχθεί |
+| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 υλοποιήθηκε**: held-out empirical calibration + tests, **δεν έχουν εκτελεστεί**· risk-aware stopping εκκρεμεί |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -53,9 +53,9 @@
 
 **Ερευνητική ερώτηση:** Πότε μπορούμε να σταματήσουμε να ζητάμε παρατηρήσεις με ελεγχόμενο κίνδυνο σφάλματος και μικρότερο συνολικό κόστος;
 
-- [ ] Ορισμός σαφούς confidence score χωρίς πρόσβαση σε κρυφές oracle labels.
-- [ ] Διαχωρισμός calibration / validation / test tasks, χωρίς leakage.
-- [ ] Calibration curves, Brier score, expected calibration error και risk–coverage curves.
+- [x] Αρχικό εμπειρικό confidence score: Laplace-smoothed P(exact | family, strategy, unique) από calibration tasks. Δεν είναι εγγυημένη πιθανότητα επιτυχίας.
+- [ ] Διαχωρισμός calibration / validation / test tasks: **προσωρινά** έχουν υλοποιηθεί disjoint calibration/test seeds· ανεξάρτητο validation split εκκρεμεί.
+- [ ] Brier score και ECE-10 υλοποιήθηκαν στη Φάση 1· calibration curves και risk–coverage curves εκκρεμούν.
 - [ ] Σύγκριση fixed, random, E10 active, E11 unique-stop, E12 risk-aware σε κοινά seeds/tasks/frontier.
 - [ ] Paired uncertainty intervals ανά dataset και αναφορά περιπτώσεων αποτυχίας.
 - [ ] Καταγραφή query count **και** CPU/selection/frontier costs.
@@ -63,6 +63,16 @@
 - [ ] Απόφαση **GO / NO-GO** με βάση accuracy, calibration, efficiency και robustness.
 
 **Απαραίτητη προϋπόθεση:** Το E12 δεν πρέπει να χρησιμοποιεί την πραγματική target truth table για την εκτίμηση confidence, πέρα από τα bits που αποκαλύφθηκαν με queries. Η πραγματική λύση επιτρέπεται μόνο για post-hoc evaluation.
+
+### E12 — Φάση 1: κατάσταση υλοποίησης (2026-11-12)
+
+- Κώδικας: `experiments/e06/run_e12_confidence_calibration.py` — commit `c3e4460`.
+- Tests: `experiments/e06/tests/test_e12_confidence_calibration.py` — commit `01d8b1a`.
+- Εμπειρικό μοντέλο με disjoint calibration/test seeds, Laplace smoothing και fallback prior 0.5 για άγνωστες ομάδες.
+- Μετρικές: Brier score, ECE-10, exact rate, mean queries, unique rate.
+- **Κατάσταση:** committed, **όχι εκτελεσμένο/επαληθευμένο**. Δεν έχουν καταγραφεί E12 benchmark αποτελέσματα.
+- **Εκτέλεση:** `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e12_confidence_calibration.py`.
+- **Επόμενο:** επαλήθευση αποτελεσμάτων, calibration/validation/test split, risk–coverage, cost-aware policy και paired evaluation.
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -85,4 +95,5 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-12 | E12 Φάση 1: κώδικας calibration και tests στο GitHub· αναμένεται εκτέλεση | Δεν υπάρχουν ακόμη E12 αποτελέσματα |
 | 2026-11-12 | Δημιουργία κεντρικού progress ledger, καταγραφή E10.5/E11 και σχεδίου E12 | Τα 192/198 tests και τα metrics αναφέρθηκαν από τον χρήστη· όχι ανεξάρτητη εκτέλεση |
