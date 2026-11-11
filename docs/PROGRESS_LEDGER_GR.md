@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-12  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 1: κώδικας στο GitHub, αναμονή εκτέλεσης**)
+**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 1: εκτελέστηκε, βαθμονόμηση υπό αξιολόγηση**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -19,7 +19,7 @@
 | E06–E09 | Program synthesis, abstractions, controls, search, transfer | Υπάρχουν scripts/πειράματα· χρειάζεται συγκεντρωτικό audit ανά claim |
 | E10.5 | Active Boolean query selection σε κοινό frozen frontier | **Εκτελέστηκε**: αναφέρθηκαν 192 tests OK και benchmark αποτελέσματα |
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
-| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 υλοποιήθηκε**: held-out empirical calibration + tests, **δεν έχουν εκτελεστεί**· risk-aware stopping εκκρεμεί |
+| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 εκτελέστηκε**: 203 tests OK, held-out calibration metrics αναφέρθηκαν· risk-aware stopping εκκρεμεί |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -59,7 +59,7 @@
 - [ ] Σύγκριση fixed, random, E10 active, E11 unique-stop, E12 risk-aware σε κοινά seeds/tasks/frontier.
 - [ ] Paired uncertainty intervals ανά dataset και αναφορά περιπτώσεων αποτυχίας.
 - [ ] Καταγραφή query count **και** CPU/selection/frontier costs.
-- [ ] Νέα tests, benchmark και καταγραφή πραγματικών αποτελεσμάτων.
+- [x] E12 Phase 1: tests και benchmark εκτελέστηκαν στο Mac (203 OK), οι μετρικές καταγράφηκαν. Επιπλέον validation και benchmarks εκκρεμούν.
 - [ ] Απόφαση **GO / NO-GO** με βάση accuracy, calibration, efficiency και robustness.
 
 **Απαραίτητη προϋπόθεση:** Το E12 δεν πρέπει να χρησιμοποιεί την πραγματική target truth table για την εκτίμηση confidence, πέρα από τα bits που αποκαλύφθηκαν με queries. Η πραγματική λύση επιτρέπεται μόνο για post-hoc evaluation.
@@ -70,9 +70,26 @@
 - Tests: `experiments/e06/tests/test_e12_confidence_calibration.py` — commit `01d8b1a`.
 - Εμπειρικό μοντέλο με disjoint calibration/test seeds, Laplace smoothing και fallback prior 0.5 για άγνωστες ομάδες.
 - Μετρικές: Brier score, ECE-10, exact rate, mean queries, unique rate.
-- **Κατάσταση:** committed, **όχι εκτελεσμένο/επαληθευμένο**. Δεν έχουν καταγραφεί E12 benchmark αποτελέσματα.
+- **Κατάσταση:** committed και **εκτελέστηκε από τον χρήστη**: 203 tests OK, benchmark έξοδος καταγράφηκε. Δεν πραγματοποιήθηκε ανεξάρτητη αναπαραγωγή.
 - **Εκτέλεση:** `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e12_confidence_calibration.py`.
-- **Επόμενο:** επαλήθευση αποτελεσμάτων, calibration/validation/test split, risk–coverage, cost-aware policy και paired evaluation.
+- **Επόμενο:** διάγνωση χειρότερου Brier της active, calibration/validation/test split, risk–coverage, cost-aware policy και paired evaluation.
+
+### E12 — Φάση 1: αποτελέσματα από Mac (2026-11-12)
+
+Ο χρήστης εκτέλεσε `python3 -m unittest discover -s tests -q`: **203 tests, OK, 1.900 s**, και έπειτα `python3 run_e12_confidence_calibration.py`. Οι παρακάτω τιμές αντιγράφηκαν από την έξοδο, όχι από το πλήρες JSON.
+
+| Dataset | Strategy | Exact | Brier ↓ | ECE-10 ↓ | Mean queries ↓ |
+|---|---|---:|---:|---:|---:|
+| shifted | fixed | 0.3000 | 0.1818 | 0.0157 | 10.05 |
+| shifted | random | 0.3000 | 0.1782 | 0.0184 | 10.11 |
+| shifted | active | 0.3000 | 0.2114 | 0.0377 | **9.00** |
+| bitvector_grammar | fixed | 0.5933 | 0.1936 | 0.0174 | 11.31 |
+| bitvector_grammar | random | 0.5933 | 0.1858 | 0.0122 | 10.59 |
+| bitvector_grammar | active | 0.5933 | 0.2414 | 0.0126 | **9.04** |
+
+**Ερμηνεία:** Με ίδια αναφερόμενη exact accuracy, active απαιτεί περίπου 10.4% λιγότερα queries από fixed στο shifted και 20.1% στο bitvector_grammar. Ωστόσο έχει **χειρότερο Brier** από fixed και στα δύο datasets (+0.0296 και +0.0478). Το μικρό ECE-10 δεν αναιρεί τον χειρότερο Brier: η βαθμονόμηση αξιολογείται με περισσότερες από μία μετρικές. Το αρχικό confidence είναι απλή εμπειρική πιθανότητα ανά (family, strategy, unique), όχι εξατομικευμένο αξιόπιστο risk estimator· δεν δικαιολογεί ακόμα autonomous risk-based stopping.
+
+**Ερευνητικό gate:** E12 Phase 1 **PASS (implementation/tests ran)**, **NO-GO για risk-aware deployment** μέχρι να εξεταστούν calibration curves, risk–coverage, proper validation, statistical uncertainty και CPU costs. Το `results_e12_calibration.json` δημιουργήθηκε τοπικά και δεν έχει προστεθεί στο repository.
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -95,5 +112,6 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-12 | E12 Phase 1: 203 tests OK, held-out Brier/ECE/exact/queries καταγράφηκαν· active Brier χειρότερο | Αναφέρθηκε έξοδος Mac, δεν έγινε ανεξάρτητη αναπαραγωγή |
 | 2026-11-12 | E12 Φάση 1: κώδικας calibration και tests στο GitHub· αναμένεται εκτέλεση | Δεν υπάρχουν ακόμη E12 αποτελέσματα |
 | 2026-11-12 | Δημιουργία κεντρικού progress ledger, καταγραφή E10.5/E11 και σχεδίου E12 | Τα 192/198 tests και τα metrics αναφέρθηκαν από τον χρήστη· όχι ανεξάρτητη εκτέλεση |
