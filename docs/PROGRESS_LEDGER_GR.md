@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-12  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 3: 213 tests OK, abstain_all σε όλες τις ομάδες**)
+**Τρέχον ορόσημο:** E13 — Frontier Quality & Error Diagnosis (**κώδικας committed, αναμονή εκτέλεσης**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -19,7 +19,8 @@
 | E06–E09 | Program synthesis, abstractions, controls, search, transfer | Υπάρχουν scripts/πειράματα· χρειάζεται συγκεντρωτικό audit ανά claim |
 | E10.5 | Active Boolean query selection σε κοινό frozen frontier | **Εκτελέστηκε**: αναφέρθηκαν 192 tests OK και benchmark αποτελέσματα |
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
-| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 εκτελέστηκε**: 203 tests OK· **Φάση 2 εκτελέστηκε: 207 tests OK**· Φάση 3 εκτελέστηκε: 213 tests OK, coverage 0%· early stopping εκκρεμεί |
+| E12 | Confidence-aware, risk-aware stopping και calibration | Φάσεις 1–3 εκτελέστηκαν: 203/207/213 tests OK· Phase 3 coverage 0%, NO-GO |
+| E13 | Frontier Quality & Error Diagnosis | **Committed, όχι εκτελεσμένο**: target membership audit και failure taxonomy |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -149,6 +150,22 @@
 
 **Επόμενο:** frontier membership / representation audit, error taxonomy, πλουσιότερα non-oracle confidence features, ξεχωριστό validation και ανεξάρτητο test. Δεν αλλάζουμε το 20% risk criterion απλώς για να αυξήσουμε coverage.
 
+### E13 — Frontier Quality & Error Diagnosis (2026-11-12)
+
+**Ερευνητική ερώτηση:** Οι αποτυχίες οφείλονται σε απουσία της ακριβούς target Boolean συνάρτησης από το αρχικό frozen frontier ή σε εσφαλμένη επιλογή μεταξύ διαθέσιμων υποψηφίων;
+
+- Κώδικας: `experiments/e06/run_e13_frontier_audit.py` — commit `047c2b6`.
+- Tests: `experiments/e06/tests/test_e13_frontier_audit.py` — commit `54e8b34`.
+- **Κατάσταση:** committed στο GitHub, **δεν έχει εκτελεστεί ακόμη**.
+- Για κάθε target γίνεται post-hoc έλεγχος αν η 16-bit truth table του υπάρχει στο αρχικό frontier, πριν από filtering με queries.
+- Failure taxonomy: exact, target absent, frontier empty despite target present, wrong candidate despite target present, unresolved despite target present.
+- Αξιολογούνται fixed/random/active στο ίδιο frozen frontier. Η membership πρέπει να είναι ίδια μεταξύ στρατηγικών στο ίδιο seed/task.
+- **Αποφυγή leakage:** το target truth table χρησιμοποιείται στο audit μόνο για post-hoc scoring και ποτέ για κατασκευή frontier ή επιλογή query.
+- Εντολή: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e13_frontier_audit.py`.
+- Αναμενόμενο local/untracked output: `results_e13_frontier_audit.json`.
+- Περιορισμός: membership σημαίνει ισοδύναμη truth table σε 16 εισόδους, όχι ταυτόσημο AST ή γενίκευση σε πραγματικά προγράμματα.
+- **Επόμενο gate:** ανάλογα με το ποσοστό target-absent, αποφασίζουμε αν πρέπει πρώτα να αυξηθεί frontier recall ή να βελτιωθεί candidate discrimination. Χωρίς νέα πειραματικά δεδομένα δεν δηλώνεται επιτυχία.
+
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
 Ένα milestone χαρακτηρίζεται **ολοκληρωμένο και επαληθευμένο** μόνο όταν:
@@ -170,6 +187,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-12 | E13: post-hoc frontier membership audit και failure taxonomy προστέθηκαν | Commits 047c2b6, 54e8b34· tests/benchmark εκκρεμούν |
 | 2026-11-12 | E12 Phase 3: 213 tests OK, όλα τα thresholds None, coverage 0%, unique-wrong diagnostics | Έξοδος Mac· NO-GO για accept/abstain deployment |
 | 2026-11-12 | E12 Phase 3: disjoint calibration/validation/test και validation-selected accept/abstain gate | Commits a8f270a, 5d22f2a· tests/benchmark εκκρεμούν |
 | 2026-11-12 | E12 Phase 2: 207 tests OK, aggregate diagnostics και stop reasons καταγράφηκαν | Έξοδος Mac· risk–coverage curves στο JSON δεν έχουν ελεγχθεί |
