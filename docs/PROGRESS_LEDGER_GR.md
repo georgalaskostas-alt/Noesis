@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-12  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 2: diagnostics committed, αναμονή εκτέλεσης**)
+**Τρέχον ορόσημο:** E12 — Confidence-Aware Stopping (**Φάση 2: 207 tests OK, diagnostics εκτελέστηκαν**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -19,7 +19,7 @@
 | E06–E09 | Program synthesis, abstractions, controls, search, transfer | Υπάρχουν scripts/πειράματα· χρειάζεται συγκεντρωτικό audit ανά claim |
 | E10.5 | Active Boolean query selection σε κοινό frozen frontier | **Εκτελέστηκε**: αναφέρθηκαν 192 tests OK και benchmark αποτελέσματα |
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
-| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 εκτελέστηκε**: 203 tests OK· **Φάση 2 committed, δεν έχει εκτελεστεί**· risk-aware stopping εκκρεμεί |
+| E12 | Confidence-aware, risk-aware stopping και calibration | **Φάση 1 εκτελέστηκε**: 203 tests OK· **Φάση 2 εκτελέστηκε: 207 tests OK**· risk-aware stopping εκκρεμεί |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -93,13 +93,30 @@
 
 ### E12 — Φάση 2: Calibration diagnostics (2026-11-12)
 
-- **Κώδικας committed, δεν έχει εκτελεστεί ακόμη**: `experiments/e06/run_e12_calibration_diagnostics.py` (commit `3007c18`) και `experiments/e06/tests/test_e12_calibration_diagnostics.py` (commit `0ac56e8`).
+- **Κώδικας committed και εκτελέστηκε από τον χρήστη**: `experiments/e06/run_e12_calibration_diagnostics.py` (commit `3007c18`) και `experiments/e06/tests/test_e12_calibration_diagnostics.py` (commit `0ac56e8`).
 - Χρησιμοποιεί τα ίδια disjoint calibration/test seeds και το ίδιο confidence model της Φάσης 1.
 - Προσθέτει reliability bins (πλήθος/μέσο confidence/accuracy), risk–coverage για **προκαθορισμένα** thresholds και diagnostics ανά stop reason (unique/budget/frontier_empty).
 - **Δεν** βελτιστοποιεί threshold στο test set, δεν κάνει ακόμη αυτόνομη διακοπή και δεν εγγυάται επίπεδο κινδύνου.
 - Εκτέλεση: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e12_calibration_diagnostics.py`.
-- Αναμενόμενο τοπικό output: `results_e12_diagnostics.json` (untracked).
+- Τοπικό output: `results_e12_diagnostics.json` δημιουργήθηκε σύμφωνα με την έξοδο τερματικού (untracked).
 - Επόμενο: αξιολόγηση καμπυλών και confidence model, ξεχωριστό validation split, paired uncertainty και μέτρηση CPU.
+
+### E12 — Φάση 2: αναφερθέντα αποτελέσματα (2026-11-12)
+
+Ο χρήστης εκτέλεσε **207 tests σε 3.686 s — OK** και το `run_e12_calibration_diagnostics.py`. Ακολουθούν οι τιμές από το Terminal, όχι από ανεξάρτητη επανεκτέλεση ή από το πλήρες JSON.
+
+| Dataset | Strategy | Brier ↓ | ECE-10 ↓ | Mean queries ↓ | Unique | Frontier empty |
+|---|---|---:|---:|---:|---:|---:|
+| shifted | fixed | 0.1818 | 0.0157 | 10.05 | 228 | 72 |
+| shifted | random | 0.1782 | 0.0184 | 10.11 | 221 | 79 |
+| shifted | active | 0.2114 | 0.0377 | **9.00** | 300 | 0 |
+| bitvector_grammar | fixed | 0.1936 | 0.0174 | 11.31 | 264 | 36 |
+| bitvector_grammar | random | 0.1858 | 0.0122 | 10.59 | 259 | 41 |
+| bitvector_grammar | active | 0.2414 | 0.0126 | **9.04** | 300 | 0 |
+
+**Κρίσιμη παρατήρηση:** Η active σταματά με έναν υποψήφιο σε 300/300 tasks ανά οικογένεια, αλλά η Phase 1 αναφέρει exact accuracy μόλις 0.3000 (shifted) και 0.5933 (bitvector). Το frontier uniqueness **δεν** πιστοποιεί correctness. Οι άλλες στρατηγικές έχουν frontier-empty failures. Η active εμφανίζει χειρότερο Brier από fixed και στα δύο datasets, παρά τα λιγότερα queries.
+
+**Εκκρεμότητες:** Δεν έχουμε δει ακόμη τις πραγματικές risk–coverage curves ή τα reliability bins από το JSON· η έξοδος Terminal εμφανίζει μόνο aggregate metrics και stop reasons. Επομένως δεν επιτρέπεται ισχυρισμός για ασφαλές confidence threshold. Επόμενο ερευνητικό βήμα: explicit frontier-miss diagnosis, validation-only threshold selection και paired risk–coverage αξιολόγηση.
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -122,6 +139,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-12 | E12 Phase 2: 207 tests OK, aggregate diagnostics και stop reasons καταγράφηκαν | Έξοδος Mac· risk–coverage curves στο JSON δεν έχουν ελεγχθεί |
 | 2026-11-12 | E12 Phase 2: reliability bins, risk–coverage και stop-reason diagnostics προστέθηκαν | Commits 3007c18, 0ac56e8· tests/benchmark εκκρεμούν |
 | 2026-11-12 | E12 Phase 1: 203 tests OK, held-out Brier/ECE/exact/queries καταγράφηκαν· active Brier χειρότερο | Αναφέρθηκε έξοδος Mac, δεν έγινε ανεξάρτητη αναπαραγωγή |
 | 2026-11-12 | E12 Φάση 1: κώδικας calibration και tests στο GitHub· αναμένεται εκτέλεση | Δεν υπάρχουν ακόμη E12 αποτελέσματα |
