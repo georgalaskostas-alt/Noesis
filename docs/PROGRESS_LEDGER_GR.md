@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-12  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E13 — Frontier Quality & Error Diagnosis (**κώδικας committed, αναμονή εκτέλεσης**)
+**Τρέχον ορόσημο:** E13 — Frontier Quality & Error Diagnosis (**219 tests OK, frontier recall bottleneck επιβεβαιώθηκε στο benchmark**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -20,7 +20,7 @@
 | E10.5 | Active Boolean query selection σε κοινό frozen frontier | **Εκτελέστηκε**: αναφέρθηκαν 192 tests OK και benchmark αποτελέσματα |
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
 | E12 | Confidence-aware, risk-aware stopping και calibration | Φάσεις 1–3 εκτελέστηκαν: 203/207/213 tests OK· Phase 3 coverage 0%, NO-GO |
-| E13 | Frontier Quality & Error Diagnosis | **Committed, όχι εκτελεσμένο**: target membership audit και failure taxonomy |
+| E13 | Frontier Quality & Error Diagnosis | **Εκτελέστηκε**: 219 tests OK· shifted membership 31.11%, bitvector 56.67%· όλες οι αποτυχίες target-absent |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -156,15 +156,30 @@
 
 - Κώδικας: `experiments/e06/run_e13_frontier_audit.py` — commit `047c2b6`.
 - Tests: `experiments/e06/tests/test_e13_frontier_audit.py` — commit `54e8b34`.
-- **Κατάσταση:** committed στο GitHub, **δεν έχει εκτελεστεί ακόμη**.
+- **Κατάσταση:** committed και εκτελέστηκε από τον χρήστη: **219 tests OK (1.848 s)**.
 - Για κάθε target γίνεται post-hoc έλεγχος αν η 16-bit truth table του υπάρχει στο αρχικό frontier, πριν από filtering με queries.
 - Failure taxonomy: exact, target absent, frontier empty despite target present, wrong candidate despite target present, unresolved despite target present.
 - Αξιολογούνται fixed/random/active στο ίδιο frozen frontier. Η membership πρέπει να είναι ίδια μεταξύ στρατηγικών στο ίδιο seed/task.
 - **Αποφυγή leakage:** το target truth table χρησιμοποιείται στο audit μόνο για post-hoc scoring και ποτέ για κατασκευή frontier ή επιλογή query.
 - Εντολή: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e13_frontier_audit.py`.
-- Αναμενόμενο local/untracked output: `results_e13_frontier_audit.json`.
+- Local/untracked output: `results_e13_frontier_audit.json` δημιουργήθηκε σύμφωνα με την έξοδο του χρήστη.
 - Περιορισμός: membership σημαίνει ισοδύναμη truth table σε 16 εισόδους, όχι ταυτόσημο AST ή γενίκευση σε πραγματικά προγράμματα.
 - **Επόμενο gate:** ανάλογα με το ποσοστό target-absent, αποφασίζουμε αν πρέπει πρώτα να αυξηθεί frontier recall ή να βελτιωθεί candidate discrimination. Χωρίς νέα πειραματικά δεδομένα δεν δηλώνεται επιτυχία.
+
+### E13 — Αναφερθέντα αποτελέσματα (2026-11-12)
+
+Ο χρήστης εκτέλεσε **219 tests σε 1.848 s — OK** και `run_e13_frontier_audit.py`. Οι παρακάτω αριθμοί προέρχονται από την έξοδο του Terminal, όχι από ανεξάρτητη επανεκτέλεση ή έλεγχο του πλήρους JSON.
+
+| Dataset | Tasks | Target present | Target absent | Exact | Wrong despite target present |
+|---|---:|---:|---:|---:|---:|
+| shifted | 180 | 56 (31.11%) | 124 (68.89%) | 56 (31.11%) | 0 |
+| bitvector_grammar | 180 | 102 (56.67%) | 78 (43.33%) | 102 (56.67%) | 0 |
+
+Οι τιμές membership και exact είναι ίδιες για fixed/random/active. Οι `wrong_unique` μετρήσεις διαφέρουν ανά στρατηγική: shifted 84/84/124, bitvector 54/51/78 (fixed/random/active). **Και στις δύο οικογένειες, όλες οι μη-exact εργασίες ταξινομήθηκαν target_absent_from_frontier**, χωρίς `wrong_candidate_despite_target_present` ή `frontier_empty_despite_target_present`.
+
+**Ερμηνεία:** Στο συγκεκριμένο frozen-frontier benchmark, ο περιοριστικός παράγοντας είναι το frontier recall. Όταν η σωστή 16-bit Boolean συνάρτηση περιλαμβάνεται στο frontier, όλες οι στρατηγικές την ανακτούν. Αυτό δεν εγγυάται ότι το ίδιο θα ισχύει σε διαφορετικά seeds, search budgets, γλώσσες προγραμμάτων ή πραγματικά tasks.
+
+**Απόφαση:** E13 diagnostic milestone PASS (user-reported tests/benchmark), **NO-GO** για risk-aware autonomous acceptance. Επόμενο πείραμα: frontier expansion σε κοινά seeds και με ελεγχόμενο work/attempt budget, σύγκριση recall, exact, CPU και cost, χωρίς target-aware search.
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -187,6 +202,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-12 | E13: 219 tests OK, shifted 56/180 και bitvector 102/180 membership/exact, όλες οι αποτυχίες target absent | Έξοδος Mac· frontier recall bottleneck, NO-GO deployment |
 | 2026-11-12 | E13: post-hoc frontier membership audit και failure taxonomy προστέθηκαν | Commits 047c2b6, 54e8b34· tests/benchmark εκκρεμούν |
 | 2026-11-12 | E12 Phase 3: 213 tests OK, όλα τα thresholds None, coverage 0%, unique-wrong diagnostics | Έξοδος Mac· NO-GO για accept/abstain deployment |
 | 2026-11-12 | E12 Phase 3: disjoint calibration/validation/test και validation-selected accept/abstain gate | Commits a8f270a, 5d22f2a· tests/benchmark εκκρεμούν |
