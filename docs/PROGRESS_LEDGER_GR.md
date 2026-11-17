@@ -1,9 +1,9 @@
 # NOESIS — Ζωντανό μητρώο προόδου / Research Progress Ledger
 
-**Τελευταία ενημέρωση:** 2026-11-12  
+**Τελευταία ενημέρωση:** 2026-11-17  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E13 — Frontier Quality & Error Diagnosis (**219 tests OK, frontier recall bottleneck επιβεβαιώθηκε στο benchmark**)
+**Τρέχον ορόσημο:** E14 — Frontier Expansion (**κώδικας committed, αναμονή tests/benchmark**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -21,6 +21,7 @@
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
 | E12 | Confidence-aware, risk-aware stopping και calibration | Φάσεις 1–3 εκτελέστηκαν: 203/207/213 tests OK· Phase 3 coverage 0%, NO-GO |
 | E13 | Frontier Quality & Error Diagnosis | **Εκτελέστηκε**: 219 tests OK· shifted membership 31.11%, bitvector 56.67%· όλες οι αποτυχίες target-absent |
+| E14 | Paired Frontier Expansion | **Committed, όχι εκτελεσμένο**: budget sweep και cost telemetry |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -181,6 +182,19 @@
 
 **Απόφαση:** E13 diagnostic milestone PASS (user-reported tests/benchmark), **NO-GO** για risk-aware autonomous acceptance. Επόμενο πείραμα: frontier expansion σε κοινά seeds και με ελεγχόμενο work/attempt budget, σύγκριση recall, exact, CPU και cost, χωρίς target-aware search.
 
+### E14 — Frontier Expansion (2026-11-17)
+
+- Κώδικας: `experiments/e06/run_e14_frontier_expansion.py` — commit `5b5d5e6`.
+- Tests: `experiments/e06/tests/test_e14_frontier_expansion.py` — commit `b23381a`.
+- **Κατάσταση:** committed, **δεν έχουν εκτελεστεί ακόμη tests ή benchmark**.
+- Paired sweep στο ίδιο seed/task/training: baseline `(work=8000, attempts=2000)`, expanded `(16000,4000)` και `(32000,8000)`. Διατηρείται ίδιο generator και `deep_depth=7`.
+- Αναφορά: per-family target truth-table membership/recall, paired gains/losses, frontier build CPU elapsed seconds, actual work, attempts, unique signatures.
+- Τα targets **δεν** επηρεάζουν το candidate generation. Χρησιμοποιούνται μόνο στο post-hoc audit.
+- **Περιορισμός:** αλλάζουν ταυτόχρονα work budget και attempt cap· δεν μπορεί να αποδοθεί τυχόν διαφορά αποκλειστικά σε έναν πόρο. Δεν περιλαμβάνεται χρόνος εκπαίδευσης και query selection.
+- Εκτέλεση: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e14_frontier_expansion.py`.
+- Local output: `results_e14_frontier_expansion.json` (untracked).
+- Ερευνητικό gate: αύξηση recall με σαφή καταγραφή πρόσθετου κόστους. Αν η αύξηση budget δεν βελτιώνει ουσιαστικά recall, θα χρειαστεί αλλαγή generator/vocabulary/depth αντί για απλή αύξηση compute.
+
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
 Ένα milestone χαρακτηρίζεται **ολοκληρωμένο και επαληθευμένο** μόνο όταν:
@@ -202,6 +216,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-17 | E14: paired frontier budget sweep, cost telemetry και unit tests | Commits 5b5d5e6, b23381a· εκτέλεση εκκρεμεί |
 | 2026-11-12 | E13: 219 tests OK, shifted 56/180 και bitvector 102/180 membership/exact, όλες οι αποτυχίες target absent | Έξοδος Mac· frontier recall bottleneck, NO-GO deployment |
 | 2026-11-12 | E13: post-hoc frontier membership audit και failure taxonomy προστέθηκαν | Commits 047c2b6, 54e8b34· tests/benchmark εκκρεμούν |
 | 2026-11-12 | E12 Phase 3: 213 tests OK, όλα τα thresholds None, coverage 0%, unique-wrong diagnostics | Έξοδος Mac· NO-GO για accept/abstain deployment |
