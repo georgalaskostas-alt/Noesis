@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-17  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E14 — Frontier Expansion (**κώδικας committed, αναμονή tests/benchmark**)
+**Τρέχον ορόσημο:** E14 — Frontier Expansion (**223 tests OK, paired benchmark εκτελέστηκε — gain σε recall με κόστος**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -21,7 +21,7 @@
 | E11 | Adaptive stopping όταν απομένει ένας υποψήφιος | **Εκτελέστηκε**: αναφέρθηκαν 198 tests OK και benchmark αποτελέσματα |
 | E12 | Confidence-aware, risk-aware stopping και calibration | Φάσεις 1–3 εκτελέστηκαν: 203/207/213 tests OK· Phase 3 coverage 0%, NO-GO |
 | E13 | Frontier Quality & Error Diagnosis | **Εκτελέστηκε**: 219 tests OK· shifted membership 31.11%, bitvector 56.67%· όλες οι αποτυχίες target-absent |
-| E14 | Paired Frontier Expansion | **Committed, όχι εκτελεσμένο**: budget sweep και cost telemetry |
+| E14 | Paired Frontier Expansion | **Εκτελέστηκε**: 223 tests OK· shifted recall 31.11%→37.78%, bitvector 56.67%→70.00% στο 32k |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -186,14 +186,37 @@
 
 - Κώδικας: `experiments/e06/run_e14_frontier_expansion.py` — commit `5b5d5e6`.
 - Tests: `experiments/e06/tests/test_e14_frontier_expansion.py` — commit `b23381a`.
-- **Κατάσταση:** committed, **δεν έχουν εκτελεστεί ακόμη tests ή benchmark**.
+- **Κατάσταση:** committed και **εκτελέστηκε από τον χρήστη**: 223 tests OK σε 1.856 s· benchmark results αναφέρθηκαν.
 - Paired sweep στο ίδιο seed/task/training: baseline `(work=8000, attempts=2000)`, expanded `(16000,4000)` και `(32000,8000)`. Διατηρείται ίδιο generator και `deep_depth=7`.
 - Αναφορά: per-family target truth-table membership/recall, paired gains/losses, frontier build CPU elapsed seconds, actual work, attempts, unique signatures.
 - Τα targets **δεν** επηρεάζουν το candidate generation. Χρησιμοποιούνται μόνο στο post-hoc audit.
 - **Περιορισμός:** αλλάζουν ταυτόχρονα work budget και attempt cap· δεν μπορεί να αποδοθεί τυχόν διαφορά αποκλειστικά σε έναν πόρο. Δεν περιλαμβάνεται χρόνος εκπαίδευσης και query selection.
 - Εκτέλεση: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e14_frontier_expansion.py`.
-- Local output: `results_e14_frontier_expansion.json` (untracked).
+- Local output: `results_e14_frontier_expansion.json` δημιουργήθηκε σύμφωνα με την έξοδο τερματικού (untracked).
 - Ερευνητικό gate: αύξηση recall με σαφή καταγραφή πρόσθετου κόστους. Αν η αύξηση budget δεν βελτιώνει ουσιαστικά recall, θα χρειαστεί αλλαγή generator/vocabulary/depth αντί για απλή αύξηση compute.
+
+### E14 — Αποτελέσματα από Mac (2026-11-17)
+
+Ο χρήστης ανέφερε `Ran 223 tests in 1.856s — OK` και εκτέλεσε το `run_e14_frontier_expansion.py`. Οι τιμές προέρχονται από την έξοδο Terminal, όχι από ανεξάρτητη αναπαραγωγή ή έλεγχο του πλήρους JSON.
+
+| Dataset | Work / attempts cap | Recall | Gain vs baseline | New targets | Lost targets |
+|---|---|---:|---:|---:|---:|
+| shifted | 8000 / 2000 | 0.3111 | 0 | 0 | 0 |
+| shifted | 16000 / 4000 | 0.3333 | +0.0222 | 4 | 0 |
+| shifted | 32000 / 8000 | 0.3778 | +0.0667 | 12 | 0 |
+| bitvector_grammar | 8000 / 2000 | 0.5667 | 0 | 0 | 0 |
+| bitvector_grammar | 16000 / 4000 | 0.6389 | +0.0722 | 13 | 0 |
+| bitvector_grammar | 32000 / 8000 | 0.7000 | +0.1333 | 24 | 0 |
+
+| Work/attempt cap | Mean actual work | Mean attempts | Mean unique signatures | Mean frontier seconds |
+|---|---:|---:|---:|---:|
+| 8000 / 2000 | 7995 | 1471 | 440 | 0.0015 |
+| 16000 / 4000 | 16000 | 2636 | 632 | 0.0026 |
+| 32000 / 8000 | 28866 | 4474 | 893 | 0.0048 |
+
+**Ερμηνεία:** 36 additional covered tasks στα 360 συνολικά (12 shifted, 24 bitvector), χωρίς observed lost targets. Το μεγαλύτερο arm κατανάλωσε 28,866 work αντί για 32,000, με ~3.61× baseline work, ~3.04× attempts και ~2.03× unique signatures. Οι χρόνοι είναι μικροί, εξαρτώνται από τη συγκεκριμένη εκτέλεση Mac και **δεν** μετρούν training/query overhead. Αλλάζουν μαζί work cap και attempt cap. Δεν υπάρχει ακόμη confidence interval ή ανεξάρτητο held-out seed replication.
+
+**Απόφαση:** E14 benchmark **PASS ως διαγνωστικό frontier expansion**, αλλά **NO-GO για autonomous risk-aware acceptance** (E12). Επόμενο: συγκρίσιμες πολιτικές παραγωγής frontier κάτω από ίσο πραγματικό compute, και per-seed paired uncertainty. Δεν αποδίδουμε την αύξηση σε καλύτερο αλγόριθμο: ήταν περισσότερο search.
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -216,6 +239,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-17 | E14: 223 tests OK, recall +6.67pp shifted / +13.33pp bitvector στο 32k, κόστος καταγράφηκε | Έξοδος Mac· E14 diagnostic PASS, E12 NO-GO |
 | 2026-11-17 | E14: paired frontier budget sweep, cost telemetry και unit tests | Commits 5b5d5e6, b23381a· εκτέλεση εκκρεμεί |
 | 2026-11-12 | E13: 219 tests OK, shifted 56/180 και bitvector 102/180 membership/exact, όλες οι αποτυχίες target absent | Έξοδος Mac· frontier recall bottleneck, NO-GO deployment |
 | 2026-11-12 | E13: post-hoc frontier membership audit και failure taxonomy προστέθηκαν | Commits 047c2b6, 54e8b34· tests/benchmark εκκρεμούν |
