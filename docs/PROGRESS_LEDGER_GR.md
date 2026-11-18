@@ -1,9 +1,9 @@
 # NOESIS — Ζωντανό μητρώο προόδου / Research Progress Ledger
 
-**Τελευταία ενημέρωση:** 2026-11-17  
+**Τελευταία ενημέρωση:** 2026-11-18  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E14 — Frontier Expansion (**223 tests OK, paired benchmark εκτελέστηκε — gain σε recall με κόστος**)
+**Τρέχον ορόσημο:** E15 — Efficient Frontier Search (**committed, εκκρεμούν tests και benchmark**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -22,6 +22,7 @@
 | E12 | Confidence-aware, risk-aware stopping και calibration | Φάσεις 1–3 εκτελέστηκαν: 203/207/213 tests OK· Phase 3 coverage 0%, NO-GO |
 | E13 | Frontier Quality & Error Diagnosis | **Εκτελέστηκε**: 219 tests OK· shifted membership 31.11%, bitvector 56.67%· όλες οι αποτυχίες target-absent |
 | E14 | Paired Frontier Expansion | **Εκτελέστηκε**: 223 tests OK· shifted recall 31.11%→37.78%, bitvector 56.67%→70.00% στο 32k |
+| E15 | Efficient Frontier Search | **Committed, όχι εκτελεσμένο**: plain vs learned-first vs random-first, ίσα caps |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -218,6 +219,20 @@
 
 **Απόφαση:** E14 benchmark **PASS ως διαγνωστικό frontier expansion**, αλλά **NO-GO για autonomous risk-aware acceptance** (E12). Επόμενο: συγκρίσιμες πολιτικές παραγωγής frontier κάτω από ίσο πραγματικό compute, και per-seed paired uncertainty. Δεν αποδίδουμε την αύξηση σε καλύτερο αλγόριθμο: ήταν περισσότερο search.
 
+### E15 — Efficient Frontier Search (2026-11-18)
+
+- Κώδικας: `experiments/e06/run_e15_search_policies.py` — commit `1b23cae`.
+- Tests: `experiments/e06/tests/test_e15_search_policies.py` — commit `ee9a33a`.
+- **Κατάσταση:** committed στο GitHub, **δεν έχουν εκτελεστεί ακόμη tests/benchmark**.
+- Τρεις target-blind πολιτικές: `plain` (E14 baseline), `learned_first` (50% caps learned macro stream + remaining plain stream), `random_first` (50% caps random macro stream + remaining plain stream).
+- Ίδια source training, test seeds/tasks, `work cap=8000`, `attempt cap=2000`, `deep_depth=7`. Το κόστος επανεκκίνησης και τα duplicates χρεώνονται κανονικά.
+- Paired target membership/recall, new/lost targets έναντι plain, actual work/attempts, unique signatures και elapsed frontier time.
+- **Κρίσιμη διευκρίνιση:** ίσα **ανώτατα όρια**, όχι απαραίτητα ίση πραγματική κατανάλωση work/attempts. Χωρίς ανεξάρτητο normalization ή confidence intervals, το αποτέλεσμα θα είναι exploratory.
+- Τα target truth tables χρησιμοποιούνται μόνο για post-hoc scoring. Το learned vocabulary προέρχεται από source training.
+- Εκτέλεση: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e15_search_policies.py`.
+- Τοπικό output: `results_e15_search_policies.json` (untracked).
+- Gate: συγκρίνουμε recall και realized cost. Αύξηση recall με μεγαλύτερο πραγματικό work δεν τεκμηριώνει compute efficiency χωρίς πρόσθετο matched-cost audit.
+
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
 Ένα milestone χαρακτηρίζεται **ολοκληρωμένο και επαληθευμένο** μόνο όταν:
@@ -239,6 +254,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-18 | E15: three target-blind vocabulary policies, shared caps, paired membership and cost telemetry | Commits 1b23cae, ee9a33a· execution pending |
 | 2026-11-17 | E14: 223 tests OK, recall +6.67pp shifted / +13.33pp bitvector στο 32k, κόστος καταγράφηκε | Έξοδος Mac· E14 diagnostic PASS, E12 NO-GO |
 | 2026-11-17 | E14: paired frontier budget sweep, cost telemetry και unit tests | Commits 5b5d5e6, b23381a· εκτέλεση εκκρεμεί |
 | 2026-11-12 | E13: 219 tests OK, shifted 56/180 και bitvector 102/180 membership/exact, όλες οι αποτυχίες target absent | Έξοδος Mac· frontier recall bottleneck, NO-GO deployment |
