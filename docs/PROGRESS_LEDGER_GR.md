@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-18  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E15 — Efficient Frontier Search (**committed, εκκρεμούν tests και benchmark**)
+**Τρέχον ορόσημο:** E15 — Efficient Frontier Search (**228 tests OK, στόχος αύξησης recall δεν επιτεύχθηκε**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -22,7 +22,7 @@
 | E12 | Confidence-aware, risk-aware stopping και calibration | Φάσεις 1–3 εκτελέστηκαν: 203/207/213 tests OK· Phase 3 coverage 0%, NO-GO |
 | E13 | Frontier Quality & Error Diagnosis | **Εκτελέστηκε**: 219 tests OK· shifted membership 31.11%, bitvector 56.67%· όλες οι αποτυχίες target-absent |
 | E14 | Paired Frontier Expansion | **Εκτελέστηκε**: 223 tests OK· shifted recall 31.11%→37.78%, bitvector 56.67%→70.00% στο 32k |
-| E15 | Efficient Frontier Search | **Committed, όχι εκτελεσμένο**: plain vs learned-first vs random-first, ίσα caps |
+| E15 | Efficient Frontier Search | **Εκτελέστηκε**: 228 tests OK· learned/random-first χειρότερα από plain σε αμφότερες τις οικογένειες· **FAIL ως προς recall** |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -223,15 +223,40 @@
 
 - Κώδικας: `experiments/e06/run_e15_search_policies.py` — commit `1b23cae`.
 - Tests: `experiments/e06/tests/test_e15_search_policies.py` — commit `ee9a33a`.
-- **Κατάσταση:** committed στο GitHub, **δεν έχουν εκτελεστεί ακόμη tests/benchmark**.
+- **Κατάσταση:** committed και εκτελέστηκε από τον χρήστη: **228 tests OK σε 1.945 s**, benchmark ολοκληρώθηκε.
 - Τρεις target-blind πολιτικές: `plain` (E14 baseline), `learned_first` (50% caps learned macro stream + remaining plain stream), `random_first` (50% caps random macro stream + remaining plain stream).
 - Ίδια source training, test seeds/tasks, `work cap=8000`, `attempt cap=2000`, `deep_depth=7`. Το κόστος επανεκκίνησης και τα duplicates χρεώνονται κανονικά.
 - Paired target membership/recall, new/lost targets έναντι plain, actual work/attempts, unique signatures και elapsed frontier time.
 - **Κρίσιμη διευκρίνιση:** ίσα **ανώτατα όρια**, όχι απαραίτητα ίση πραγματική κατανάλωση work/attempts. Χωρίς ανεξάρτητο normalization ή confidence intervals, το αποτέλεσμα θα είναι exploratory.
 - Τα target truth tables χρησιμοποιούνται μόνο για post-hoc scoring. Το learned vocabulary προέρχεται από source training.
 - Εκτέλεση: `cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e15_search_policies.py`.
-- Τοπικό output: `results_e15_search_policies.json` (untracked).
+- Τοπικό output: `results_e15_search_policies.json` δημιουργήθηκε σύμφωνα με την έξοδο τερματικού (untracked).
 - Gate: συγκρίνουμε recall και realized cost. Αύξηση recall με μεγαλύτερο πραγματικό work δεν τεκμηριώνει compute efficiency χωρίς πρόσθετο matched-cost audit.
+
+### E15 — Αναφερθέντα αποτελέσματα (2026-11-18)
+
+Ο χρήστης εκτέλεσε το suite και το benchmark: **228 tests OK, 1.945 s**. Τα αποτελέσματα προέρχονται από το Terminal· δεν έγινε ανεξάρτητη επανεκτέλεση ή επιθεώρηση του πλήρους JSON.
+
+| Family | Policy | Recall | Δ vs plain (pp) | New | Lost |
+|---|---|---:|---:|---:|---:|
+| shifted | plain | 0.3111 | 0 | 0 | 0 |
+| shifted | learned_first | 0.2056 | -10.56 | 3 | 22 |
+| shifted | random_first | 0.1833 | -12.78 | 3 | 26 |
+| bitvector_grammar | plain | 0.5667 | 0 | 0 | 0 |
+| bitvector_grammar | learned_first | 0.4611 | -10.56 | 3 | 22 |
+| bitvector_grammar | random_first | 0.4444 | -12.22 | 1 | 23 |
+
+| Policy | Mean actual work | Mean attempts | Mean unique signatures | Mean frontier seconds |
+|---|---:|---:|---:|---:|
+| plain | 7995 | 1471 | 440 | 0.00154 |
+| learned_first | 7997.2 | 1461.7 | 329.5 | 0.00149 |
+| random_first | 7997 | 1467 | 318.8 | 0.00150 |
+
+**Gate:** E15 benchmark completed, **FAIL για τον στόχο recall improvement**. Το ενιαίο `work cap` είναι περίπου ισότιμο ως προς την πραγματική κατανάλωση, αλλά τα attempts και οι signature counts διαφέρουν. Τα elapsed milliseconds είναι μη αξιόπιστη ένδειξη για μικρές διαφορές performance χωρίς repeated timing.
+
+**Ερμηνεία/υπόθεση, όχι αποδεδειγμένη αιτία:** Οι two-phase στρατηγικές ξεκινούν με macro-vocabulary search που περιέχει και τα βασικά primitives, και κατόπιν επανεκκινούν plain stream. Το κόστος επανάληψης χρεώνεται· πιθανόν χάνεται budget σε επαναλαμβανόμενο search και περιορίζεται η εμβάθυνση. Οι παρόντες counters δεν διαχωρίζουν cross-stream duplicates και gained novelty ανά φάση. Το αποτέλεσμα δεν αποδεικνύει ότι τα learned macros είναι γενικά μη χρήσιμα.
+
+**Επόμενο βήμα προτεραιότητας:** E16 instrumentation + shared-frontier or non-restarting policy controlled experiment. Μετρήσεις ανά phase για novelty, cross-stream duplication, AST-work, depth coverage, paired recall σε χωριστά seeds. Μη χρησιμοποιηθεί το E15 test set για εκπαίδευση ή ad-hoc policy selection χωρίς νέα held-out δεδομένα. **E12 autonomous acceptance παραμένει NO-GO.**
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -254,6 +279,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-18 | E15: 228 tests OK· plain υπερείχε learned_first/random_first, στόχος recall FAIL | Έξοδος Mac· E16 instrumentation προτεραιότητα |
 | 2026-11-18 | E15: three target-blind vocabulary policies, shared caps, paired membership and cost telemetry | Commits 1b23cae, ee9a33a· execution pending |
 | 2026-11-17 | E14: 223 tests OK, recall +6.67pp shifted / +13.33pp bitvector στο 32k, κόστος καταγράφηκε | Έξοδος Mac· E14 diagnostic PASS, E12 NO-GO |
 | 2026-11-17 | E14: paired frontier budget sweep, cost telemetry και unit tests | Commits 5b5d5e6, b23381a· εκτέλεση εκκρεμεί |
