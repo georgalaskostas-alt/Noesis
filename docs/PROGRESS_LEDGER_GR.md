@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-19  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E16 — Search Efficiency Diagnostics (**234 tests OK, plain καλύτερο, E16 recall GOAL FAIL**)
+**Τρέχον ορόσημο:** E17 — Cost-Aware Search (**committed, tests/benchmark εκκρεμούν**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -24,6 +24,7 @@
 | E14 | Paired Frontier Expansion | **Εκτελέστηκε**: 223 tests OK· shifted recall 31.11%→37.78%, bitvector 56.67%→70.00% στο 32k |
 | E15 | Efficient Frontier Search | **Εκτελέστηκε**: 228 tests OK· learned/random-first χειρότερα από plain σε αμφότερες τις οικογένειες· **FAIL ως προς recall** |
 | E16 | Search Efficiency Diagnostics | **Εκτελέστηκε**: 234 tests OK· plain καλύτερο σε shifted/bitvector, κανένα macro policy δεν βελτίωσε recall· diagnostic PASS, recall FAIL |
+| E17 | Cost-Aware Search | **Committed, όχι εκτελεσμένο**: persistent streams και greedy novelty/work allocation, νέα seeds |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -301,6 +302,18 @@
 
 **Gate:** E16 diagnostic benchmark **PASS**, αλλά στόχος recall improvement **FAIL**. Το plain είναι καλύτερο και στα δύο datasets. Πιθανός μηχανισμός: macro vocabulary αυξάνει average candidate cost / περιορίζει semantic novelty ανά work· πρόκειται για υπόθεση μερικώς υποστηριζόμενη από τη σχέση attempts/work, όχι απόδειξη αιτιότητας. Απαιτείται cost-normalized semantic novelty audit, candidate depth/cost distribution, targeted generator redesign και επανάληψη σε νέα seeds πριν claim transfer. Η αποδοχή λύσεων του E12 παραμένει **NO-GO**.
 
+### E17 — Cost-Aware Search (2026-11-19)
+
+- Κώδικας `experiments/e06/run_e17_cost_aware.py` (commit `8c9a4fa`), tests `experiments/e06/tests/test_e17_cost_aware.py` (commit `b08eb31`).
+- **Κατάσταση:** committed, **tests/benchmark δεν έχουν εκτελεστεί ακόμη**.
+- Πολιτικές: `plain`, `learned_continuous`, `random_continuous`, `learned_adaptive`, `random_adaptive`. Τα adaptive policies διατηρούν δύο persistent streams, κάνουν προκαθορισμένο warm-up και επιλέγουν επόμενο stream βάσει `novel_global / chunk_AST_work`, χωρίς target labels.
+- Νέα exploratory seeds `18000–18005`. Ίδια global work/attempt caps 8000/2000, depth 7, chunk work 500. Καταγράφονται candidate-cost/depth histograms, per-phase novelty, duplicates και actual resource consumption.
+- **Περιορισμός σχεδιασμού:** αν το επόμενο candidate δεν χωρά στο chunk, επιτρέπεται single-candidate fallback με διαθέσιμο global work· το chunk είναι στόχος, όχι απόλυτο όριο. Η last-chunk efficiency είναι θορυβώδης και το adaptive policy δεν είναι εκπαιδευμένο ή επικυρωμένο.
+- Η σύγκριση γίνεται σε κοινά caps, **όχι υποχρεωτικά ίση actual work**. Τα learned macros έχουν source training cost που δεν προσμετράται. Τα targets χρησιμοποιούνται μόνο για post-hoc recall.
+- Εκτέλεση: `cd ~/Projects/Noesis && git pull origin research/e06-program-synthesis && cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e17_cost_aware.py`.
+- Local output: `results_e17_cost_aware.json` (untracked).
+- Gate: η adaptive πολιτική πρέπει να ξεπεράσει το plain recall χωρίς δυσανάλογο actual work, και να επαληθευτεί σε ανεξάρτητα seeds πριν claim βελτίωσης. E12 autonomous acceptance **NO-GO**.
+
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
 Ένα milestone χαρακτηρίζεται **ολοκληρωμένο και επαληθευμένο** μόνο όταν:
@@ -322,6 +335,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-19 | E17: cost-aware persistent streams, per-chunk novelty/work, νέες seeds | Commits 8c9a4fa, b08eb31· execution pending |
 | 2026-11-19 | E16: 234 tests OK, plain καλύτερο όλων, continuous δεν έλυσε την πτώση recall | Terminal benchmark· diagnostic PASS, recall FAIL |
 | 2026-11-19 | E16: instrumentation και continuous/restart policy comparison σε νέα seeds | Commits 7704e6f, 89c081c· tests εκκρεμούν |
 | 2026-11-18 | E15: 228 tests OK· plain υπερείχε learned_first/random_first, στόχος recall FAIL | Έξοδος Mac· E16 instrumentation προτεραιότητα |
