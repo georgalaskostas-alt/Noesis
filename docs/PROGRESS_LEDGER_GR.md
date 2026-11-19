@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-19  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E16 — Search Efficiency Diagnostics (**committed, tests/benchmark εκκρεμούν**)
+**Τρέχον ορόσημο:** E16 — Search Efficiency Diagnostics (**234 tests OK, plain καλύτερο, E16 recall GOAL FAIL**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -23,7 +23,7 @@
 | E13 | Frontier Quality & Error Diagnosis | **Εκτελέστηκε**: 219 tests OK· shifted membership 31.11%, bitvector 56.67%· όλες οι αποτυχίες target-absent |
 | E14 | Paired Frontier Expansion | **Εκτελέστηκε**: 223 tests OK· shifted recall 31.11%→37.78%, bitvector 56.67%→70.00% στο 32k |
 | E15 | Efficient Frontier Search | **Εκτελέστηκε**: 228 tests OK· learned/random-first χειρότερα από plain σε αμφότερες τις οικογένειες· **FAIL ως προς recall** |
-| E16 | Search Efficiency Diagnostics | **Committed, όχι εκτελεσμένο**: per-phase novelty, duplication, restart vs continuous, νέα seeds |
+| E16 | Search Efficiency Diagnostics | **Εκτελέστηκε**: 234 tests OK· plain καλύτερο σε shifted/bitvector, κανένα macro policy δεν βελτίωσε recall· diagnostic PASS, recall FAIL |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -262,7 +262,7 @@
 ### E16 — Search Efficiency Diagnostics (2026-11-19)
 
 - Κώδικας `experiments/e06/run_e16_search_diagnostics.py` (commit `7704e6f`), tests `experiments/e06/tests/test_e16_search_diagnostics.py` (commit `89c081c`).
-- **Κατάσταση:** GitHub committed, **δεν έχει εκτελεστεί ακόμη** το suite/benchmark.
+- **Κατάσταση:** Github committed και **εκτελέστηκε από τον χρήστη**: 234 tests OK σε 1.825s· benchmark ολοκληρώθηκε.
 - Νέα seeds `17000–17005`, χωριστά από E15 (`16014–16019`).
 - Πολιτικές: `plain`, `learned_restart`, `learned_continuous`, `random_restart`, `random_continuous`.
 - Ίδια global caps (work 8000, attempts 2000) και depth 7. Καταγράφονται per-phase work, attempts, novelty, within-stream duplicate attempts, global duplicate attempts, depth-attempt histogram και frontier time.
@@ -271,6 +271,35 @@
 - Paired recall και new/lost target membership συγκρίνονται post-hoc. Τα target truth tables δεν επηρεάζουν την αναζήτηση.
 - **Εκτέλεση:** `cd ~/Projects/Noesis && git pull origin research/e06-program-synthesis && cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e16_search_diagnostics.py`.
 - Local JSON `results_e16_search_diagnostics.json`. Χωρίς ανεξάρτητο replication ή seed-cluster uncertainty, τα αποτελέσματα είναι exploratory. Το E12 NO-GO παραμένει.
+
+### E16 — Αποτελέσματα Terminal (2026-11-19)
+
+**Πηγή:** έξοδος Mac που κοινοποιήθηκε στη συζήτηση. `Ran 234 tests in 1.825s — OK` και `run_e16_search_diagnostics.py` ολοκληρώθηκε, output `results_e16_search_diagnostics.json`. Το πλήρες JSON δεν έχει ελεγχθεί ούτε έγινε ανεξάρτητη επανεκτέλεση.
+
+| Family | Policy | Recall | Gain vs plain (pp) | Newly covered | Lost coverage |
+|---|---|---:|---:|---:|---:|
+| shifted | plain | 0.3333 | 0 | 0 | 0 |
+| shifted | learned_restart | 0.2222 | -11.11 | 6 | 26 |
+| shifted | learned_continuous | 0.2111 | -12.22 | 8 | 30 |
+| shifted | random_restart | 0.1667 | -16.67 | 2 | 32 |
+| shifted | random_continuous | 0.1833 | -15.00 | 7 | 34 |
+| bitvector_grammar | plain | 0.5000 | 0 | 0 | 0 |
+| bitvector_grammar | learned_restart | 0.4722 | -2.78 | 7 | 12 |
+| bitvector_grammar | learned_continuous | 0.4389 | -6.11 | 8 | 19 |
+| bitvector_grammar | random_restart | 0.4167 | -8.33 | 1 | 16 |
+| bitvector_grammar | random_continuous | 0.4389 | -6.11 | 8 | 19 |
+
+| Policy | Mean work | Mean attempts | Mean unique signatures | Global duplicate attempts | Phase novelty |
+|---|---:|---:|---:|---:|---|
+| plain | 7995 | 1471 | 440 | 1031 | [440] |
+| learned_restart | 7997.2 | 1456.3 | 355.3 | 1101 | [205, 150.3] |
+| learned_continuous | 7996.3 | 1158.3 | 321.7 | 836.7 | [321.7] |
+| random_restart | 7997.3 | 1470.2 | 314.2 | 1156 | [171.5, 142.7] |
+| random_continuous | 7996.3 | 1142.3 | 317.2 | 825.2 | [317.2] |
+
+**Ερμηνεία:** Με περίπου ίδιο actual AST-work (~7995–7997), οι continuous policies καταναλώνουν λιγότερα attempts: learned ~1158 vs plain 1471 και random ~1142. Αυτό συνεπάγεται κατά μέσο όρο ακριβότερες generated expressions, με λιγότερες μοναδικές truth-table signatures. Η πολιτική continuous δεν είναι ελεγχόμενο ablation του restart (αλλάζει vocabulary και allocation). Το `global duplicate attempts` περιλαμβάνει within-stream duplicates, και πρέπει να αποφεύγεται η ανεξάρτητη άθροισή τους.
+
+**Gate:** E16 diagnostic benchmark **PASS**, αλλά στόχος recall improvement **FAIL**. Το plain είναι καλύτερο και στα δύο datasets. Πιθανός μηχανισμός: macro vocabulary αυξάνει average candidate cost / περιορίζει semantic novelty ανά work· πρόκειται για υπόθεση μερικώς υποστηριζόμενη από τη σχέση attempts/work, όχι απόδειξη αιτιότητας. Απαιτείται cost-normalized semantic novelty audit, candidate depth/cost distribution, targeted generator redesign και επανάληψη σε νέα seeds πριν claim transfer. Η αποδοχή λύσεων του E12 παραμένει **NO-GO**.
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -293,6 +322,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-19 | E16: 234 tests OK, plain καλύτερο όλων, continuous δεν έλυσε την πτώση recall | Terminal benchmark· diagnostic PASS, recall FAIL |
 | 2026-11-19 | E16: instrumentation και continuous/restart policy comparison σε νέα seeds | Commits 7704e6f, 89c081c· tests εκκρεμούν |
 | 2026-11-18 | E15: 228 tests OK· plain υπερείχε learned_first/random_first, στόχος recall FAIL | Έξοδος Mac· E16 instrumentation προτεραιότητα |
 | 2026-11-18 | E15: three target-blind vocabulary policies, shared caps, paired membership and cost telemetry | Commits 1b23cae, ee9a33a· execution pending |
