@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-19  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E17 — Cost-Aware Search (**committed, tests/benchmark εκκρεμούν**)
+**Τρέχον ορόσημο:** E17 — Cost-Aware Search (**infinite-loop bug διορθώθηκε· επανεκτέλεση εκκρεμεί**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -305,7 +305,7 @@
 ### E17 — Cost-Aware Search (2026-11-19)
 
 - Κώδικας `experiments/e06/run_e17_cost_aware.py` (commit `8c9a4fa`), tests `experiments/e06/tests/test_e17_cost_aware.py` (commit `b08eb31`).
-- **Κατάσταση:** committed, **tests/benchmark δεν έχουν εκτελεστεί ακόμη**.
+- **Κατάσταση:** πρώτη προσπάθεια tests διακόπηκε με KeyboardInterrupt· benchmark δεν επαληθεύτηκε. Διορθώθηκε ο βρόχος και προστέθηκαν regression tests· επανεκτέλεση εκκρεμεί.
 - Πολιτικές: `plain`, `learned_continuous`, `random_continuous`, `learned_adaptive`, `random_adaptive`. Τα adaptive policies διατηρούν δύο persistent streams, κάνουν προκαθορισμένο warm-up και επιλέγουν επόμενο stream βάσει `novel_global / chunk_AST_work`, χωρίς target labels.
 - Νέα exploratory seeds `18000–18005`. Ίδια global work/attempt caps 8000/2000, depth 7, chunk work 500. Καταγράφονται candidate-cost/depth histograms, per-phase novelty, duplicates και actual resource consumption.
 - **Περιορισμός σχεδιασμού:** αν το επόμενο candidate δεν χωρά στο chunk, επιτρέπεται single-candidate fallback με διαθέσιμο global work· το chunk είναι στόχος, όχι απόλυτο όριο. Η last-chunk efficiency είναι θορυβώδης και το adaptive policy δεν είναι εκπαιδευμένο ή επικυρωμένο.
@@ -313,6 +313,16 @@
 - Εκτέλεση: `cd ~/Projects/Noesis && git pull origin research/e06-program-synthesis && cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e17_cost_aware.py`.
 - Local output: `results_e17_cost_aware.json` (untracked).
 - Gate: η adaptive πολιτική πρέπει να ξεπεράσει το plain recall χωρίς δυσανάλογο actual work, και να επαληθευτεί σε ανεξάρτητα seeds πριν claim βελτίωσης. E12 autonomous acceptance **NO-GO**.
+
+### E17 — Debugging exhausted-stream infinite loop (2026-11-22)
+
+- Ο χρήστης διέκοψε το test_budget_and_accounting με KeyboardInterrupt στο run_e17_cost_aware.py:47. Δεν ολοκληρώθηκε το test suite ή benchmark.
+- Root cause: στις nonadaptive πολιτικές το εξαντλημένο μοναδικό επιλέξιμο stream επανεπιλέγεται χωρίς αύξηση work ή attempts, προκαλώντας infinite loop.
+- Fix: explicit guard για exhausted selectable arms και break αντί continue για fixed policies. Commits 749a6cc και 8ba3bfc.
+- Regression tests: depth=1 και μεγάλα caps ελέγχουν τερματισμό fixed arms (6 attempts) και adaptive arms (12 attempts), commit e46e5f5.
+- Status: τα διορθωμένα tests δεν έχουν ακόμη εκτελεστεί από τον χρήστη ή ανεξάρτητα· καμία δήλωση PASS.
+- Εντολές επανεκτέλεσης: cd ~/Projects/Noesis && git pull origin research/e06-program-synthesis && cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e17_cost_aware.py.
+- E12 acceptance NO-GO παραμένει.
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -335,6 +345,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-22 | E17: KeyboardInterrupt λόγω exhausted fixed stream· fix και regression tests | Commits 749a6cc, 8ba3bfc, e46e5f5· retest pending |
 | 2026-11-19 | E17: cost-aware persistent streams, per-chunk novelty/work, νέες seeds | Commits 8c9a4fa, b08eb31· execution pending |
 | 2026-11-19 | E16: 234 tests OK, plain καλύτερο όλων, continuous δεν έλυσε την πτώση recall | Terminal benchmark· diagnostic PASS, recall FAIL |
 | 2026-11-19 | E16: instrumentation και continuous/restart policy comparison σε νέα seeds | Commits 7704e6f, 89c081c· tests εκκρεμούν |
