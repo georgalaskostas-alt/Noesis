@@ -34,11 +34,9 @@ def search(learned, random_macros, policy, budget=8000,
     while work < budget and attempts < attempt_cap:
         # A nonadaptive policy has only one selectable arm. Once that arm is
         # exhausted, stop instead of repeatedly selecting it forever.
-        if not schedule and not any(not stream.exhausted
-                                    for stream in streams.values()
-                                    if adaptive or
-                                    (policy == "plain" and stream is streams["plain"]) or
-                                    (policy != "plain" and stream is streams.get("macro"))):
+        selectable = ("plain", "macro") if adaptive else (
+            ("plain",) if policy == "plain" else ("macro",))
+        if not schedule and all(streams[name].exhausted for name in selectable):
             break
         if schedule:
             arm = schedule.pop(0)
