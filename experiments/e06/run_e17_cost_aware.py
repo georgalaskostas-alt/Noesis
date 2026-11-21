@@ -32,6 +32,14 @@ def search(learned, random_macros, policy, budget=8000,
     schedule = ["plain", "macro"] if adaptive else [
         "plain" if policy == "plain" else "macro"]
     while work < budget and attempts < attempt_cap:
+        # A nonadaptive policy has only one selectable arm. Once that arm is
+        # exhausted, stop instead of repeatedly selecting it forever.
+        if not schedule and not any(not stream.exhausted
+                                    for stream in streams.values()
+                                    if adaptive or
+                                    (policy == "plain" and stream is streams["plain"]) or
+                                    (policy != "plain" and stream is streams.get("macro"))):
+            break
         if schedule:
             arm = schedule.pop(0)
         elif adaptive:
@@ -44,7 +52,9 @@ def search(learned, random_macros, policy, budget=8000,
             arm = "plain" if policy == "plain" else "macro"
         stream = streams[arm]
         if stream.exhausted:
-            continue
+            if adaptive:
+                continue
+            break
         phase_work = phase_attempts = novel = duplicate = 0
         costs = {}
         depth_counts = {}
