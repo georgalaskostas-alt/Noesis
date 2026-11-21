@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-19  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E17 — Cost-Aware Search (**infinite-loop bug διορθώθηκε· επανεκτέλεση εκκρεμεί**)
+**Τρέχον ορόσημο:** E17 — Cost-Aware Search (**240 tests OK, benchmark completed, recall improvement FAIL**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -24,7 +24,7 @@
 | E14 | Paired Frontier Expansion | **Εκτελέστηκε**: 223 tests OK· shifted recall 31.11%→37.78%, bitvector 56.67%→70.00% στο 32k |
 | E15 | Efficient Frontier Search | **Εκτελέστηκε**: 228 tests OK· learned/random-first χειρότερα από plain σε αμφότερες τις οικογένειες· **FAIL ως προς recall** |
 | E16 | Search Efficiency Diagnostics | **Εκτελέστηκε**: 234 tests OK· plain καλύτερο σε shifted/bitvector, κανένα macro policy δεν βελτίωσε recall· diagnostic PASS, recall FAIL |
-| E17 | Cost-Aware Search | **Committed, όχι εκτελεσμένο**: persistent streams και greedy novelty/work allocation, νέα seeds |
+| E17 | Cost-Aware Search | **Εκτελέστηκε μετά το infinite-loop fix**: 240 tests OK, Plain ξεπερνά όλες τις macro/adaptive πολιτικές σε shifted και bitvector· recall improvement FAIL |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -324,6 +324,35 @@
 - Εντολές επανεκτέλεσης: cd ~/Projects/Noesis && git pull origin research/e06-program-synthesis && cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e17_cost_aware.py.
 - E12 acceptance NO-GO παραμένει.
 
+### E17 — Verified user-run results (2026-11-22)
+
+Μετά τα commits 8ba3bfc / e46e5f5, ο χρήστης έτρεξε `python3 -m unittest discover -s tests -q`: **Ran 240 tests in 1.873s — OK**, και ολοκλήρωσε το `run_e17_cost_aware.py`. Το Terminal ανέφερε output `results_e17_cost_aware.json`· το πλήρες JSON δεν επιθεωρήθηκε ανεξάρτητα.
+
+| Family | Policy | Recall | New vs plain | Lost vs plain |
+|---|---|---:|---:|---:|
+| shifted | plain | 0.3500 | 0 | 0 |
+| shifted | learned_continuous | 0.3000 | 10 | 19 |
+| shifted | random_continuous | 0.2056 | 5 | 31 |
+| shifted | learned_adaptive | 0.2944 | 5 | 15 |
+| shifted | random_adaptive | 0.2333 | 1 | 22 |
+| bitvector_grammar | plain | 0.4667 | 0 | 0 |
+| bitvector_grammar | learned_continuous | 0.4222 | 7 | 15 |
+| bitvector_grammar | random_continuous | 0.4000 | 6 | 18 |
+| bitvector_grammar | learned_adaptive | 0.4278 | 3 | 10 |
+| bitvector_grammar | random_adaptive | 0.4444 | 2 | 6 |
+
+| Policy | Mean work | Mean attempts | Mean unique | Novel / 1000 work | Mean duplicates |
+|---|---:|---:|---:|---:|---:|
+| plain | 7995 | 1471 | 440 | 55.03 | 1031 |
+| learned_continuous | 7993 | 1133.2 | 321 | 40.16 | 812.2 |
+| random_continuous | 7996.2 | 1149.8 | 324.5 | 40.58 | 825.3 |
+| learned_adaptive | 7998 | 1446.7 | 364.5 | 45.57 | 1082.2 |
+| random_adaptive | 7998.2 | 1491 | 358 | 44.76 | 1133 |
+
+**Gate:** post-fix test suite PASS; benchmark executed; E17 recall-improvement FAIL in both synthetic families. Plain has best recall and most unique signatures per work. New targets under some macro policies show complementary coverage, not net gain. Training expense excluded; equal caps do not ensure equal realized attempts; seed-level uncertainty not calculated. E12 autonomous-acceptance gate remains NO-GO.
+
+**Next:** Avoid more heuristic scheduler tuning on these evaluation seeds. A separate generator-level study should compare cost-ordered enumeration, explicit macro cost regularization, and union/portfolio selection at controlled compute, with source-only policy selection and genuinely unseen evaluation seeds.
+
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
 Ένα milestone χαρακτηρίζεται **ολοκληρωμένο και επαληθευμένο** μόνο όταν:
@@ -345,6 +374,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-22 | E17: 240 tests OK after infinite-loop fix; plain wins all recall and novelty/work comparisons | Mac output; diagnostic PASS / improvement FAIL |
 | 2026-11-22 | E17: KeyboardInterrupt λόγω exhausted fixed stream· fix και regression tests | Commits 749a6cc, 8ba3bfc, e46e5f5· retest pending |
 | 2026-11-19 | E17: cost-aware persistent streams, per-chunk novelty/work, νέες seeds | Commits 8c9a4fa, b08eb31· execution pending |
 | 2026-11-19 | E16: 234 tests OK, plain καλύτερο όλων, continuous δεν έλυσε την πτώση recall | Terminal benchmark· diagnostic PASS, recall FAIL |
