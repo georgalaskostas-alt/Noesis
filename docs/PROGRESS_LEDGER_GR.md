@@ -3,7 +3,7 @@
 **Τελευταία ενημέρωση:** 2026-11-19  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E17 — Cost-Aware Search (**240 tests OK, benchmark completed, recall improvement FAIL**)
+**Τρέχον ορόσημο:** E18 — Generator Architecture (**committed, tests/benchmark εκκρεμούν**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -25,6 +25,7 @@
 | E15 | Efficient Frontier Search | **Εκτελέστηκε**: 228 tests OK· learned/random-first χειρότερα από plain σε αμφότερες τις οικογένειες· **FAIL ως προς recall** |
 | E16 | Search Efficiency Diagnostics | **Εκτελέστηκε**: 234 tests OK· plain καλύτερο σε shifted/bitvector, κανένα macro policy δεν βελτίωσε recall· diagnostic PASS, recall FAIL |
 | E17 | Cost-Aware Search | **Εκτελέστηκε μετά το infinite-loop fix**: 240 tests OK, Plain ξεπερνά όλες τις macro/adaptive πολιτικές σε shifted και bitvector· recall improvement FAIL |
+| E18 | Generator Architecture | **Committed, όχι εκτελεσμένο**: cost-ordered Boolean enumeration, expanded-cost macro cap, paired recall και work telemetry |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -353,6 +354,18 @@
 
 **Next:** Avoid more heuristic scheduler tuning on these evaluation seeds. A separate generator-level study should compare cost-ordered enumeration, explicit macro cost regularization, and union/portfolio selection at controlled compute, with source-only policy selection and genuinely unseen evaluation seeds.
 
+### E18 — Generator Architecture (2026-11-22)
+
+- Code `experiments/e06/run_e18_generator_architecture.py`, commit `b5d24b5`; tests `experiments/e06/tests/test_e18_generator_architecture.py`, commit `124e1b6`.
+- **Κατάσταση:** committed στο GitHub, tests/benchmark δεν έχουν εκτελεστεί. Δεν υπάρχει ακόμη τεκμηριωμένο PASS.
+- Νέα seeds 19000–19005, κοινά resource caps 8000 AST-work / 2000 attempts, max_cost 13, macro_cost_cap 5.
+- Policies: E17 plain baseline, cost_ordered (bottom-up by expanded AST cost), cost_ordered_learned, cost_ordered_random.
+- Ο cost-ordered enumerator διατηρεί έναν canonical representative ανά 16-bit truth table και συνθέτει μόνο από ήδη αποδεκτές cost layers. Όλες οι candidate attempts, και οι duplicates, χρεώνονται με το πραγματικό expanded AST cost.
+- Macros επιτρέπονται ως seeds μόνο αν cost <= 5, χρεώνονται με το πραγματικό cost, δεν συμπιέζονται σε depth=1 ως cost=1. Η μέθοδος δεν αποτελεί ακόμη πλήρες shared-frontier portfolio· συγκρίνει cost-ordering και macro-seed variants.
+- Κίνδυνος/περιορισμός: η προετοιμασία candidate batch δεν περιλαμβάνεται στο AST-work counter· μπορεί να διαφέρει το CPU cost. Επίσης η seed ordering και το max_cost επηρεάζουν recall. Τα results είναι exploratory.
+- Execution: `cd ~/Projects/Noesis && git pull origin research/e06-program-synthesis && cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e18_generator_architecture.py`.
+- Output: `results_e18_generator_architecture.json`. E12 autonomous acceptance NO-GO.
+
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
 Ένα milestone χαρακτηρίζεται **ολοκληρωμένο και επαληθευμένο** μόνο όταν:
@@ -374,6 +387,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-22 | E18: cost-ordered generator + expanded-cost macro controls | Commits b5d24b5, 124e1b6· execution pending |
 | 2026-11-22 | E17: 240 tests OK after infinite-loop fix; plain wins all recall and novelty/work comparisons | Mac output; diagnostic PASS / improvement FAIL |
 | 2026-11-22 | E17: KeyboardInterrupt λόγω exhausted fixed stream· fix και regression tests | Commits 749a6cc, 8ba3bfc, e46e5f5· retest pending |
 | 2026-11-19 | E17: cost-aware persistent streams, per-chunk novelty/work, νέες seeds | Commits 8c9a4fa, b08eb31· execution pending |
