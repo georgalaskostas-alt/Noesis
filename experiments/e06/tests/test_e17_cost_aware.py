@@ -21,6 +21,24 @@ class E17Tests(unittest.TestCase):
             self.assertEqual(sum(p["novel"] for p in report["phases"]),
                              len(frontier))
 
+    def test_exhausted_fixed_arm_returns_without_hanging(self):
+        # Depth 1 exhausts after the six atoms. This previously looped forever
+        # because nonadaptive policies selected the exhausted stream again.
+        for policy in ("plain", "learned_continuous", "random_continuous"):
+            frontier, report = search([], [], policy, budget=1000,
+                                      attempt_cap=1000, depth=1, chunk_work=30)
+            self.assertEqual(len(frontier), 6)
+            self.assertEqual(report["attempts"], 6)
+            self.assertEqual(report["work"], 6)
+
+    def test_exhausted_adaptive_arms_return(self):
+        for policy in ("learned_adaptive", "random_adaptive"):
+            frontier, report = search([], [], policy, budget=1000,
+                                      attempt_cap=1000, depth=1, chunk_work=30)
+            self.assertEqual(len(frontier), 6)
+            self.assertEqual(report["attempts"], 12)
+            self.assertEqual(report["work"], 12)
+
     def test_smoke(self):
         report = run(seeds=(18000,), budget=300, attempt_cap=100,
                      chunk_work=30, n_train=30, n_validation=10,
