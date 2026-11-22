@@ -1,9 +1,9 @@
 # NOESIS — Ζωντανό μητρώο προόδου / Research Progress Ledger
 
-**Τελευταία ενημέρωση:** 2026-11-19  
+**Τελευταία ενημέρωση:** 2026-11-22  
 **Repository:** `georgalaskostas-alt/Noesis`  
 **Branch εργασίας:** `research/e06-program-synthesis`  
-**Τρέχον ορόσημο:** E18 — Generator Architecture (**committed, tests/benchmark εκκρεμούν**)
+**Τρέχον ορόσημο:** E18 — Generator Architecture (**245 tests OK, benchmark completed, recall gain FAIL**)
 
 > **Κανόνας αξιοπιστίας:** Διαχωρίζουμε (A) κώδικα που υπάρχει στο GitHub, (B) ελέγχους που εκτελέστηκαν και αναφέρθηκαν, (C) πειραματικά ευρήματα, (D) μη επαληθευμένους ισχυρισμούς. Δεν θεωρούμε «επιτυχία» την ύπαρξη ενός αρχείου ή το πέρασμα unit tests από μόνο του.
 
@@ -25,7 +25,7 @@
 | E15 | Efficient Frontier Search | **Εκτελέστηκε**: 228 tests OK· learned/random-first χειρότερα από plain σε αμφότερες τις οικογένειες· **FAIL ως προς recall** |
 | E16 | Search Efficiency Diagnostics | **Εκτελέστηκε**: 234 tests OK· plain καλύτερο σε shifted/bitvector, κανένα macro policy δεν βελτίωσε recall· diagnostic PASS, recall FAIL |
 | E17 | Cost-Aware Search | **Εκτελέστηκε μετά το infinite-loop fix**: 240 tests OK, Plain ξεπερνά όλες τις macro/adaptive πολιτικές σε shifted και bitvector· recall improvement FAIL |
-| E18 | Generator Architecture | **Committed, όχι εκτελεσμένο**: cost-ordered Boolean enumeration, expanded-cost macro cap, paired recall και work telemetry |
+| E18 | Generator Architecture | **Εκτελέστηκε**: 245 tests OK, cost_ordered και plain ισοδύναμα στις μετρήσεις, learned μία απώλεια bitvector· recall gain FAIL |
 
 ### E10.5 — καταγεγραμμένα αποτελέσματα
 
@@ -357,7 +357,7 @@
 ### E18 — Generator Architecture (2026-11-22)
 
 - Code `experiments/e06/run_e18_generator_architecture.py`, commit `b5d24b5`; tests `experiments/e06/tests/test_e18_generator_architecture.py`, commit `124e1b6`.
-- **Κατάσταση:** committed στο GitHub, tests/benchmark δεν έχουν εκτελεστεί. Δεν υπάρχει ακόμη τεκμηριωμένο PASS.
+- **Κατάσταση:** μετά το commit ο χρήστης εκτέλεσε **245 tests OK σε 1.856s** και benchmark. Diagnostic execution PASS, recall improvement FAIL.
 - Νέα seeds 19000–19005, κοινά resource caps 8000 AST-work / 2000 attempts, max_cost 13, macro_cost_cap 5.
 - Policies: E17 plain baseline, cost_ordered (bottom-up by expanded AST cost), cost_ordered_learned, cost_ordered_random.
 - Ο cost-ordered enumerator διατηρεί έναν canonical representative ανά 16-bit truth table και συνθέτει μόνο από ήδη αποδεκτές cost layers. Όλες οι candidate attempts, και οι duplicates, χρεώνονται με το πραγματικό expanded AST cost.
@@ -365,6 +365,34 @@
 - Κίνδυνος/περιορισμός: η προετοιμασία candidate batch δεν περιλαμβάνεται στο AST-work counter· μπορεί να διαφέρει το CPU cost. Επίσης η seed ordering και το max_cost επηρεάζουν recall. Τα results είναι exploratory.
 - Execution: `cd ~/Projects/Noesis && git pull origin research/e06-program-synthesis && cd experiments/e06 && python3 -m unittest discover -s tests -q && python3 run_e18_generator_architecture.py`.
 - Output: `results_e18_generator_architecture.json`. E12 autonomous acceptance NO-GO.
+
+### E18 — Αναφερθέντα αποτελέσματα (2026-11-22)
+
+**Πηγή:** terminal του χρήστη. `Ran 245 tests in 1.856s — OK`, `run_e18_generator_architecture.py` ολοκληρώθηκε και παρήχθη το `results_e18_generator_architecture.json`. Το πλήρες JSON δεν έχει ελεγχθεί ανεξάρτητα.
+
+| Family | Policy | Recall | New vs plain | Lost vs plain |
+|---|---|---:|---:|---:|
+| shifted | plain | 0.3333 | 0 | 0 |
+| shifted | cost_ordered | 0.3333 | 0 | 0 |
+| shifted | cost_ordered_learned | 0.3333 | 0 | 0 |
+| shifted | cost_ordered_random | 0.3333 | 0 | 0 |
+| bitvector_grammar | plain | 0.5833 | 0 | 0 |
+| bitvector_grammar | cost_ordered | 0.5833 | 0 | 0 |
+| bitvector_grammar | cost_ordered_learned | 0.5778 | 0 | 1 |
+| bitvector_grammar | cost_ordered_random | 0.5833 | 0 | 0 |
+
+| Policy | Mean work | Attempts | Unique signatures | Novel/1000 work |
+|---|---:|---:|---:|---:|
+| plain | 7995 | 1471 | 440 | 55.03 |
+| cost_ordered | 7995 | 1471 | 440 | 55.03 |
+| cost_ordered_learned | 7996.8 | 1473 | 438.5 | 54.83 |
+| cost_ordered_random | 7996.8 | 1473 | 439.5 | 54.96 |
+
+**Source code audit:** το `Stream._candidates()` ήδη παράγει πρώτα atoms, μετά NOT των accepted depth d−1, έπειτα binary compositions από προηγούμενες depth-layers. Επειδή κάθε `Program.cost` ισούται με τον αριθμό expanded AST nodes για τις primitive συνθέσεις, η depth κατάταξη αυτών των candidates συμπίπτει με το expanded cost. Η E18 `cost_ordered()` χρησιμοποιεί ακριβώς αντίστοιχα depth/cost layers και semantic deduplication, επομένως η ισότητα plain/cost_ordered είναι αναμενόμενη και δεν συνιστά ανεξάρτητη αρχιτεκτονική βελτίωση.
+
+**Caution:** Η ισότητα συγκεντρωτικών μετρικών και paired target membership δεν αποδεικνύει αυστηρά ισότητα όλων των frontier signatures/σειράς· χρειάζεται explicit set-equality audit. Η ταξινόμηση macros ως seed candidates, παρότι χρεώνονται στο πραγματικό expanded cost, γίνεται πριν τις cost layers· επομένως το macro variant δεν είναι globally strictly cost-ordered όταν περιέχει macros cost>1.
+
+**Gate:** test suite PASS, benchmark PASS, recall gain FAIL. E12 autonomous acceptance NO-GO. Επόμενη έρευνα: πραγματικά διαφορετική candidate-generation policy με explicit frontier set equality, resource accounting, και νέα evaluation seeds. Αποφυγή επανάληψης ισοδύναμων enumeration orders.
 
 ## 4. Ορισμός ολοκλήρωσης / Definition of Done
 
@@ -387,6 +415,7 @@
 
 | Ημερομηνία | Αλλαγή | Επαλήθευση |
 |---|---|---|
+| 2026-11-22 | E18: 245 tests OK; cost_ordered ταυτόσημα aggregate metrics με plain, learned lost 1 bitvector, κανένα gain | Mac benchmark· diagnostic PASS / recall gain FAIL |
 | 2026-11-22 | E18: cost-ordered generator + expanded-cost macro controls | Commits b5d24b5, 124e1b6· execution pending |
 | 2026-11-22 | E17: 240 tests OK after infinite-loop fix; plain wins all recall and novelty/work comparisons | Mac output; diagnostic PASS / improvement FAIL |
 | 2026-11-22 | E17: KeyboardInterrupt λόγω exhausted fixed stream· fix και regression tests | Commits 749a6cc, 8ba3bfc, e46e5f5· retest pending |
